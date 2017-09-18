@@ -1,0 +1,14 @@
+app:
+    resource: '@AppBundle/Controller/'
+    type: annotation
+
+lucky_number:
+    path: /lucky/number/{max}
+    defaults: {_controller: AppBundle:Lucky:number, max: 10}
+    requirements:
+      max: '\d+'
+
+lucky_hello:
+    path: /lucky/hello/{name}
+    defaults: {_controller: AppBundle:Lucky:hello}
+
