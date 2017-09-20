@@ -1,0 +1,15 @@
+sample_homepage:
+    path:     /
+    defaults: { _controller: SampleBundle:Default:index }
+
+form_new:
+  path: /form/new
+  defaults: { _controller: SampleBundle:Form:new }
+
+form_create:
+  path: /form/create
+  defaults: { _controller: SampleBundle:Form:create }
+
+form_success:
+  path: /form/success
+  defaults: { _controller: SampleBundle:Form:success }

@@ -1,0 +1,36 @@
+{# {% form_theme form 'form/fields.html.twig' %} #}
+
+{# src/SampleBundle/Resources/views/default/new.html.twig #}
+
+
+{{ form_start(form) }}
+    {{ form_errors(form) }}
+<div>
+    {{ form_label(form.firstname, 'Your First Name:') }}
+    {{ form_errors(form.firstname) }}
+    {{ form_widget(form.firstname) }}
+</div>
+
+<div>
+    {{ form_label(form.lastname, 'Your Last Name:') }}
+    {{ form_errors(form.lastname) }}
+    {{ form_widget(form.lastname) }}
+</div>
+
+<div>
+    {{ form_label(form.dateofbirth) }}
+    {{ form_errors(form.dateofbirth) }}
+    {{ form_widget(form.dateofbirth) }}
+</div>
+<div>
+    {{ form_label(form.task, 'Task Description') }}
+    {{ form_errors(form.task) }}
+    {{ form_widget(form.task, {'attr': {'class': 'task_field'}}) }}
+</div>
+
+{#
+    {{ form_row(form.firstname) }}
+    {{ form_row(form.lastname) }}
+    {{ form_row(form.dateofbirth) }} 
+#}
+{{ form_end(form) }}

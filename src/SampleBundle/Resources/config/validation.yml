@@ -1,0 +1,10 @@
+# src/SampleBundle/Resources/config/validation.yml
+SampleBundle\Entity\Task:
+    properties:
+        task:
+            - NotBlank: ~
+        dueDate:
+            - NotBlank: ~
+            - Type: \DateTime
+        firstname:
+            - NotBlank: ~

@@ -1,3 +1,12 @@
+acme_bundle_blog:
+    resource: "@AcmeBundleBlogBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+sample:
+    resource: "@SampleBundle/Resources/config/routing.yml"
+    prefix:   /
+
 app:
     resource: '@AppBundle/Controller/'
     type: annotation
@@ -11,4 +20,3 @@ lucky_number:
 lucky_hello:
     path: /lucky/hello/{name}
     defaults: {_controller: AppBundle:Lucky:hello}
-

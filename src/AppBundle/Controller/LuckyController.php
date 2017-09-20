@@ -6,24 +6,26 @@ namespace AppBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 
 class LuckyController extends Controller
 {
     /**
      *  @Route("/lucky/hello/{name}", name="lucky_hello")
      */
-    public function helloAction($name)
+    public function helloAction($name, Request $request)
     {
         $number = "Hello " . ucfirst($name);
+        // echo $request->getRequestUri();
         // return $this->render('lucky/number.html.twig', array(
         //     'number' => $number,
         // ));
         // $number = $this->json(array('username' => $name));
-        // return $this->redirectToRoute('lucky_number');
+        return $this->redirectToRoute('lucky_number');
 
-        return new Response(
-            '<html><body>'.$number.'</body></html>'
-        );
+        // return new Response(
+        //     '<html><body>'.$number.'</body></html>'
+        // );
     }
 
     /**
@@ -35,9 +37,9 @@ class LuckyController extends Controller
         return $this->render('lucky/number.html.twig', array(
             'number' => $number,
         ));
-        return new Response(
-            '<html><body>'.$number.'</body></html>'
-        );
+//        return new Response(
+//            '<html><body>'.$number.'</body></html>'
+//        );
     }
 
     /**
