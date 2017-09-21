@@ -10,6 +10,15 @@ class Task
     protected $firstname;
     protected $lastname;
     protected $dateofbirth;
+    protected $email;
+    protected $gender;
+    protected $bloodgroup;
+    protected $course;
+    protected $stream;
+    protected $college;
+    protected $location;
+    protected $areaofinterest;
+    protected $mobilenumber;
 
     public function getTask()
     {
@@ -60,4 +69,105 @@ class Task
     {
         $this->dateofbirth = $dateofbirth;
     }
+
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    public function getGender()
+    {
+        return $this->gender;
+    }
+
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+    }
+
+    public function getBloodGroup()
+    {
+        return $this->bloodgroup;
+    }
+
+    public function setBloodGroup($bloodgroup)
+    {
+        $this->bloodgroup = $bloodgroup;
+    }
+
+    public function getCourse()
+    {
+        return $this->course;
+    }
+
+    public function setCourse($course)
+    {
+        $this->course = $course;
+    }
+
+    public function getStream()
+    {
+        return $this->stream;
+    }
+
+    public function setStream($stream)
+    {
+        $this->stream = $stream;
+    }
+
+    public function getCollege()
+    {
+        return $this->college;
+    }
+
+    public function setCollege($college)
+    {
+        $this->college = $college;
+    }
+
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    public function setLocation($location)
+    {
+        $this->location = $location;
+    }
+
+
+    public function getMobileNumber()
+    {
+        return $this->mobilenumber;
+    }
+
+    public function setMobileNumber($mobilenumber)
+    {
+        $this->mobilenumber = $mobilenumber;
+    }
+
+    public function getAreaOfInterest()
+    {
+        return $this->areaofinterest;
+    }
+
+    public function setAreaOfInterest($areaofinterest)
+    {
+        $this->areaofinterest = $areaofinterest;
+    }
+
+    // public function get()
+    // {
+    //     return $this->;
+    // }
+
+    // public function set()
+    // {
+    //     $this->
+    // }
 }

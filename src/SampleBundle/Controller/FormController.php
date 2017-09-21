@@ -7,6 +7,9 @@ use SampleBundle\Entity\Task;
 use SampleBundle\Form\TaskType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class FormController extends Controller
 {
@@ -20,7 +23,7 @@ class FormController extends Controller
     //     $form = $this->createFormBuilder($task)
     //         ->add('task', TextType::class)
     //         ->add('dueDate', DateType::class)
-    //         ->add('save', SubmitType::class, array('label' => 'Create Post'))
+    //         ->add('save', SubmitType::class, array('label' => 'Post'))
     //         ->getForm();
 
     //     return $this->render('SampleBundle:Default:new.html.twig', array(
@@ -62,6 +65,27 @@ class FormController extends Controller
     public function successAction()
     {
         // echo "Form was submitted successfully!";
-        return $this->render('SampleBundle:form:success.html.twig');
+        return $this->render('@Sample/Default/link.html.twig');
+    }
+
+    public function userAction()
+    {
+        $users = [
+            [
+                "name" => "Molecule Man",
+                "age" => 29,
+            ],
+            [
+                "name" => "Karthikeyan",
+                "age" => 21,
+            ],
+            [
+                "name" => "Aadhil Ahmed",
+                "age" => 22,
+            ],
+        ];
+        return $this->render('SampleBundle:Default:user.html.twig', array(
+            'users' => $users,
+        ));
     }
 }

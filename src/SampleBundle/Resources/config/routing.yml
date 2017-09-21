@@ -13,3 +13,8 @@ form_create:
 form_success:
   path: /form/success
   defaults: { _controller: SampleBundle:Form:success }
+
+form_users:
+  path: /users/display
+  defaults: { _controller: SampleBundle:Form:user }
+
