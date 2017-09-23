@@ -1,0 +1,115 @@
+{# empty Twig template #}
+
+{# src/UserManagementBundle/Resources/views/user/new.html.twig #}
+
+{# {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }} #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+  
+<div>
+    {{ form_label(form.firstname) }}    
+    {{ form_errors(form.firstname) }}
+    {{ form_widget(form.firstname) }}
+</div>
+
+<div>
+    {{ form_label(form.lastname) }}
+    {{ form_widget(form.lastname) }}
+    {{ form_errors(form.lastname) }}
+</div>
+{#<div>
+    {{ form_label(form.emails) }}
+    {% for emailField in form.emails %}
+        {{ form_errors(form.emailField) }}
+        {{ form_widget(form.emailField) }}
+    {% endfor %}
+</div>#}
+<div>
+        {{ form_label(form.emails) }}
+        
+    <ul id="email-fields-list"
+        data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}">
+        {% for emailField in form.emails %}
+            <li>
+                {{ form_widget(emailField) }}
+                {{ form_errors(emailField) }}
+
+            </li>
+        {% endfor %}
+    </ul>
+
+    <a href="#" id="add-another-email">Add another email</a>
+</div>
+<div>
+    {{ form_label(form.mobilenumber) }}
+    {{ form_widget(form.mobilenumber) }}
+    {{ form_errors(form.mobilenumber) }}
+</div>
+<div>
+    {{ form_label(form.gender) }}
+    {{ form_widget(form.gender) }}
+    {{ form_errors(form.gender) }}
+</div>
+<div>
+    {{ form_label(form.bloodgroup) }}
+    {{ form_widget(form.bloodgroup) }}
+    {{ form_errors(form.bloodgroup) }}
+</div>
+<div>
+    {{ form_label(form.areaofinterest) }}
+    {{ form_widget(form.areaofinterest) }}
+    {{ form_errors(form.areaofinterest) }}
+</div>
+<div>
+    {{ form_label(form.dateofbirth) }}
+    {{ form_widget(form.dateofbirth) }}
+    {{ form_errors(form.dateofbirth) }}
+</div>
+
+<div>
+    <p> Graduation: </p>
+    <div>
+    {{ form_label(form.course) }}
+    {{ form_widget(form.course) }}
+    {{ form_errors(form.course) }}
+    </div>
+    <div>
+    {{ form_label(form.stream) }}
+    {{ form_widget(form.stream) }}
+    {{ form_errors(form.stream) }}
+    </div>
+    <div>
+    {{ form_label(form.college) }}
+    {{ form_widget(form.college) }}
+    {{ form_errors(form.college) }}
+    </div>
+    <div>
+    {{ form_label(form.location) }}
+    {{ form_widget(form.location) }}
+    {{ form_errors(form.location) }}
+    </div>
+</div>
+
+{{ form_end(form) }}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+        
+    </script>
+    <script src="{{ asset('bundles/usermanagement/js/addField.js') }}">
+    </script>
+    
+{% endblock %}
+{% block stylesheets %}
+{#    <link rel="stylesheet" #}
+{#          href="{{ asset('bundles/usermanagement/css/main.css') }}">#}
+{% endblock %}
+
+{#<div>
+    {{ form_label(form.) }}
+    {{ form_widget(form.) }}
+    {{ form_errors(form.) }}
+</div>
+#}

@@ -1,0 +1,7 @@
+user_management_homepage:
+    path:     /
+    defaults: { _controller: UserManagementBundle:Default:index }
+
+user_management_form:
+    path: /users/new
+    defaults: { _controller: UserManagementBundle:User:form }

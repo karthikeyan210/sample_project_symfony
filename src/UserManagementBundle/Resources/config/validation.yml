@@ -1,0 +1,12 @@
+# src/UserManagementBundle/Resources/config/validation.yml
+UserManagementBundle\Entity\Task:
+    properties:
+        firstname:
+            - NotBlank:
+                message: Should Enter First Name.
+#        emails:
+#            - NotBlank: ~
+#            - Email:
+#                message: The email "{{ value }}" is not a valid email.
+        dateofbirth:
+            - Date: ~

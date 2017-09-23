@@ -1,6 +1,5 @@
-acme_bundle_blog:
-    resource: "@AcmeBundleBlogBundle/Controller/"
-    type:     annotation
+user_management:
+    resource: "@UserManagementBundle/Resources/config/routing.yml"
     prefix:   /
 
 sample:

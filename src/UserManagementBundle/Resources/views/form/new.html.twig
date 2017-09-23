@@ -1,0 +1,263 @@
+{# {% form_theme form 'form/fields.html.twig' %} #}
+
+{# src/UserManagementBundle/Resources/views/default/new.html.twig #}
+
+{# {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }} #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{{ form_start(form, { 'attr' : { 'novalidate' : 'novalidate' }}) }}
+<table>
+
+    <tr>
+        <td>
+            {{ form_label(form.firstname) }}
+        </td>
+        <td>
+            {{ form_widget(form.firstname) }}
+            {{ form_errors(form.firstname) }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.lastname) }}
+        </td>
+        <td>
+            {{ form_widget(form.lastname) }}
+            {{ form_errors(form.lastname) }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.mobilenumber) }}
+        </td>
+        <td>
+            {{ form_widget(form.mobilenumber) }}
+            {{ form_errors(form.mobilenumber) }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.gender) }}
+        </td>
+        <td>
+            {{ form_widget(form.gender) }}
+            {{ form_errors(form.gender) }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.bloodgroup) }}
+        </td>
+        <td>
+            {{ form_widget(form.bloodgroup) }}
+            {{ form_errors(form.bloodgroup) }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.dateofbirth) }}
+        </td>
+        <td>
+            {{ form_widget(form.dateofbirth) }}
+            {{ form_errors(form.dateofbirth) }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.areaofinterest) }}
+        </td>
+        <td>
+            {{ form_widget(form.areaofinterest) }}
+            {{ form_errors(form.areaofinterest) }}
+        </td>
+    </tr>
+
+{#<div>
+    {{ form_label(form.lastname) }}
+    {{ form_errors(form.lastname) }}
+    {{ form_widget(form.lastname) }}
+</div>#}
+<tr>
+    <td>
+        {{ form_label(form.emails) }}
+    </td>
+    <td>
+        
+    <ul id="email-fields-list"
+        data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}">
+        {% for emailField in form.emails %}
+            <li>
+                {{ form_widget(emailField) }}
+                {{ form_errors(emailField) }}
+
+            </li>
+        {% endfor %}
+    </ul>
+    </td>
+</tr>
+<tr>
+    <td></td>
+    <td>
+    <a href="#" id="add-another-email">Add another email</a>
+    </td>
+</tr>
+{#</div>
+<div>
+    {{ form_label(form.mobilenumber) }}
+    {{ form_widget(form.mobilenumber) }}
+    {{ form_errors(form.mobilenumber) }}
+</div>
+<div>
+    {{ form_label(form.gender) }}
+    {{ form_widget(form.gender) }}
+    {{ form_errors(form.gender) }}
+</div>
+<div>
+    {{ form_label(form.bloodgroup) }}
+    {{ form_widget(form.bloodgroup) }}
+    {{ form_errors(form.bloodgroup) }}
+</div>
+<div>
+    {{ form_label(form.areaofinterest) }}
+    {{ form_widget(form.areaofinterest) }}
+    {{ form_errors(form.areaofinterest) }}
+</div>
+<div>
+    {{ form_label(form.dateofbirth) }}
+    {{ form_widget(form.dateofbirth) }}
+    {{ form_errors(form.dateofbirth) }}
+</div>#}
+
+<tr>
+    <td>
+    <p> Graduation: </p>
+    </td>
+    <td>
+    </td>
+</tr>
+<tr>
+    <td>
+    {{ form_label(form.course) }}
+    </td>
+    <td>
+    {{ form_widget(form.course) }}
+    {{ form_errors(form.course) }}
+    </td>
+</tr>
+<tr>
+    <td>
+    {{ form_label(form.stream) }}
+    </td>
+    <td>
+    {{ form_widget(form.stream) }}
+    {{ form_errors(form.stream) }}
+    </td>
+</tr>
+<tr>
+    <td>
+    {{ form_label(form.college) }}
+    </td>
+    <td>
+    {{ form_widget(form.college) }}
+    {{ form_errors(form.college) }}
+    </td>
+</tr>
+<tr>
+    <td>
+    {{ form_label(form.location) }}
+    </td>
+    <td>
+    {{ form_widget(form.location) }}
+    {{ form_errors(form.location) }}
+    </td>
+</tr>
+    
+
+</table>
+
+{#
+<div>
+    {{ form_label(form.emails) }}
+    {{ form_errors(form.emails) }}
+    {{ form_widget(form.emails) }}
+</div>
+<div>
+    {{ form_row(form.mobilenumber) }}
+</div>
+<div>
+    {{ form_row(form.gender) }}
+</div>
+<div>
+    {{ form_row(form.bloodgroup) }}
+</div>
+
+<div>
+    {{ form_row(form.areaofinterest) }}
+</div>
+<div>
+    {{ form_row(form.dateofbirth) }}
+</div>
+<div>
+    <p> Graduation: </p>
+    <div>
+        {{ form_row(form.course) }}
+    </div>
+    <div>
+        {{ form_row(form.stream) }}
+    </div>
+    <div>
+        {{ form_row(form.college) }}
+    </div>
+    <div>
+        {{ form_row(form.location) }}
+    </div>
+</div>
+#}
+
+
+{#
+<div>
+    {{ form_label(form.dateofbirth) }}
+    {{ form_errors(form.dateofbirth) }}
+    {{ form_widget(form.dateofbirth) }}
+</div>
+
+    {{ form_row(form.firstname) }}
+    {{ form_row(form.lastname) }}
+    {{ form_row(form.dateofbirth) }} 
+#}
+{{ form_end(form) }}
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+        
+    </script>
+    <script>
+        var emailCount = '{{ form.emails|length }}';
+    console.log(emailCount);
+    var addEmail = document.getElementById('add-another-email');
+    console.log(addEmail);
+    addEmail.onclick = function() { addEmailId(); };
+    function addEmailId()
+    {
+        console.log(emailCount);
+        var emailList = document.getElementById('email-fields-list');
+        console.log(emailList);
+        var emailWidget = emailList.getAttribute('data-prototype');
+        console.log(emailWidget);
+        emailWidget = emailWidget.replace(/__name__/g,emailCount);
+        emailCount++;
+        var newLi = document.createElement("li");
+{#        var text = documen(emailWidget);#}
+{#        newLi.appendChild(emailWidget);#}
+        console.log(newLi);
+        emailList.appendChild(newLi);
+{#        var newLi = jQuery('<li></li>').html(newWidget);#}
+
+    }
+    </script>
+    
+{% endblock %}
