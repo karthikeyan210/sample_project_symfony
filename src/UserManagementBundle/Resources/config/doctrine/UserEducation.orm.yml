@@ -1,0 +1,48 @@
+UserManagementBundle\Entity\UserEducation:
+    type: entity
+    table: user_education
+    indexes:
+        user_id_idx:
+            columns:
+                - user_id
+        graduation_id_idx:
+            columns:
+                - edu_type_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        institute:
+            type: string
+            nullable: false
+            length: 45
+            options:
+                fixed: false
+    manyToOne:
+        eduType:
+            targetEntity: EducationType
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                edu_type_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        user:
+            targetEntity: User
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: education
+            joinColumn:
+                    name: user_id
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,115 +1,195 @@
-{# empty Twig template #}
+{# src/UserManagementBundle/Resources/views/form/new.html.twig #}
 
-{# src/UserManagementBundle/Resources/views/user/new.html.twig #}
-
-{# {{ form(form, {'attr': {'novalidate': 'novalidate'}}) }} #}
 {% extends 'base.html.twig' %}
 
 {% block body %}
+{{ form_start(form, { 'attr' : { 'novalidate' : 'novalidate' }}) }}
+<table>
+    <tr>
+        <td>
+            {{ form_label(form.username) }}
+        </td>
+        <td>
+            {{ form_widget(form.username) }}
+            {{ form_errors(form.username) }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.firstname) }}
+        </td>
+        <td>
+            {{ form_widget(form.firstname) }}
+            {{ form_errors(form.firstname) }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.lastname) }}
+        </td>
+        <td>
+            {{ form_widget(form.lastname) }}
+            {{ form_errors(form.lastname) }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.gender) }}
+        </td>
+        <td>
+            {{ form_widget(form.gender) }}
+            {{ form_errors(form.gender) }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.blood) }}
+        </td>
+        <td>
+            {{ form_widget(form.blood) }}
+            {{ form_errors(form.blood) }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.dob) }}
+        </td>
+        <td>
+            {{ form_widget(form.dob) }}
+            {{ form_errors(form.dob) }}
+        </td>
+    </tr>
   
-<div>
-    {{ form_label(form.firstname) }}    
-    {{ form_errors(form.firstname) }}
-    {{ form_widget(form.firstname) }}
-</div>
+    <tr>
+        <td>
+            {{ form_label(form.emails) }}
+        </td>
+        <td>
 
-<div>
-    {{ form_label(form.lastname) }}
-    {{ form_widget(form.lastname) }}
-    {{ form_errors(form.lastname) }}
-</div>
-{#<div>
-    {{ form_label(form.emails) }}
-    {% for emailField in form.emails %}
-        {{ form_errors(form.emailField) }}
-        {{ form_widget(form.emailField) }}
-    {% endfor %}
-</div>#}
-<div>
-        {{ form_label(form.emails) }}
-        
-    <ul id="email-fields-list"
-        data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}">
-        {% for emailField in form.emails %}
-            <li>
-                {{ form_widget(emailField) }}
-                {{ form_errors(emailField) }}
+        <ul id="email-fields-list"
+            data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}">
+            {% for emailField in form.emails %}
+                <li>
+                    {{ form_widget(emailField) }}
+                    {{ form_errors(emailField) }}
 
-            </li>
-        {% endfor %}
-    </ul>
+                </li>
+            {% endfor %}
+        </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        <a href="#" id="add-another-email" onclick="addField('email-fields-list')">Add another email</a>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.mobileNumbers) }}
+        </td>
+        <td>
 
-    <a href="#" id="add-another-email">Add another email</a>
-</div>
-<div>
-    {{ form_label(form.mobilenumber) }}
-    {{ form_widget(form.mobilenumber) }}
-    {{ form_errors(form.mobilenumber) }}
-</div>
-<div>
-    {{ form_label(form.gender) }}
-    {{ form_widget(form.gender) }}
-    {{ form_errors(form.gender) }}
-</div>
-<div>
-    {{ form_label(form.bloodgroup) }}
-    {{ form_widget(form.bloodgroup) }}
-    {{ form_errors(form.bloodgroup) }}
-</div>
-<div>
-    {{ form_label(form.areaofinterest) }}
-    {{ form_widget(form.areaofinterest) }}
-    {{ form_errors(form.areaofinterest) }}
-</div>
-<div>
-    {{ form_label(form.dateofbirth) }}
-    {{ form_widget(form.dateofbirth) }}
-    {{ form_errors(form.dateofbirth) }}
-</div>
+        <ul id="mobile-numbers-list"
+            data-prototype="{{ form_widget(form.mobileNumbers.vars.prototype)|e }}">
+            {% for mobileField in form.mobileNumbers %}
+                <li>
+                    {{ form_widget(mobileField) }}
+                    {{ form_errors(mobileField) }}
 
-<div>
-    <p> Graduation: </p>
-    <div>
-    {{ form_label(form.course) }}
-    {{ form_widget(form.course) }}
-    {{ form_errors(form.course) }}
-    </div>
-    <div>
-    {{ form_label(form.stream) }}
-    {{ form_widget(form.stream) }}
-    {{ form_errors(form.stream) }}
-    </div>
-    <div>
-    {{ form_label(form.college) }}
-    {{ form_widget(form.college) }}
-    {{ form_errors(form.college) }}
-    </div>
-    <div>
-    {{ form_label(form.location) }}
-    {{ form_widget(form.location) }}
-    {{ form_errors(form.location) }}
-    </div>
-</div>
+                </li>
+            {% endfor %}
+        </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        <a href="#" id="add-another-number" onclick="addField('mobile-numbers-list')">Add another Number</a>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.education) }}
+        </td>
+        <td>
+
+        <ul id="education-list"
+            data-prototype="{{ form_widget(form.education.vars.prototype)|e }}">
+            {% for edu in form.education %}
+                <li>
+                    {{ form_widget(edu.eduType.type) }}
+                    {{ form_errors(edu.eduType.type) }}
+                    {{ form_widget(edu.institute) }}
+                    {{ form_errors(edu.institute) }}
+                </li>
+            {% endfor %}
+        </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        <a href="#" id="add-another-education" onclick="addField('education-list')">Add another Education</a>
+        </td>
+        <td></td>
+    </tr>
+    
+    <tr>
+        <td>
+            {{ form_label(form.interests) }}
+        </td>
+        <td>
+
+        <ul id="interests-list"
+            data-prototype="{{ form_widget(form.interests.vars.prototype)|e }}">
+            {% for interestfield in form.interests %}
+                <li>
+                    {{ form_widget(interestfield.interest.name) }}
+                    {{ form_errors(interestfield.interest.name) }}
+                </li>
+            {% endfor %}
+        </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        <a href="#" id="add-another-interest" onclick="addField('interests-list')">Add another interest</a>
+        </td>
+        <td></td>
+    </tr>
+    </table>
 
 {{ form_end(form) }}
 {% endblock %}
+
 
 {% block javascripts %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
         
     </script>
-    <script src="{{ asset('bundles/usermanagement/js/addField.js') }}">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script src="{{ asset('bundles/usermanagement/js/addRemoveField.js') }}">    
+    </script>
+    <script>
+        $(document).ready(function() {
+            var today = new Date();
+            var currentYear = today.getFullYear();
+            //var rangeLimit = currentYear-18;
+            $( ".js-datepicker" ).datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '1980:'+currentYear,
+            });
+        });
     </script>
     
 {% endblock %}
 {% block stylesheets %}
-{#    <link rel="stylesheet" #}
-{#          href="{{ asset('bundles/usermanagement/css/main.css') }}">#}
+    <style>
+        .ui-datepicker {
+            background: #999;
+        }
+    </style>
 {% endblock %}
-
-{#<div>
-    {{ form_label(form.) }}
-    {{ form_widget(form.) }}
-    {{ form_errors(form.) }}
-</div>
-#}
+        

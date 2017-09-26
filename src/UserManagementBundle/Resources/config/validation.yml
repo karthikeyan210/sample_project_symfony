@@ -1,12 +1,53 @@
 # src/UserManagementBundle/Resources/config/validation.yml
 UserManagementBundle\Entity\Task:
     properties:
+        username:
+            - NotBlank:
+                message: Should Enter First Name.
+            - Regex:
+                pattern: '/\d/'
+                match:   false
+                message: Your name cannot contain a number
         firstname:
             - NotBlank:
                 message: Should Enter First Name.
+            - Regex:
+                pattern: '/\d/'
+                match:   false
+                message: Your name cannot contain a number
 #        emails:
 #            - NotBlank: ~
 #            - Email:
 #                message: The email "{{ value }}" is not a valid email.
         dateofbirth:
             - Date: ~
+        lastname:
+#            - Required: false
+            - Regex:
+                pattern: '/\d/'
+                match:   false
+                message: Your name cannot contain a number
+        emails:
+#        mobilenumber:
+#            -collection:
+#                fields:
+#                    *:
+#                        - NotBlank: 
+#                            message: Enter Mobile Number
+#                        - Regex: 
+#                            pattern: '/^[9|8|7][0-9]{9}$/'
+#                            match: true
+#                            message: Your Number should start at 9 or 8 or 7.
+
+                
+        gender:
+            - Choice:
+                choices:  [male, female]
+                message:  Choose a valid gender.
+                min: 1
+            
+            
+        bloodgroup:
+        areaofinterest:
+        course:
+            

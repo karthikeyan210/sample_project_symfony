@@ -5,6 +5,7 @@ namespace UserManagementBundle\Entity;
 
 class Task
 {
+    protected $username;
     protected $task;
     protected $dueDate;
     protected $firstname;
@@ -19,7 +20,11 @@ class Task
     protected $location;
     protected $areaofinterest;
     protected $mobilenumber;
-
+    public function __toString() 
+    {
+        return serialize($this);
+        
+    }
     public function getTask()
     {
         return $this->task;
@@ -159,6 +164,16 @@ class Task
     public function setAreaOfInterest($areaofinterest)
     {
         $this->areaofinterest = $areaofinterest;
+    }
+    
+    public function getUserName()
+    {
+        return $this->username;
+    }
+
+    public function setUserName($username)
+    {
+        $this->username = $username;
     }
 
     // public function get()

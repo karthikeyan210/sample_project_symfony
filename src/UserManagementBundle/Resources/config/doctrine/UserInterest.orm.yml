@@ -1,0 +1,41 @@
+UserManagementBundle\Entity\UserInterest:
+    type: entity
+    table: user_interest
+    indexes:
+        user_id_idx:
+            columns:
+                - user_id
+        interest_id_idx:
+            columns:
+                - interest_id
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: false
+            id: true
+            generator:
+                strategy: IDENTITY
+    manyToOne:
+        interest:
+            targetEntity: Interest
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                interest_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        user:
+            targetEntity: User
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: interests
+            joinColumn:
+                    name: user_id
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -18,3 +18,11 @@ form_users:
   path: /users/display
   defaults: { _controller: SampleBundle:Form:user }
 
+task_new:
+    path: task/new
+    defaults: { _controller: SampleBundle:Task:new }
+    
+product_create:
+    path: product/create
+    defaults: { _controller: SampleBundle:Product:createProduct }
+    

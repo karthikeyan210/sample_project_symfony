@@ -1,0 +1,111 @@
+UserManagementBundle\Entity\User:
+    type: entity
+    table: user
+    indexes:
+        blood_id_idx:
+            columns:
+                - blood_id
+        dob_index:
+            columns:
+                - dob
+        gender_id_idx:
+            columns:
+                - gender_id
+    uniqueConstraints:
+        username:
+            columns:
+                - username
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        username:
+            type: string
+            nullable: false
+            length: 45
+            options:
+                fixed: false
+        firstname:
+            type: string
+            nullable: false
+            length: 45
+            options:
+                fixed: false
+        lastname:
+            type: string
+            nullable: true
+            length: 45
+            options:
+                fixed: false
+        dob:
+            type: date
+            nullable: false
+    manyToOne:
+        blood:
+            targetEntity: BloodGroup
+            cascade: ["persist"]
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                blood_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        gender:
+            targetEntity: Gender
+            cascade: ["persist"]
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: null
+            joinColumns:
+                gender_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    oneToMany:
+        emails:
+            targetEntity: UserEmail
+            cascade: ["persist"]
+            fetch: LAZY
+            mappedBy: user
+            inversedBy: null
+            joinColumns:
+                email_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        mobileNumbers:
+            targetEntity: UserPhone
+            cascade: ["persist"]
+            fetch: LAZY
+            mappedBy: user
+            inversedBy: null
+            joinColumns:
+                mobilenumber_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        education:
+            targetEntity: UserEducation
+            cascade: ["persist"]
+            fetch: LAZY
+            mappedBy: user
+            inversedBy: null
+            joinColumns:
+                education_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+        interests:
+            targetEntity: UserInterest
+            cascade: ["persist"]
+            fetch: LAZY
+            mappedBy: user
+            inversedBy: null
+            joinColumns:
+                interest_id:
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

@@ -1,0 +1,28 @@
+UserManagementBundle\Entity\EducationType:
+    type: entity
+    table: education_type
+    indexes:
+        graduation_index:
+            columns:
+                - type
+    uniqueConstraints:
+        name:
+            columns:
+                - type
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        type:
+            type: string
+            nullable: false
+            length: 45
+            options:
+                fixed: false
+    lifecycleCallbacks: {  }

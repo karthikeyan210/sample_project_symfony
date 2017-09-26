@@ -1,0 +1,38 @@
+UserManagementBundle\Entity\UserPhone:
+    type: entity
+    table: user_phone
+    indexes:
+        user_id_idx:
+            columns:
+                - user_id
+    uniqueConstraints:
+        mobile_no_index:
+            columns:
+                - number
+    id:
+        id:
+            type: integer
+            nullable: false
+            options:
+                unsigned: true
+            id: true
+            generator:
+                strategy: IDENTITY
+    fields:
+        number:
+            type: bigint
+            nullable: false
+            options:
+                unsigned: false
+    manyToOne:
+        user:
+            targetEntity: User
+            cascade: {  }
+            fetch: LAZY
+            mappedBy: null
+            inversedBy: mobileNumbers
+            joinColumn:
+                    name: user_id
+                    referencedColumnName: id
+            orphanRemoval: false
+    lifecycleCallbacks: {  }

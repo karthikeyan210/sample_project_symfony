@@ -19,15 +19,29 @@ class TaskType extends AbstractType
         $builder
             ->add('firstname', TextType::class)
             ->add('lastname', TextType::class)
-            ->add('dateofbirth', DateType::class)
+            ->add('dateofbirth', DateType::class, array(
+                'widget' => 'single_text',
+                'html5' => false,
+                'attr' => ['class' => 'js-datepicker'],
+                'format' => 'mm-dd-yyyy',
+            ))
 //            ->add('email', EmailType::class)
             ->add('emails', CollectionType::class, array(
                 'entry_type'   => EmailType::class,
                 'entry_options'  => array(
-                    'attr'      => array('class' => 'email-box'),
+                    'attr'      => array('class' => 'email-id'),
                 ),
                 'allow_add' => true,
+                'allow_delete' => true,
              ))
+            ->add('mobilenumber', CollectionType::class, array(
+                'entry_type'   => TextType::class,
+                'entry_options'  => array(
+                    'attr'      => array('class' => 'mobile-no'),
+                ),
+                'allow_add' => true,
+                'allow_delete' => true
+            ))
             ->add('gender', ChoiceType::class, array(
     		'choices'  => array(
                     'male' => 'male',
@@ -57,13 +71,12 @@ class TaskType extends AbstractType
                     'UG' => 'ug',
                     'PG' => 'pg',
                 ), 
-                'expanded' => false,
-                'multiple' => false,
+                'expanded' => true,
+                'multiple' => true,
                 ))
-            ->add('stream', TextType::class)
-            ->add('college', TextType::class)
-            ->add('location', TextType::class)
-            ->add('mobilenumber', TextType::class)
+//            ->add('stream', TextType::class)
+//            ->add('college', TextType::class)
+//            ->add('location', TextType::class)
             ->add('areaofinterest', ChoiceType::class, array(
                 'choices'  => array(
                     'playing' => 'playing',
@@ -73,6 +86,7 @@ class TaskType extends AbstractType
                 'expanded' => true,
                 'multiple' => true,
                 ))
+            ->add('username', TextType::class)
             ->add('save', SubmitType::class, array('label' => 'Submit'))
         ;
     }
