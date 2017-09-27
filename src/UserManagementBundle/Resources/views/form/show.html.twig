@@ -1,0 +1,89 @@
+{# empty Twig template #}
+<table border = "2">
+    {#<tr>
+        <th>Id</th>
+        <th>UserName</th>
+        <th>FirstName</th>
+        <th>LastName</th> 
+        <th>DOB</th>
+        <th>BloodGroup</th>
+        <th>Gender</th>
+        <th>Emails</th>
+        <th>MobileNumbers</th>
+        <th>Education-Institute</th>
+        <th>Interests</th>
+        <th>Modify</th>
+    </tr>#}
+    <tr>  
+        <th>Id</th>
+        <td>{{ user.id }}</td>
+    </tr>
+    <tr>
+        <th>UserName</th>
+        <td>{{ user.username }}</td>
+    </tr>
+    <tr>
+        <th>FirstName</th>
+        <td>{{ user.firstname }}</td>   
+    </tr>
+    <tr>
+        <th>LastName</th> 
+        <td>{{ user.lastname }}</td>
+    </tr>
+    <tr>
+        <th>DOB</th>
+        <td>{{ user.dob|date('Y-m-d') }}</td>
+    </tr>
+    <tr>
+        <th>BloodGroup</th>
+        <td>{{ user.blood }}</td>
+    </tr>
+    <tr>
+        <th>Gender</th>
+        <td>{{ user.gender }}</td>
+    </tr>
+    <tr>
+        <th>Emails</th>
+        <td>
+            {% for email in user.emails %}
+                {{ email.emailAddr}}
+                <br/>
+            {% endfor %}
+        </td>
+    </tr>
+    <tr>
+        <th>MobileNumbers</th>
+        <td>
+            {% for mobilenumber in user.mobilenumbers %}
+                {{ mobilenumber.number }}
+                <br/>
+            {% endfor %}
+        </td>
+    </tr>
+    <tr>
+        <th>Education-Institute</th>
+        <td>
+            {% for edu in user.education %}
+                {{ edu.eduType }}-{{ edu.institute }}
+                <br/>
+            {% endfor %}
+        </td>
+    </tr>
+    <tr>
+        <th>Interests</th>
+        <td>
+            {% for area in user.interests %}
+                {{ area.interest }}
+                <br/>
+            {% endfor %}
+        </td>
+    </tr>
+    <tr>
+        <th>Modify</th>
+        <td><input type="button" value="Edit"
+                   onclick="location.href='/users/edit/{{user.id}}';" >
+        </td>
+    </tr>
+</table>
+    
+    

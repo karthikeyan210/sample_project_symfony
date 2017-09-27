@@ -5,3 +5,23 @@ user_management_homepage:
 user_management_form:
     path: /users/new
     defaults: { _controller: UserManagementBundle:User:form }
+
+user_management_list:
+    path: /users/
+    defaults: { _controller: UserManagementBundle:User:list }
+
+user_management_list:
+    path: /users
+    defaults: { _controller: UserManagementBundle:User:list }
+
+user_management_show:
+    path: /users/{id}
+    defaults: { _controller: UserManagementBundle:User:show, id : 1 }
+    requirements:
+      id: '\d+'
+      
+user_management_edit:
+    path: /users/edit/{id}
+    defaults: { _controller: UserManagementBundle:User:edit, id : 1 }
+    requirements:
+      id: '\d+'

@@ -10,7 +10,7 @@
             {{ form_label(form.username) }}
         </td>
         <td>
-            {{ form_widget(form.username, {'value' : 'Default title'}) }}
+            {{ form_widget(form.username, {'value' : user.username }) }}
             {{ form_errors(form.username) }}
         </td>
     </tr>
@@ -19,7 +19,7 @@
             {{ form_label(form.firstname) }}
         </td>
         <td>
-            {{ form_widget(form.firstname) }}
+            {{ form_widget(form.firstname, {'value' : user.firstname }) }}
             {{ form_errors(form.firstname) }}
         </td>
     </tr>
@@ -28,7 +28,7 @@
             {{ form_label(form.lastname) }}
         </td>
         <td>
-            {{ form_widget(form.lastname) }}
+            {{ form_widget(form.lastname, {'value' : user.lastname }) }}
             {{ form_errors(form.lastname) }}
         </td>
     </tr>
@@ -37,7 +37,7 @@
             {{ form_label(form.gender) }}
         </td>
         <td>
-            {{ form_widget(form.gender) }}
+            {{ form_widget(form.gender, {'value' : user.gender.name }) }}
             {{ form_errors(form.gender) }}
         </td>
     </tr>
@@ -46,7 +46,7 @@
             {{ form_label(form.blood) }}
         </td>
         <td>
-            {{ form_widget(form.blood) }}
+            {{ form_widget(form.blood, {'value' : user.blood.name }) }}
             {{ form_errors(form.blood) }}
         </td>
     </tr>
@@ -55,7 +55,7 @@
             {{ form_label(form.dob) }}
         </td>
         <td>
-            {{ form_widget(form.dob) }}
+            {{ form_widget(form.dob, {'value' : user.dob| date('Y-m-d') }) }}
             {{ form_errors(form.dob) }}
         </td>
     </tr>

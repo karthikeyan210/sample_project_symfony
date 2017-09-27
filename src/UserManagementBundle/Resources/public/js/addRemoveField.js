@@ -10,17 +10,18 @@ function addField(ulFieldId)
     newLi.innerHTML = fieldWidget;
     if (fieldCount != 1) {
         var removeButton = document.createElement('input');
-        removeButton.setAttribute("type","button");
-        removeButton.setAttribute("value","X");
-        removeButton.onclick = function() { removeField(this,ulField); };
+        removeButton.setAttribute("type", "button");
+        removeButton.setAttribute("value", "X");
+        removeButton.setAttribute('class', 'remove_button')
+        removeButton.onclick = function() { removeField(this); };
         newLi.appendChild(removeButton);
     }
     ulField.appendChild(newLi);
     console.log(fieldCount);
 }
 
-function removeField(removeLink, ulField)
+function removeField(removeLink)
 {
-    console.log(ulField.children.length, removeLink.parentElement);
+    console.log(removeLink.parentElement);
     removeLink.parentElement.remove();
 }
