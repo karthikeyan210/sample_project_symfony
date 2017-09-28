@@ -5,25 +5,16 @@ namespace UserManagementBundle\Controller;
 
 use UserManagementBundle\Entity\User;
 use UserManagementBundle\Form\UserType;
-use UserManagementBundle\Entity\UserEmail;
-use UserManagementBundle\Entity\UserPhone;
-use UserManagementBundle\Entity\UserInterest;
-use UserManagementBundle\Entity\UserEducation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+
 
 class UserController extends Controller
 {
     public function formAction(Request $request)
     {
-        // create a task and give it some dummy data for this example
         $user = new User();
-        $user->addEmail(new UserEmail());
-        $user->addEducation(new UserEducation());
-        $user->addInterest(new UserInterest());
-        $user->addMobileNumber(new UserPhone());
- 
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
 
@@ -32,9 +23,9 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            return new Response("User is saved. id=" .$user->getId());
+            return new Response($user->getId());
         }
-        return $this->render('UserManagementBundle:form:new.html.twig', array(
+        return $this->render('UserManagementBundle:user:new.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -44,35 +35,17 @@ class UserController extends Controller
         return $this->render('@UserManagement/Default/link.html.twig');
     }
     
-    public function listAction($page = 1)
+    public function listAction()
     {           
         $em = $this->getDoctrine()->getManager();
-        $users = $em->getRepository('UserManagementBundle:User')
-                    ->getAllUsers($page);
-//        $allUsers = $repo->findAll();
-//        $users = $repo->getAllUsers($page); // Returns 5 posts out of 20
-
-        # Total fetched (ie: `5` posts)
-        $totalUsersReturned = $users->getIterator()->count();
-        # Count of ALL posts (ie: `20` posts)
-        $totalUsers = $users->count();
-
-        # ArrayIterator
-        $iterator = $users->getIterator();
-
-        $limit = 5;
-        $maxPages = ceil($totalUsers / $limit);
-        $thisPage = $page;
-        // Pass through the 3 above variables to calculate pages in twig
-//        return $this->render('view.twig.html', compact('categories', 'maxPages', 'thisPage'));
-       return $this->render('UserManagementBundle:user:list.html.twig', array(
+        $repo = $em->getRepository('UserManagementBundle:User');
+        $users = $repo->findAll();
+        return $this->render('UserManagementBundle:form:list.html.twig', array(
             'users' => $users,
-            'maxPages' => $maxPages,
-           'thisPage' => $thisPage,
         ));
     }
-   
-    public function showAction($id = 2)
+    
+    public function showAction($id)
     {           
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('UserManagementBundle:User');
@@ -87,8 +60,8 @@ class UserController extends Controller
         ));
     }
     
-    public function editAction($id = 2, Request $request)
-    {           
+    public function editAction($id, Request $request)
+    {       
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('UserManagementBundle:User');
         $userProfile = $repo->find($id);
@@ -97,21 +70,21 @@ class UserController extends Controller
                 'No user found for id '.$id
             );
         }
-        
+//        if ($user == null) {
+//            echo "No user Found";
+//            die();
+//        }        
         $form = $this->createForm(UserType::class, $userProfile);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $userProfile = $form->getData();
             $em->flush();
-            return new Response("Updated the user Profile. id=" . $userProfile->getId());
+            return new Response($userProfile->getId());
         }
         
         return $this->render('UserManagementBundle:form:new.html.twig', array(
-            'user' => $userProfile,
             'form' => $form->createView(),
         ));
     }
-    
-    
 }

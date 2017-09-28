@@ -10,7 +10,7 @@
             {{ form_label(form.username) }}
         </td>
         <td>
-            {{ form_widget(form.username, {'value' : 'Default title'}) }}
+            {{ form_widget(form.username) }}
             {{ form_errors(form.username) }}
         </td>
     </tr>
@@ -118,8 +118,8 @@
             data-prototype="{{ form_widget(form.education.vars.prototype)|e }}">
             {% for edu in form.education %}
                 <li>
-                    {{ form_widget(edu.eduType.type) }}
-                    {{ form_errors(edu.eduType.type) }}
+                    {{ form_widget(edu.eduType) }}
+                    {{ form_errors(edu.eduType) }}
                     {{ form_widget(edu.institute) }}
                     {{ form_errors(edu.institute) }}
                 </li>
@@ -144,8 +144,8 @@
             data-prototype="{{ form_widget(form.interests.vars.prototype)|e }}">
             {% for interestfield in form.interests %}
                 <li>
-                    {{ form_widget(interestfield.interest.name) }}
-                    {{ form_errors(interestfield.interest.name) }}
+                    {{ form_widget(interestfield.interest) }}
+                    {{ form_errors(interestfield.interest) }}
                 </li>
             {% endfor %}
         </ul>

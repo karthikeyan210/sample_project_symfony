@@ -8,20 +8,20 @@ function addField(ulFieldId)
     fieldCount++;
     var newLi = document.createElement("li");
     newLi.innerHTML = fieldWidget;
-    if (fieldCount != 1) {
-        var removeButton = document.createElement('input');
-        removeButton.setAttribute("type", "button");
-        removeButton.setAttribute("value", "X");
-        removeButton.setAttribute('class', 'remove_button')
-        removeButton.onclick = function() { removeField(this); };
-        newLi.appendChild(removeButton);
-    }
+    var removeButton = document.createElement('input');
+    removeButton.setAttribute("type", "button");
+    removeButton.setAttribute("value", "X");
+    removeButton.setAttribute('class', 'remove_button')
+    removeButton.onclick = function() { removeField(this,ulField); };
+    newLi.appendChild(removeButton);
     ulField.appendChild(newLi);
     console.log(fieldCount);
 }
 
-function removeField(removeLink)
+function removeField(removeLink, ulField)
 {
-    console.log(removeLink.parentElement);
-    removeLink.parentElement.remove();
+    console.log(ulField.children.length, removeLink.parentElement);
+    if (ulField.children.length > 1) {
+        removeLink.parentElement.remove();
+    }
 }

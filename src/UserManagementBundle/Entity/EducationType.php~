@@ -51,4 +51,9 @@ class EducationType
     {
         return $this->type;
     }
+    
+    public function __toString() 
+    {
+        return $this->getType();      
+    }
 }

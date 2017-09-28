@@ -1,5 +1,6 @@
 UserManagementBundle\Entity\User:
     type: entity
+    repositoryClass: UserManagementBundle\Repository\UserRepository
     table: user
     indexes:
         blood_id_idx:

@@ -1,0 +1,358 @@
+{# src/UserManagementBundle/Resources/views/form/new.html.twig #}
+
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{{ form_start(form, { 'attr' : { 'novalidate' : 'novalidate' }}) }}
+<table>
+    <tr>
+        <td>
+            {{ form_label(form.username) }}
+        </td>
+        <td>
+            {{ form_widget(form.username) }}
+            {{ form_errors(form.username) }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.firstname) }}
+        </td>
+        <td>
+            {{ form_widget(form.firstname) }}
+            {{ form_errors(form.firstname) }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.lastname) }}
+        </td>
+        <td>
+            {{ form_widget(form.lastname) }}
+            {{ form_errors(form.lastname) }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.gender) }}
+        </td>
+        <td>
+            {{ form_widget(form.gender) }}
+            {{ form_errors(form.gender) }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.blood) }}
+        </td>
+        <td>
+            {{ form_widget(form.blood) }}
+            {{ form_errors(form.blood) }}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.dob) }}
+        </td>
+        <td>
+            {{ form_widget(form.dob) }}
+            {{ form_errors(form.dob) }}
+        </td>
+    </tr>
+  
+    <tr>
+        <td>
+            {{ form_label(form.emails) }}
+        </td>
+        <td>
+
+        <ul id="email-fields-list"
+            data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}">
+            {% for emailField in form.emails %}
+                <li>
+                    {{ form_widget(emailField) }}
+                    {{ form_errors(emailField) }}
+
+                </li>
+            {% endfor %}
+        </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        <a href="#" id="add-another-email">Add another email</a>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.mobileNumbers) }}
+        </td>
+        <td>
+
+        <ul id="mobile-numbers-list"
+            data-prototype="{{ form_widget(form.mobileNumbers.vars.prototype)|e }}">
+            {% for mobileField in form.mobileNumbers %}
+                <li>
+                    {{ form_widget(mobileField) }}
+                    {{ form_errors(mobileField) }}
+
+                </li>
+            {% endfor %}
+        </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        <a href="#" id="add-another-number">Add another Number</a>
+        </td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.education) }}
+        </td>
+        <td>
+
+        <ul id="education-list"
+            data-prototype="{{ form_widget(form.education.vars.prototype)|e }}">
+            {% for edu in form.education %}
+                <li>
+                    {{ form_widget(edu.eduType.type) }}
+                    {{ form_errors(edu.eduType.type) }}
+                    {{ form_widget(edu.institute) }}
+                    {{ form_errors(edu.institute) }}
+                </li>
+            {% endfor %}
+        </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        <a href="#" id="add-another-education">Add another Education</a>
+        </td>
+        <td></td>
+    </tr>
+    
+    <tr>
+        <td>
+            {{ form_label(form.interests) }}
+        </td>
+        <td>
+
+        <ul id="interests-list"
+            data-prototype="{{ form_widget(form.interests.vars.prototype)|e }}">
+            {% for interestfield in form.interests %}
+                <li>
+                    {{ form_widget(interestfield.interest.name) }}
+                    {{ form_errors(interestfield.interest.name) }}
+                </li>
+            {% endfor %}
+        </ul>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        <a href="#" id="add-another-interest">Add another interest</a>
+        </td>
+        <td></td>
+    </tr>
+    </table>
+
+{{ form_end(form) }}
+{% endblock %}
+
+
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+        
+    </script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        var emailCount = '{{ form.emails|length }}';
+        console.log(emailCount);
+        var addEmail = document.getElementById('add-another-email');
+        console.log(addEmail);
+        addEmail.onclick = function() { addEmailId(); };
+        function addEmailId()
+        {
+            var emailList = document.getElementById('email-fields-list');
+            console.log(emailList);
+            var emailWidget = emailList.getAttribute('data-prototype');
+            console.log(emailWidget);
+            emailWidget = emailWidget.replace(/__name__/g,emailCount);
+            emailCount++;
+            var newLi = document.createElement("li");
+            newLi.innerHTML = emailWidget;
+            console.log(newLi);
+            emailList.appendChild(newLi);
+            console.log(emailCount);
+            if (emailCount == 2) {
+                var removeEmail = document.createElement("a");
+                removeEmail.innerHTML = "Remove email";
+                removeEmail.setAttribute('href','#');
+                console.log(removeEmail);
+                var addLink = addEmail.parentElement;
+                console.log(addLink);
+                var removeLink = addLink.nextElementSibling;
+                console.log(removeLink);
+                removeEmail.onclick = function() { removeEmailId(emailList, removeLink); };
+                removeLink.appendChild(removeEmail);
+            }
+        }
+        function removeEmailId(emailList,removeLink)
+        {
+            emailList.removeChild(emailList.children[emailCount-1]);
+            emailCount--;
+            if (emailCount == 1) {
+                removeLink.removeChild(removeLink.children[0]);
+            }
+            console.log(emailCount);
+        }
+        var mobilenumberCount = '{{ form.mobileNumbers|length }}';
+        console.log(mobilenumberCount);
+        var addnumber = document.getElementById('add-another-number');
+        console.log(addnumber);
+        addnumber.onclick = function() { addMobileNumber(); };
+        function addMobileNumber()
+        {
+            var mobilenumberList = document.getElementById('mobile-numbers-list');
+            console.log(mobilenumberList);
+            var mobilenumberWidget = mobilenumberList.getAttribute('data-prototype');
+            console.log(mobilenumberWidget);
+            mobilenumberWidget = mobilenumberWidget.replace(/__name__/g,mobilenumberCount);
+            mobilenumberCount++;
+            var newLi = document.createElement("li");
+            newLi.innerHTML = mobilenumberWidget;
+            console.log(newLi);
+            mobilenumberList.appendChild(newLi);
+            console.log(mobilenumberCount);
+            if (mobilenumberCount == 2) {
+                var removenumber = document.createElement("a");
+                removenumber.innerHTML = "Remove Number";
+                removenumber.setAttribute('href','#');
+                console.log(removenumber);
+                var addLink = addnumber.parentElement;
+                console.log(addLink);
+                var removeLink = addLink.nextElementSibling;
+                console.log(removeLink);
+                removenumber.onclick = function() { removeMobileNumber(mobilenumberList, removeLink); };
+                removeLink.appendChild(removenumber);
+            }
+        }
+        
+        function removeMobileNumber(mobilenumberList,removeLink)
+        {
+            mobilenumberList.removeChild(mobilenumberList.children[mobilenumberCount-1]);
+            mobilenumberCount--;
+            if (mobilenumberCount == 1) {
+                removeLink.removeChild(removeLink.children[0]);
+            }
+            console.log(mobilenumberCount);
+        }
+        
+        var educationCount = '{{ form.education|length }}';
+        console.log(educationCount);
+        var addEducationLink = document.getElementById('add-another-education');
+        console.log(addEducationLink);
+        addEducationLink.onclick = function() { addEducation(); };
+        function addEducation()
+        {
+            var educationList = document.getElementById('education-list');
+            console.log(educationList);
+            var educationWidget = educationList.getAttribute('data-prototype');
+            console.log(educationWidget);
+            educationWidget = educationWidget.replace(/__name__/g,educationCount);
+            educationCount++;
+            var newLi = document.createElement("li");
+            newLi.innerHTML = educationWidget;
+            console.log(newLi);
+            educationList.appendChild(newLi);
+            console.log(educationCount);
+            if (educationCount == 2) {
+                var removeEducationLink = document.createElement("a");
+                removeEducationLink.innerHTML = "Remove education";
+                removeEducationLink.setAttribute('href','#');
+                console.log(removeEducationLink);
+                var addLink = addEducationLink.parentElement;
+                console.log(addLink);
+                var removeLink = addLink.nextElementSibling;
+                console.log(removeLink);
+                removeEducationLink.onclick = function() { removeEducation(educationList, removeLink); };
+                removeLink.appendChild(removeEducationLink);
+            }
+        }
+        function removeEducation(educationList,removeLink)
+        {
+            educationList.removeChild(educationList.children[educationCount-1]);
+            educationCount--;
+            if (educationCount == 1) {
+                removeLink.removeChild(removeLink.children[0]);
+            }
+            console.log(educationCount);
+        }
+        
+        var interestCount = '{{ form.interests|length }}';
+        console.log(interestCount);
+        var addInterestLink = document.getElementById('add-another-interest');
+        console.log(addInterestLink);
+        addInterestLink.onclick = function() { addInterest(); };
+        function addInterest()
+        {
+            var interestList = document.getElementById('interests-list');
+            console.log(interestList);
+            var interestWidget = interestList.getAttribute('data-prototype');
+            console.log(interestWidget);
+            interestWidget = interestWidget.replace(/__name__/g,interestCount);
+            interestCount++;
+            var newLi = document.createElement("li");
+            newLi.innerHTML = interestWidget;
+            console.log(newLi);
+            interestList.appendChild(newLi);
+            console.log(interestCount);
+            if (interestCount == 2) {
+                var removeInterestLink = document.createElement("a");
+                removeInterestLink.innerHTML = "Remove interest";
+                removeInterestLink.setAttribute('href','#');
+                console.log(removeInterestLink);
+                var addLink = addInterestLink.parentElement;
+                console.log(addLink);
+                var removeLink = addLink.nextElementSibling;
+                console.log(removeLink);
+                removeInterestLink.onclick = function() { removeInterest(interestList, removeLink); };
+                removeLink.appendChild(removeInterestLink);
+            }
+        }
+        function removeInterest(interestList,removeLink)
+        {
+            interestList.removeChild(interestList.children[interestCount-1]);
+            interestCount--;
+            if (interestCount == 1) {
+                removeLink.removeChild(removeLink.children[0]);
+            }
+            console.log(interestCount);
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            var today = new Date();
+            var currentYear = today.getFullYear();
+            //var rangeLimit = currentYear-18;
+            $( ".js-datepicker" ).datepicker({
+                changeMonth: true,
+                changeYear: true,
+                yearRange: '1980:'+currentYear,
+            });
+        });
+    </script>
+    
+{% endblock %}
+{% block stylesheets %}
+    <style>
+        .ui-datepicker {
+            background: #999;
+        }
+    </style>
+{% endblock %}
+        

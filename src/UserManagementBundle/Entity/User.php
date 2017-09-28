@@ -188,7 +188,6 @@ class User
      */
     public function addEmail(\UserManagementBundle\Entity\UserEmail $email)
     {   
-        $email->setEmailAddr($this);
         $this->emails[] = $email;
         return $this;
     }

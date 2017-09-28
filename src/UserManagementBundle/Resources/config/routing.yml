@@ -7,21 +7,19 @@ user_management_form:
     defaults: { _controller: UserManagementBundle:User:form }
 
 user_management_list:
-    path: /users/
-    defaults: { _controller: UserManagementBundle:User:list }
-
-user_management_list:
-    path: /users
-    defaults: { _controller: UserManagementBundle:User:list }
-
+    path: /users/list/{page}
+    defaults: { _controller: UserManagementBundle:User:list, page: 1 }
+    requirements:
+      page: '\d+'
+          
 user_management_show:
     path: /users/{id}
-    defaults: { _controller: UserManagementBundle:User:show, id : 1 }
+    defaults: { _controller: UserManagementBundle:User:show, id : 2 }
     requirements:
       id: '\d+'
       
 user_management_edit:
     path: /users/edit/{id}
-    defaults: { _controller: UserManagementBundle:User:edit, id : 1 }
+    defaults: { _controller: UserManagementBundle:User:edit, id : 2 }
     requirements:
       id: '\d+'

@@ -1,5 +1,5 @@
 # src/UserManagementBundle/Resources/config/validation.yml
-UserManagementBundle\Entity\Task:
+UserManagementBundle\Entity\User:
     properties:
         username:
             - NotBlank:
@@ -15,39 +15,44 @@ UserManagementBundle\Entity\Task:
                 pattern: '/\d/'
                 match:   false
                 message: Your name cannot contain a number
-#        emails:
-#            - NotBlank: ~
-#            - Email:
-#                message: The email "{{ value }}" is not a valid email.
-        dateofbirth:
-            - Date: ~
         lastname:
 #            - Required: false
             - Regex:
                 pattern: '/\d/'
                 match:   false
                 message: Your name cannot contain a number
-        emails:
-#        mobilenumber:
-#            -collection:
-#                fields:
-#                    *:
-#                        - NotBlank: 
-#                            message: Enter Mobile Number
-#                        - Regex: 
-#                            pattern: '/^[9|8|7][0-9]{9}$/'
-#                            match: true
-#                            message: Your Number should start at 9 or 8 or 7.
-
-                
+#        emails:
+#            - NotBlank: ~
+#            - Email:
+#                message: The email "{{ value }}" is not a valid email.
+#        mobileNumbers:
+#            - NotBlank: ~
+#            - Regex:
+#                pattern: '$[9|8|7][0-9]{9}$'
+#                match: true
+#                message: Enter Valid Mobile Number.
+        dob:
+            - Date: ~
+            - NotBlank: 
+                message: Should not be blank.
         gender:
-            - Choice:
-                choices:  [male, female]
-                message:  Choose a valid gender.
-                min: 1
-            
-            
-        bloodgroup:
-        areaofinterest:
-        course:
+            - NotBlank: 
+                message: Should not be blank.
+        blood:
+            - NotBlank: 
+                message: Should not be blank.
+        interests:
+            - NotBlank: 
+                message: Should not be blank.
+        education:
+            - NotBlank: 
+                message: Should not be blank.
+        emails:
+            - Collection:
+                fields:
+                    emailAddr: 
+                        - NotBlank: ~
+                        - Email : 
+                            message: The email "{{ value }}" is not a valid email.
+                allowMissingFields: true
             

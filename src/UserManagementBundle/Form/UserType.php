@@ -25,7 +25,7 @@ class UserType extends AbstractType
                 'widget' => 'single_text',
                 'html5' => false,
                 'attr' => ['class' => 'js-datepicker'],
-                'format' => 'mm-dd-yyyy',
+                'format' => 'dd/MM/yyyy',
             ))
             ->add('gender', EntityType::class, array(
                 'class' => 'UserManagementBundle:Gender',
