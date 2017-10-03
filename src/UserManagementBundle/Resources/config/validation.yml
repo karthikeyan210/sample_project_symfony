@@ -1,4 +1,24 @@
 # src/UserManagementBundle/Resources/config/validation.yml
+UserManagementBundle\Entity\UserEmail:
+    properties:
+        emailAddr:
+            - NotBlank: ~
+            - Email:
+                message: The email "{{ value }}" is not a valid email.
+UserManagementBundle\Entity\UserPhone:
+    properties:
+        number:
+            - NotBlank: ~
+            - Regex:
+                pattern: '$[9|8|7][0-9]{9}$'
+                match: true
+                message: Enter Valid Mobile Number.
+UserManagementBundle\Entity\Gender:
+    properties:
+        name:
+            - Choice:
+                choices: [male, female]
+                message: should select gender.
 UserManagementBundle\Entity\User:
     properties:
         username:
@@ -21,23 +41,16 @@ UserManagementBundle\Entity\User:
                 pattern: '/\d/'
                 match:   false
                 message: Your name cannot contain a number
-#        emails:
-#            - NotBlank: ~
-#            - Email:
-#                message: The email "{{ value }}" is not a valid email.
-#        mobileNumbers:
-#            - NotBlank: ~
-#            - Regex:
-#                pattern: '$[9|8|7][0-9]{9}$'
-#                match: true
-#                message: Enter Valid Mobile Number.
+#       
+#       
         dob:
             - Date: ~
             - NotBlank: 
                 message: Should not be blank.
         gender:
-            - NotBlank: 
-                message: Should not be blank.
+            - Valid: ~
+#            - NotBlank: 
+#                message: Should not be blank.
         blood:
             - NotBlank: 
                 message: Should not be blank.
@@ -48,11 +61,6 @@ UserManagementBundle\Entity\User:
             - NotBlank: 
                 message: Should not be blank.
         emails:
-            - Collection:
-                fields:
-                    emailAddr: 
-                        - NotBlank: ~
-                        - Email : 
-                            message: The email "{{ value }}" is not a valid email.
-                allowMissingFields: true
-            
+            - Valid: ~
+        mobileNumbers:
+            - Valid: ~

@@ -189,6 +189,7 @@ class User
     public function addEmail(\UserManagementBundle\Entity\UserEmail $email)
     {   
         $this->emails[] = $email;
+        $email->setUser($this);
         return $this;
     }
 
@@ -222,7 +223,7 @@ class User
     public function addMobileNumber(\UserManagementBundle\Entity\UserPhone $mobileNumber)
     {
         $this->mobileNumbers[] = $mobileNumber;
-
+        $mobileNumber->setUser($this);  
         return $this;
     }
 
@@ -256,7 +257,7 @@ class User
     public function addEducation(\UserManagementBundle\Entity\UserEducation $education)
     {
         $this->education[] = $education;
-
+        $education->setUser($this);
         return $this;
     }
 
@@ -290,7 +291,7 @@ class User
     public function addInterest(\UserManagementBundle\Entity\UserInterest $interest)
     {
         $this->interests[] = $interest;
-
+        $interest->setUser($this);
         return $this;
     }
 

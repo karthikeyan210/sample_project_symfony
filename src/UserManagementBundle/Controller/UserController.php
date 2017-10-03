@@ -72,7 +72,7 @@ class UserController extends Controller
         ));
     }
    
-    public function showAction($id = 2)
+    public function showAction($id)
     {           
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('UserManagementBundle:User');
@@ -87,7 +87,7 @@ class UserController extends Controller
         ));
     }
     
-    public function editAction($id = 2, Request $request)
+    public function editAction($id, Request $request)
     {           
         $em = $this->getDoctrine()->getManager();
         $repo = $em->getRepository('UserManagementBundle:User');
@@ -104,7 +104,8 @@ class UserController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $userProfile = $form->getData();
             $em->flush();
-            return new Response("Updated the user Profile. id=" . $userProfile->getId());
+            return $this->redirectToRoute('user_management_show', array('id'=>$id));
+//            return new Response("Updated the user Profile. id=" . $userProfile->getId());
         }
         
         return $this->render('UserManagementBundle:form:new.html.twig', array(

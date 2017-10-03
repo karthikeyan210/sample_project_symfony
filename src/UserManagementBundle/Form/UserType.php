@@ -42,6 +42,7 @@ class UserType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
+                'by_reference' => false,
                 'entry_options' => array(
                     'attr' => array('class' => 'email_id'),
                 )
@@ -51,6 +52,7 @@ class UserType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
+                'by_reference' => false,
                 'entry_options' => array(
                     'attr' => array('class' => 'phone_number'),
                 )
@@ -60,6 +62,7 @@ class UserType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
+                'by_reference' => false,
                 'entry_options' => array(
                     'attr' => array('class' => 'education_type'),
                 )
@@ -69,6 +72,7 @@ class UserType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'prototype' => true,
+                'by_reference' => false,
                 'entry_options' => array(
                     'attr' => array('class' => 'interest_area'),
                 )
