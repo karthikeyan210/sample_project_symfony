@@ -69,11 +69,11 @@
         <ul id="email-fields-list"
             data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}">
             {% for emailField in form.emails %}
-                <li>
+                <p>
                     {{ form_widget(emailField) }}
                     {{ form_errors(emailField) }}
 
-                </li>
+                </p>
             {% endfor %}
         </ul>
         </td>
@@ -93,11 +93,11 @@
         <ul id="mobile-numbers-list"
             data-prototype="{{ form_widget(form.mobileNumbers.vars.prototype)|e }}">
             {% for mobileField in form.mobileNumbers %}
-                <li>
+                <p>
                     {{ form_widget(mobileField) }}
                     {{ form_errors(mobileField) }}
 
-                </li>
+                </p>
             {% endfor %}
         </ul>
         </td>
@@ -117,12 +117,12 @@
         <ul id="education-list"
             data-prototype="{{ form_widget(form.education.vars.prototype)|e }}">
             {% for edu in form.education %}
-                <li>
+                <p>
                     {{ form_widget(edu.eduType) }}
                     {{ form_errors(edu.eduType) }}
                     {{ form_widget(edu.institute) }}
                     {{ form_errors(edu.institute) }}
-                </li>
+                </p>
             {% endfor %}
         </ul>
         </td>
@@ -143,10 +143,10 @@
         <ul id="interests-list"
             data-prototype="{{ form_widget(form.interests.vars.prototype)|e }}">
             {% for interestfield in form.interests %}
-                <li>
+                <p>
                     {{ form_widget(interestfield.interest) }}
                     {{ form_errors(interestfield.interest) }}
-                </li>
+                </p>
             {% endfor %}
         </ul>
         </td>

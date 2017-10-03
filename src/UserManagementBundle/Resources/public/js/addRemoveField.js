@@ -6,7 +6,7 @@ function addField(ulFieldId)
     console.log(fieldWidget);
     fieldWidget = fieldWidget.replace(/__name__/g,fieldCount);
     fieldCount++;
-    var newLi = document.createElement("li");
+    var newLi = document.createElement("p");
     newLi.innerHTML = fieldWidget;
     var removeButton = document.createElement('input');
     removeButton.setAttribute("type", "button");

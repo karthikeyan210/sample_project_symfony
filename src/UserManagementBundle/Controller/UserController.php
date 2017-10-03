@@ -32,9 +32,10 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            return new Response("User is saved. id=" .$user->getId());
+            return $this->redirectToRoute('user_management_list');
+//            return new Response("User is saved. id=" .$user->getId());
         }
-        return $this->render('UserManagementBundle:form:new.html.twig', array(
+        return $this->render('UserManagementBundle:user:new.html.twig', array(
             'form' => $form->createView(),
         ));
     }
@@ -49,22 +50,10 @@ class UserController extends Controller
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('UserManagementBundle:User')
                     ->getAllUsers($page);
-//        $allUsers = $repo->findAll();
-//        $users = $repo->getAllUsers($page); // Returns 5 posts out of 20
-
-        # Total fetched (ie: `5` posts)
-        $totalUsersReturned = $users->getIterator()->count();
-        # Count of ALL posts (ie: `20` posts)
         $totalUsers = $users->count();
-
-        # ArrayIterator
-        $iterator = $users->getIterator();
-
         $limit = 5;
         $maxPages = ceil($totalUsers / $limit);
         $thisPage = $page;
-        // Pass through the 3 above variables to calculate pages in twig
-//        return $this->render('view.twig.html', compact('categories', 'maxPages', 'thisPage'));
        return $this->render('UserManagementBundle:user:list.html.twig', array(
             'users' => $users,
             'maxPages' => $maxPages,

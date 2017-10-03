@@ -1,25 +1,47 @@
 # src/UserManagementBundle/Resources/config/validation.yml
 UserManagementBundle\Entity\UserEmail:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [emailAddr]
+#            errorPath: emailAddr
+            message: This email "{{ value }}" already used.
     properties:
         emailAddr:
             - NotBlank: ~
             - Email:
                 message: The email "{{ value }}" is not a valid email.
+    
+    
+    
 UserManagementBundle\Entity\UserPhone:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [number]
+            message: This number "{{ value }}" already used.
     properties:
         number:
             - NotBlank: ~
             - Regex:
-                pattern: '$[9|8|7][0-9]{9}$'
+                pattern: '/^[9|8|7][0-9]{9}$/'
                 match: true
                 message: Enter Valid Mobile Number.
+                
+                
+                
 UserManagementBundle\Entity\Gender:
     properties:
         name:
-            - Choice:
-                choices: [male, female]
-                message: should select gender.
+            - Choice: ['male', 'female']
+#                choices: ['male', 'female']
+#                message: should select gender.
+                
+                
+                
 UserManagementBundle\Entity\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [username]
+            message: This username "{{ value }}" already used.
     properties:
         username:
             - NotBlank:
