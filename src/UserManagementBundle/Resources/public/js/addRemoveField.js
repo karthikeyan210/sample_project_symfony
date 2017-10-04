@@ -1,11 +1,12 @@
+var count = 1;
 function addField(ulFieldId)
 {
     var ulField = document.getElementById(ulFieldId);
-    var fieldCount = ulField.children.length;
+//    var fieldCount = ulField.children.length;
     var fieldWidget = ulField.getAttribute('data-prototype');
     console.log(fieldWidget);
-    fieldWidget = fieldWidget.replace(/__name__/g,fieldCount);
-    fieldCount++;
+    fieldWidget = fieldWidget.replace(/__name__/g,count);
+    count++;
     var newLi = document.createElement("p");
     newLi.innerHTML = fieldWidget;
     var removeButton = document.createElement('input');
@@ -15,13 +16,13 @@ function addField(ulFieldId)
     removeButton.onclick = function() { removeField(this,ulField); };
     newLi.appendChild(removeButton);
     ulField.appendChild(newLi);
-    console.log(fieldCount);
+    console.log(count);
 }
 
 function removeField(removeLink, ulField)
 {
     console.log(ulField.children.length, removeLink.parentElement);
-    if (ulField.children.length > 1) {
+//    if (ulField.children.length > 1) {
         removeLink.parentElement.remove();
-    }
+//    }
 }

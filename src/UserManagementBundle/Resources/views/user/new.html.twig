@@ -10,8 +10,8 @@
             {{ form_label(form.username) }}
         </td>
         <td>
-            {{ form_widget(form.username) }}
-            {{ form_errors(form.username) }}
+            <p class="widget">{{ form_widget(form.username) }}</p>
+            <span class="error">{{ form_errors(form.username) }}</span>
         </td>
     </tr>
     <tr>
@@ -69,11 +69,10 @@
         <ul id="email-fields-list"
             data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}">
             {% for emailField in form.emails %}
-                <p>
+                
                     {{ form_widget(emailField) }}
                     {{ form_errors(emailField) }}
-
-                </p>
+                
             {% endfor %}
         </ul>
         </td>
@@ -157,9 +156,17 @@
         </td>
         <td></td>
     </tr>
+    <tr>
+        <td>
+        </td>
+        <td>
+            {{ form_row(form.save) }}
+        </td>
+    </tr>
     </table>
+            {{ form_row(form._token) }}
 
-{{ form_end(form) }}
+{{ form_end(form, {'render_rest': false}) }}
 {% endblock %}
 
 

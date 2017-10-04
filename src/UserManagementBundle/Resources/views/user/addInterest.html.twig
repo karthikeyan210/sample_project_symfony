@@ -1,0 +1,21 @@
+{# empty Twig template onclick="location.href='/admin/{{ gender.id }}/remove'"#}
+{% extends 'base.html.twig' %}
+{% block body %}
+<table border="2">
+    <tr>
+        <th>Interests</th>
+        <th>Add New</th>
+        <th>Action</th>                
+    <tr>
+        <td>
+    {% for interest in interests %}
+        {{ interest.name }}<br/>
+    {% endfor %}
+
+        {{ form_start(form) }}
+            <td> {{ form_row(form.name) }} </td>
+            <td>{{ form_row(form.save) }}</td>
+        {{ form_end(form) }}
+    </tr>
+</table>
+{% endblock %}

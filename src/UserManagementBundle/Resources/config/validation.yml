@@ -27,16 +27,60 @@ UserManagementBundle\Entity\UserPhone:
                 message: Enter Valid Mobile Number.
                 
                 
-                
+UserManagementBundle\Entity\BloodGroup:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [name]
+            message: This Blood_group "{{ value }}" is already there. 
+    properties:
+        name:
+            - NotBlank: ~
+            
+            
+UserManagementBundle\Entity\Interest:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [name]
+            message: This interest "{{ value }}" is already there.     
+    properties:
+        name:
+            - NotBlank: ~
+
+            
+            
+UserManagementBundle\Entity\EducationType:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [type]
+            message: This type "{{ value }}" is already there.  
+    properties:
+        type:
+            - NotBlank: ~
+
+            
 UserManagementBundle\Entity\Gender:
     properties:
         name:
             - Choice: ['male', 'female']
 #                choices: ['male', 'female']
 #                message: should select gender.
-                
-                
-                
+ 
+               
+#UserManagementBundle\Entity\UserInterest:
+#    properties:
+#        interest:
+#            - Valid: ~
+            
+                           
+#UserManagementBundle\Entity\UserEducation:
+#    properites:
+#        institute:
+#            - NotBlank: 
+#                  message: should fill this field.
+#        eduType:
+#            - Valid: ~
+#            
+            
 UserManagementBundle\Entity\User:
     constraints:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
@@ -45,11 +89,11 @@ UserManagementBundle\Entity\User:
     properties:
         username:
             - NotBlank:
-                message: Should Enter First Name.
+                message: Should Enter User Name.
             - Regex:
-                pattern: '/\d/'
-                match:   false
-                message: Your name cannot contain a number
+                pattern: '/\w+/'
+                match:   true
+                message: Enter valid User name.
         firstname:
             - NotBlank:
                 message: Should Enter First Name.
@@ -70,19 +114,23 @@ UserManagementBundle\Entity\User:
             - NotBlank: 
                 message: Should not be blank.
         gender:
-            - Valid: ~
+#            - Valid: ~
+            - NotBlank: 
+                message: Select one gender.
+        
 #            - NotBlank: 
 #                message: Should not be blank.
-        blood:
-            - NotBlank: 
-                message: Should not be blank.
-        interests:
-            - NotBlank: 
-                message: Should not be blank.
-        education:
-            - NotBlank: 
-                message: Should not be blank.
+#        interests:
+#            - NotBlank: 
+#                message: Should not be blank.
         emails:
             - Valid: ~
         mobileNumbers:
             - Valid: ~
+        blood:
+            - Valid: ~
+        interests:
+            - Valid: ~
+        education:
+            - Valid: ~
+#       

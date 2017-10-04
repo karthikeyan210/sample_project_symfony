@@ -1,0 +1,18 @@
+{# empty Twig template action="{{ path('user_management_editBlood') }}"#}
+{#<form  action="{{ path('user_management_saveBlood') }}" method="POST">#}
+{{ form_start(form) }}
+    <tr>
+        <td>
+            {{ form_label(form.blood) }}
+        </td>
+        <td>
+            {{ form_widget(form.blood) }}
+            {{ form_errors(form.blood) }}
+        </td>
+     </tr>
+    <input type="text" id="add_blood" name="blood_group">
+    <input type="submit" value="add">
+{{ form_end(form, { 'render_rest' : false}) }}
+</form>
+
+    

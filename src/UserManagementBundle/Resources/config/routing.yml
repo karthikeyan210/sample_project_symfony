@@ -23,3 +23,31 @@ user_management_edit:
     defaults: { _controller: UserManagementBundle:User:edit }
     requirements:
       id: '\d+'
+
+user_management_gender:
+    path: /users/gender
+    defaults: { _controller: UserManagementBundle:User:gender }
+
+user_management_admin:
+    path: /admin
+    defaults: { _controller: UserManagementBundle:User:admin }
+
+user_management_addBlood:
+    path: /users/blood
+    defaults: { _controller: UserManagementBundle:User:addBlood }
+
+user_management_saveBlood:
+    path: /users/blood/save
+    defaults: { _controller: UserManagementBundle:User:saveBlood }
+    
+user_management_addBloodGroup:
+    path: /admin/bloodgroup
+    defaults: { _controller: UserManagementBundle:User:addBloodGroup }
+    
+user_management_addInterest:
+    path: /admin/interest
+    defaults: { _controller: UserManagementBundle:User:addInterest }
+    
+user_management_addEducation:
+    path: /admin/education
+    defaults: { _controller: UserManagementBundle:User:addEducation }

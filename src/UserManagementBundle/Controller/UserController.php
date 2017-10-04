@@ -9,6 +9,12 @@ use UserManagementBundle\Entity\UserEmail;
 use UserManagementBundle\Entity\UserPhone;
 use UserManagementBundle\Entity\UserInterest;
 use UserManagementBundle\Entity\UserEducation;
+use UserManagementBundle\Entity\BloodGroup;
+use UserManagementBundle\Form\BloodGroupType;
+use UserManagementBundle\Entity\Interest;
+use UserManagementBundle\Form\InterestType;
+use UserManagementBundle\Entity\EducationType;
+use UserManagementBundle\Form\EduType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,10 +46,10 @@ class UserController extends Controller
         ));
     }
 
-    public function successAction()
-    {
-        return $this->render('@UserManagement/Default/link.html.twig');
-    }
+//    public function successAction()
+//    {
+//        return $this->render('@UserManagement/Default/link.html.twig');
+//    }
     
     public function listAction($page = 1)
     {           
@@ -103,5 +109,163 @@ class UserController extends Controller
         ));
     }
     
+    public function genderAction()
+    {
+       $em = $this->getDoctrine()->getManager();
+       $repo = $em->getRepository('UserManagementBundle:BloodGroup');
+       $genders = $repo->findAll();
+       dump($genders); die();
+    }
     
+    public function adminAction(Request $request)
+    {
+        $user = new User();
+//        $user->addEmail(new UserEmail());
+        $user->addEducation(new UserEducation());
+        $user->addInterest(new UserInterest());
+//        $user->addMobileNumber(new UserPhone());
+        
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        return $this->render('UserManagementBundle:user:admin.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+    
+    public function addBloodAction(Request $request)
+    {
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        $blood_group = new BloodGroup();
+        if ($request->isMethod('POST')) {
+            $blood = $request->request->get('blood_group');
+            $blood_group->setName($blood);
+            $em = $this->getDoctrine()->getManager();
+            $repo = $em->getRepository('UserManagementBundle:BloodGroup');
+            $result = $repo->findOneBy(array(
+                'name' => $blood
+            ));
+            dump($result); die();
+            if (!$result) {
+                $em->persist($blood_group);
+                $em->flush();
+                return $this->redirectToRoute('user_management_gender');
+            } else {
+                return $this->redirectToRoute('user_management_addBlood');
+            }
+        }
+//        if ($form->isSubmitted() && $form->isValid()) {
+//             $blood = $request->request->get('blood_group');
+//        dump($blood); die();
+//            $user = $form->getData();
+//            dump($user); die();
+//            $em = $this->getDoctrine()->getManager();
+//            $em->persist($user);
+//            $em->flush();
+//            return $this->redirectToRoute('user_management_list');
+////            return new Response("User is saved. id=" .$user->getId());
+//        }
+        return $this->render('UserManagementBundle:user:addBlood.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+    
+    public function saveBloodAction(Request $request)
+    {        
+        $blood_group = new BloodGroup();
+        
+        if ($request->isMethod('POST')) {
+            $blood = $request->request->get('blood_group');
+            $blood_group->setName($blood);
+            $em = $this->getDoctrine()->getManager();
+            $repo = $em->getRepository('UserManagementBundle:BloodGroup');
+            $result = $repo->findOneBy(array(
+                'name' => $blood
+            ));
+//            dump($result); die();
+            if (!$result) {
+                $em->persist($blood_group);
+                $em->flush();
+                return $this->redirectToRoute('user_management_gender');
+            } else {
+                return $this->redirectToRoute('user_management_addBlood');
+            }
+            
+        } else {
+            dump("HI"); die();
+        }
+    }
+    
+    public function addBloodGroupAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('UserManagementBundle:BloodGroup');
+        $bloodgroup = $repo->findAll();
+        $blood_group = new BloodGroup();
+ 
+        $form = $this->createForm(BloodGroupType::class, $blood_group);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $blood_group = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($blood_group);
+            $em->flush();
+            return $this->redirectToRoute('user_management_admin');
+        }
+        return $this->render('UserManagementBundle:user:addBloodGroup.html.twig', array(
+            'bloodgroups' => $bloodgroup,
+            'form' => $form->createView(),
+        ));
+        
+    }
+    
+    public function addInterestAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('UserManagementBundle:Interest');
+        $interests = $repo->findAll();
+        
+        $interest = new Interest();
+        $form = $this->createForm(InterestType::class, $interest);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $interest = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($interest);
+            $em->flush();
+            return $this->redirectToRoute('user_management_admin');
+        }
+        return $this->render('UserManagementBundle:user:addInterest.html.twig', array(
+            'interests' => $interests,
+            'form' => $form->createView(),
+        ));
+        
+    }
+    
+    public function addEducationAction(Request $request)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('UserManagementBundle:EducationType');
+        $educationtypes = $repo->findAll();
+        
+        $education = new EducationType();
+        $form = $this->createForm(EduType::class, $education);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $education = $form->getData();
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($education);
+            $em->flush();
+            return $this->redirectToRoute('user_management_admin');
+        }
+        return $this->render('UserManagementBundle:user:addEducation.html.twig', array(
+            'educationtypes' => $educationtypes,
+            'form' => $form->createView(),
+        ));
+        
+    }
 }

@@ -2,6 +2,8 @@
 
 namespace UserManagementBundle\Entity;
 
+
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * UserEmail
  */

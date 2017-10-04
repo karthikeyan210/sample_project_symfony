@@ -1,0 +1,61 @@
+{# empty Twig template #}
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{{ form_start(form, { 'attr' : { 'novalidate' : 'novalidate' }}) }}
+<table>
+    <tr>
+        <th>Type</th>
+        <th>List</th>
+        <th>Action</th>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.blood) }}
+        </td>
+        <td>
+            {{ form_widget(form.blood) }}
+        </td>
+        <td>
+            <input type="button" value="Add"
+                   onclick="location.href='{{ path('user_management_addBloodGroup') }}'" >
+{#            <input type="button" value="Remove">#}
+{#                   onclick="location.href='/users/edit/{{user.id}}';" >#}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.interests) }}
+        </td>
+        <td>
+{#            {{ form_widget(form.interests, { 'label' : '' }) }}#}
+             {% for interestfield in form.interests %}
+                    {{ form_widget(interestfield.interest) }}
+            {% endfor %}
+        </td>
+        <td>
+            <input type="button" value="Add"
+                   onclick="location.href='{{ path('user_management_addInterest') }}'"
+{#            <input type="button" value="Remove">#}
+{#                   onclick="location.href='/users/edit/{{user.id}}';" >#}
+        </td>
+    </tr>
+    <tr>
+        <td>
+            {{ form_label(form.education) }}
+        </td>
+        <td>
+             {% for edu in form.education %}
+                    {{ form_widget(edu.eduType) }}
+            {% endfor %}
+        </td>
+        <td>
+            <input type="button" value="Add"
+                   onclick="location.href='{{ path('user_management_addEducation') }}'">                   
+{#            <input type="button" value="Remove">#}
+{#                   onclick="location.href='/users/edit/{{user.id}}';" >#}
+        </td>
+    </tr>
+</table>
+{{ form_end(form, {'render_rest': false}) }}
+{% endblock %}

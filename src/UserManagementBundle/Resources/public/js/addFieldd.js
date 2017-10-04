@@ -2,6 +2,7 @@
     var emailCount = '{{ form.emails|length }}';
 
     jQuery(document).ready(function() {
+        $.
         jQuery('#add-another-email').click(function(e) {
             console.log(e);
             e.preventDefault();
