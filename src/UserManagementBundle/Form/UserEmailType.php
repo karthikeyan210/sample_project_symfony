@@ -15,6 +15,7 @@ class UserEmailType extends AbstractType
     {
         $builder->add('emailAddr', EmailType::class, array(
             'label' => false,
+            'attr' => array('data-required' => 'true'),
         ));
     }
 

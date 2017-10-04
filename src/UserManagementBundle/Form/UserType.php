@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -18,13 +19,20 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('username')
-            ->add('firstname')
+            ->add('username', TextType::class, array(
+                'attr' => array('data-required' => 'true'),
+            ))
+            ->add('firstname', TextType::class, array(
+                'attr' => array('data-required' => 'true'),
+            ))
             ->add('lastname')
             ->add('dob', DateType::class, array(
                 'widget' => 'single_text',
                 'html5' => false,
-                'attr' => ['class' => 'js-datepicker'],
+                'attr' => array(
+                    'class' => 'js-datepicker',
+                    'data-required' => 'true',
+                ),
                 'format' => 'dd/MM/yyyy',
             ))
             ->add('gender', EntityType::class, array(
@@ -77,7 +85,10 @@ class UserType extends AbstractType
                     'attr' => array('class' => 'interest_area'),
                 )
             ))
-            ->add('save', SubmitType::class, array('label' => 'Submit'));
+            ->add('save', SubmitType::class, array(
+                'label' => 'Submit',
+                'attr' => array('id' => 'user_save'),
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -25,6 +25,7 @@ class EduType extends AbstractType
             ->add('type', TextType::class, array(
                 'label' => false,
                 'required' => false,
+//                'attr' => array('data-required' => 'true'),
             ))
             ->add('save', SubmitType::class, array(
                 'label' => 'ADD',

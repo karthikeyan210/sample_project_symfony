@@ -1,0 +1,128 @@
+# src/UserManagementBundle/Resources/config/validation.yml
+UserManagementBundle\Entity\UserEmail:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [emailAddr]
+#            errorPath: emailAddr
+            message: This email "{{ value }}" already used.
+    properties:
+        emailAddr:
+            - NotBlank: ~
+            - Email:
+                message: The email "{{ value }}" is not a valid email.
+    
+    
+    
+UserManagementBundle\Entity\UserPhone:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [number]
+            message: This number "{{ value }}" already used.
+    properties:
+        number:
+            - NotBlank: ~
+            - Regex:
+                pattern: '/^[9|8|7][0-9]{9}$/'
+                match: true
+                message: Enter Valid Mobile Number.
+                
+                
+UserManagementBundle\Entity\BloodGroup:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [name]
+            message: This Blood_group "{{ value }}" is already there. 
+    properties:
+        name:
+            - NotBlank: ~
+            
+            
+UserManagementBundle\Entity\Interest:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [name]
+            message: This interest "{{ value }}" is already there.     
+    properties:
+        name:
+            - NotBlank: ~
+
+            
+            
+UserManagementBundle\Entity\EducationType:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [type]
+            message: This type "{{ value }}" is already there.  
+    properties:
+        type:
+            - NotBlank: ~
+
+            
+UserManagementBundle\Entity\Gender:
+    properties:
+        name:
+            - Choice: ['male', 'female']
+#                choices: ['male', 'female']
+#                message: should select gender.
+ 
+               
+#UserManagementBundle\Entity\UserInterest:
+#    properties:
+#        interest:
+#            - Valid: ~
+            
+                           
+#UserManagementBundle\Entity\UserEducation:
+#    properites:
+#        institute:
+#            - NotBlank: 
+#                  message: should fill this field.
+#        eduType:
+#            - Valid: ~
+#            
+            
+UserManagementBundle\Entity\User:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [username]
+            message: This username "{{ value }}" already used.
+    properties:
+        username:
+            - NotBlank:
+                message: Should Enter User Name.
+            - Regex:
+                pattern: '/\w+/'
+                match:   true
+                message: Enter valid User name.
+        firstname:
+            - NotBlank:
+                message: Should Enter First Name.
+            - Regex:
+                pattern: '/\d/'
+                match:   false
+                message: Your name cannot contain a number
+        lastname:
+            - Regex:
+                pattern: '/\d/'
+                match:   false
+                message: Your name cannot contain a number.
+       
+       
+        dob:
+            - Date: ~
+            - NotBlank: 
+                message: Should not be blank.
+        gender:
+            - NotBlank: 
+                message: Select one gender.
+        emails:
+            - Valid: ~
+        mobileNumbers:
+            - Valid: ~
+        blood:
+            - Valid: ~
+        interests:
+            - Valid: ~
+        education:
+            - Valid: ~
+#       

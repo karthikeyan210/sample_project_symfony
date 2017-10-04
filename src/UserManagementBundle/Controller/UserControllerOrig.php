@@ -87,4 +87,33 @@ class UserController extends Controller
             'form' => $form->createView(),
         ));
     }
+    
+    public function addBloodAction(Request $request)
+    {
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+        $blood_group = new BloodGroup();
+        if ($request->isMethod('POST')) {
+            $blood = $request->request->get('blood_group');
+            $blood_group->setName($blood);
+            $em = $this->getDoctrine()->getManager();
+            $repo = $em->getRepository('UserManagementBundle:BloodGroup');
+            $result = $repo->findOneBy(array(
+                'name' => $blood
+            ));
+            dump($result); die();
+            if (!$result) {
+                $em->persist($blood_group);
+                $em->flush();
+                return $this->redirectToRoute('user_management_gender');
+            } else {
+                return $this->redirectToRoute('user_management_addBlood');
+            }
+        }
+        return $this->render('UserManagementBundle:user:addBlood.html.twig', array(
+            'form' => $form->createView(),
+        ));
+    }
+
 }

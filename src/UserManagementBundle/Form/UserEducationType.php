@@ -8,6 +8,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 
 class UserEducationType extends AbstractType
 {
@@ -19,8 +20,12 @@ class UserEducationType extends AbstractType
                 'choice_label' => 'type',
                 'multiple' => false,
                 'expanded' => false,
+//                'label' => false,
             ))
-            ->add('institute');
+            ->add('institute', TextType::class, array(
+//                'label' => false,
+                'attr' => array('data-required' => 'true'),
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)

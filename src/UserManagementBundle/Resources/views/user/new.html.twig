@@ -3,7 +3,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-{{ form_start(form, { 'attr' : { 'novalidate' : 'novalidate' }}) }}
+{{ form_start(form, {'attr':{'novalidate' : 'novalidate','onsubmit':'return validation();'}}) }}
 <table>
     <tr>
         <td>
@@ -19,8 +19,8 @@
             {{ form_label(form.firstname) }}
         </td>
         <td>
-            {{ form_widget(form.firstname) }}
-            {{ form_errors(form.firstname) }}
+            <p class="widget">{{ form_widget(form.firstname) }}</p>
+            <span class="error">{{ form_errors(form.firstname) }}</span>
         </td>
     </tr>
     <tr>
@@ -28,8 +28,8 @@
             {{ form_label(form.lastname) }}
         </td>
         <td>
-            {{ form_widget(form.lastname) }}
-            {{ form_errors(form.lastname) }}
+            <p class="widget">{{ form_widget(form.lastname) }}</p>
+            <span class="error">{{ form_errors(form.lastname) }}</span>
         </td>
     </tr>
     <tr>
@@ -37,8 +37,8 @@
             {{ form_label(form.gender) }}
         </td>
         <td>
-            {{ form_widget(form.gender) }}
-            {{ form_errors(form.gender) }}
+            <p class="widget">{{ form_widget(form.gender) }}</p>
+            <span class="error">{{ form_errors(form.gender) }}</span>
         </td>
     </tr>
     <tr>
@@ -46,8 +46,8 @@
             {{ form_label(form.blood) }}
         </td>
         <td>
-            {{ form_widget(form.blood) }}
-            {{ form_errors(form.blood) }}
+            <p class="widget">{{ form_widget(form.blood) }}</p>
+            <span class="error">{{ form_errors(form.blood) }}</span>
         </td>
     </tr>
     <tr>
@@ -55,8 +55,8 @@
             {{ form_label(form.dob) }}
         </td>
         <td>
-            {{ form_widget(form.dob) }}
-            {{ form_errors(form.dob) }}
+            <p class="widget">{{ form_widget(form.dob) }}</p>
+            <span class="error">{{ form_errors(form.dob) }}</span>
         </td>
     </tr>
   
@@ -69,10 +69,10 @@
         <ul id="email-fields-list"
             data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}">
             {% for emailField in form.emails %}
-                
-                    {{ form_widget(emailField) }}
-                    {{ form_errors(emailField) }}
-                
+                <p>
+                    <p class="widget">{{ form_widget(emailField) }}<p>
+                    <span class="error">{{ form_errors(emailField) }}</span>
+                </p>
             {% endfor %}
         </ul>
         </td>
@@ -93,8 +93,8 @@
             data-prototype="{{ form_widget(form.mobileNumbers.vars.prototype)|e }}">
             {% for mobileField in form.mobileNumbers %}
                 <p>
-                    {{ form_widget(mobileField) }}
-                    {{ form_errors(mobileField) }}
+                    <p class="widget">{{ form_widget(mobileField) }}</p>
+                    <span class="error">{{ form_errors(mobileField) }}</span>
 
                 </p>
             {% endfor %}
@@ -117,10 +117,10 @@
             data-prototype="{{ form_widget(form.education.vars.prototype)|e }}">
             {% for edu in form.education %}
                 <p>
-                    {{ form_widget(edu.eduType) }}
-                    {{ form_errors(edu.eduType) }}
-                    {{ form_widget(edu.institute) }}
-                    {{ form_errors(edu.institute) }}
+                    <p class="widget">{{ form_widget(edu.eduType) }}</p>
+                    <span class="error">{{ form_errors(edu.eduType) }}</span>
+                    <p class="widget">{{ form_widget(edu.institute) }}</p>
+                    <span class="error">{{ form_errors(edu.institute) }}</span>
                 </p>
             {% endfor %}
         </ul>
@@ -143,8 +143,8 @@
             data-prototype="{{ form_widget(form.interests.vars.prototype)|e }}">
             {% for interestfield in form.interests %}
                 <p>
-                    {{ form_widget(interestfield.interest) }}
-                    {{ form_errors(interestfield.interest) }}
+                    <p class="widget">{{ form_widget(interestfield.interest) }}</p>
+                    <span class="error">{{ form_errors(interestfield.interest) }}</span>
                 </p>
             {% endfor %}
         </ul>
@@ -171,12 +171,13 @@
 
 
 {% block javascripts %}
+{#    {{ parent() }}#}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-        
     </script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
     <script src="{{ asset('bundles/usermanagement/js/addRemoveField.js') }}">    
+    </script>
+    <script src="{{ asset('bundles/usermanagement/js/validation.js') }}">
     </script>
     <script>
         $(document).ready(function() {

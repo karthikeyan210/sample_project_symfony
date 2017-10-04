@@ -32,14 +32,6 @@ user_management_admin:
     path: /admin
     defaults: { _controller: UserManagementBundle:User:admin }
 
-user_management_addBlood:
-    path: /users/blood
-    defaults: { _controller: UserManagementBundle:User:addBlood }
-
-user_management_saveBlood:
-    path: /users/blood/save
-    defaults: { _controller: UserManagementBundle:User:saveBlood }
-    
 user_management_addBloodGroup:
     path: /admin/bloodgroup
     defaults: { _controller: UserManagementBundle:User:addBloodGroup }

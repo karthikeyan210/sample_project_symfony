@@ -25,6 +25,7 @@ class InterestType extends AbstractType
             ->add('name', TextType::class, array(
                 'label' => false,
                 'required' => false,
+//                'attr' => array('data-required' => 'true'),
             ))
             ->add('save', SubmitType::class, array(
                 'label' => 'ADD',

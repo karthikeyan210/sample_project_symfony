@@ -77,7 +77,7 @@ class UserController extends Controller
                 'No user found for id '.$id
             );
         }
-        return $this->render('UserManagementBundle:form:show.html.twig', array(
+        return $this->render('UserManagementBundle:user:show.html.twig', array(
             'user' => $user,
         ));
     }
@@ -103,7 +103,7 @@ class UserController extends Controller
 //            return new Response("Updated the user Profile. id=" . $userProfile->getId());
         }
         
-        return $this->render('UserManagementBundle:form:new.html.twig', array(
+        return $this->render('UserManagementBundle:user:new.html.twig', array(
             'user' => $userProfile,
             'form' => $form->createView(),
         ));
@@ -120,10 +120,8 @@ class UserController extends Controller
     public function adminAction(Request $request)
     {
         $user = new User();
-//        $user->addEmail(new UserEmail());
         $user->addEducation(new UserEducation());
         $user->addInterest(new UserInterest());
-//        $user->addMobileNumber(new UserPhone());
         
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
@@ -131,72 +129,7 @@ class UserController extends Controller
             'form' => $form->createView(),
         ));
     }
-    
-    public function addBloodAction(Request $request)
-    {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-        $blood_group = new BloodGroup();
-        if ($request->isMethod('POST')) {
-            $blood = $request->request->get('blood_group');
-            $blood_group->setName($blood);
-            $em = $this->getDoctrine()->getManager();
-            $repo = $em->getRepository('UserManagementBundle:BloodGroup');
-            $result = $repo->findOneBy(array(
-                'name' => $blood
-            ));
-            dump($result); die();
-            if (!$result) {
-                $em->persist($blood_group);
-                $em->flush();
-                return $this->redirectToRoute('user_management_gender');
-            } else {
-                return $this->redirectToRoute('user_management_addBlood');
-            }
-        }
-//        if ($form->isSubmitted() && $form->isValid()) {
-//             $blood = $request->request->get('blood_group');
-//        dump($blood); die();
-//            $user = $form->getData();
-//            dump($user); die();
-//            $em = $this->getDoctrine()->getManager();
-//            $em->persist($user);
-//            $em->flush();
-//            return $this->redirectToRoute('user_management_list');
-////            return new Response("User is saved. id=" .$user->getId());
-//        }
-        return $this->render('UserManagementBundle:user:addBlood.html.twig', array(
-            'form' => $form->createView(),
-        ));
-    }
-    
-    public function saveBloodAction(Request $request)
-    {        
-        $blood_group = new BloodGroup();
         
-        if ($request->isMethod('POST')) {
-            $blood = $request->request->get('blood_group');
-            $blood_group->setName($blood);
-            $em = $this->getDoctrine()->getManager();
-            $repo = $em->getRepository('UserManagementBundle:BloodGroup');
-            $result = $repo->findOneBy(array(
-                'name' => $blood
-            ));
-//            dump($result); die();
-            if (!$result) {
-                $em->persist($blood_group);
-                $em->flush();
-                return $this->redirectToRoute('user_management_gender');
-            } else {
-                return $this->redirectToRoute('user_management_addBlood');
-            }
-            
-        } else {
-            dump("HI"); die();
-        }
-    }
-    
     public function addBloodGroupAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
