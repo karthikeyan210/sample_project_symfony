@@ -20,7 +20,11 @@ class UserInterestType extends AbstractType
                 'multiple' => false,
                 'expanded' => false,
                 'label' => false,
-//                'attr' => array('data-required' => 'true'),
+                'required' => false,
+                'attr' => array(
+//                    'data-required' => 'true',
+                    'class' => 'interest_area',
+                ),
             ));          
     }
 

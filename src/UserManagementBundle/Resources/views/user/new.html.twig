@@ -3,7 +3,7 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-{{ form_start(form, {'attr':{'novalidate' : 'novalidate','onsubmit':'return validation();'}}) }}
+{{ form_start(form, {'attr':{'novalidate' : 'novalidate','onsubmit':'return validation();','id':'myform'}}) }}
 <table>
     <tr>
         <td>
@@ -119,7 +119,7 @@
                 <p>
                     <p class="widget">{{ form_widget(edu.eduType) }}</p>
                     <span class="error">{{ form_errors(edu.eduType) }}</span>
-                    <p class="widget">{{ form_widget(edu.institute) }}</p>
+                    <p class="widget">{{ form_widget(edu.institute, {'attr':{'placeholder': 'Institute'}}) }}</p>
                     <span class="error">{{ form_errors(edu.institute) }}</span>
                 </p>
             {% endfor %}
@@ -175,10 +175,15 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
     </script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js">
+    </script>
     <script src="{{ asset('bundles/usermanagement/js/addRemoveField.js') }}">    
     </script>
-    <script src="{{ asset('bundles/usermanagement/js/validation.js') }}">
-    </script>
+    {#<script src="{{ asset('bundles/usermanagement/js/validation2.js') }}">
+    </script>#}
     <script>
         $(document).ready(function() {
             var today = new Date();
@@ -191,17 +196,135 @@
             });
         });
     </script>
+    <script>
+        $(document).ready(function () {
+            $("#myform").validate({
+                rules: {
+                    'user[username]': {
+                        required: true,
+                        pattern: /^(\w+)$/,
+                    },
+                    'user[firstname]': {
+                        required: true,
+                        pattern: /^([a-zA-Z]+)([ \.-][a-zA-Z]+)?$/,
+                    },
+                    'user[lastname]': {
+                        required: false,
+                        pattern: /^([a-zA-Z]+)([ \.-][a-zA-Z]+)?$/,
+                    },
+                    'user[dob]': {
+                        required: true,
+                        pattern: /^[\d]{2}[/][\d]{2}[/][\d]{4}$/,
+                    },
+                    '{{ form.blood.vars.full_name }}': {
+                         required: true,
+                     }, 
+                  },
+                messages: {
+                    'user[username]': {
+                        required: "Please enter your username",
+                        pattern: "Please enter valid username"
+                    },
+                    'user[firstname]': {
+                        required: "Please enter your firstname",
+                        pattern: "Please enter valid firstname"
+                    },
+                    'user[lastname]': {
+                        pattern: "Please enter valid lastname"
+                    },
+                    'user[dob]': {
+                        required: "Please enter your dob",
+                        pattern: "Please enter valid dob",
+                    },
+                    '{{ form.blood.vars.full_name }}': {
+                        required: "Please select Blood group",
+                    }, 
+                  }        
+            });
+            
+            {#$('.email_id').each(function() {
+                $(this).rules('add', {
+                    required: true,
+                    pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                    messages: {
+                        required: "Please enter your email",
+                        pattern: "Please enter valid email"
+                    }
+                });
+            });#}
+
+            $('.phone_number').each(function() {
+                $(this).rules('add', {
+                    required: true,
+                    pattern: /^([9|8|7])[\d]{9}$/,
+                    messages: {
+                        required: "Please enter your mobile number",
+                        pattern: "Please enter valid mobile number",            }
+                });
+            });
+            '[name*="field"]'
+           {# $.validator.addMethod("cRequired", $.validator.methods.required,
+            "email required");
+#}
+            jQuery.validator.addClassRules({
+                "email_id": {
+                    required: true,
+                    pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                },
+                "education_type": {
+                    required: true,
+                },
+                "interest_area": {
+                    required: true,
+                },
+                "institute": {
+                    required: true,
+                    pattern: /^[A-z]+$/,
+                },
+            });
+        });
+    </script>
     
 {% endblock %}
 {% block stylesheets %}
     <style>
-        .ui-datepicker {
-            background: #999;
-        }
+        
         div.email_id, div.phone_number, div.education_type, div.interest_area {
             display:inline-block;
         }
-        
+        .error {
+            color: red;
+        }
+        form {
+            padding:20px 20px;
+            text-align: center;
+        }
+        {#td, th {
+            width :400px;
+            height: auto;
+            padding:5px;
+
+        }#}
+        input[type=text], input[type=email] {
+            width: 100%;
+            padding: 10px 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+        input[type=submit] {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 16px 32px;
+            text-decoration: none;
+            margin: 4px 2px;
+            cursor: pointer;
+        }
+        select {
+            width: 50%;
+            height:20px;
+        }
+
     </style>
 {% endblock %}
         

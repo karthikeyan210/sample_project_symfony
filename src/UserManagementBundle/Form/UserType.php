@@ -20,18 +20,29 @@ class UserType extends AbstractType
     {
         $builder
             ->add('username', TextType::class, array(
-                'attr' => array('data-required' => 'true'),
+                'attr' => array(
+                    'data-required' => 'true',
+                    'fieldType' => 'username',
+                ),
             ))
             ->add('firstname', TextType::class, array(
-                'attr' => array('data-required' => 'true'),
+                'attr' => array(
+                    'data-required' => 'true',
+                    'fieldType' => 'name',
+                ),
             ))
-            ->add('lastname')
+            ->add('lastname', TextType::class, array(
+                'attr' => array(
+                    'fieldType' => 'name',
+                ),
+            ))
             ->add('dob', DateType::class, array(
                 'widget' => 'single_text',
                 'html5' => false,
                 'attr' => array(
                     'class' => 'js-datepicker',
                     'data-required' => 'true',
+                    'fieldType' => 'dob',
                 ),
                 'format' => 'dd/MM/yyyy',
             ))
@@ -44,6 +55,7 @@ class UserType extends AbstractType
             ->add('blood', EntityType::class, array(
                 'class' => 'UserManagementBundle:BloodGroup',
                 'choice_label' => 'name',
+                'required' => false,
             ))
             ->add('emails', CollectionType::class, array(
                 'entry_type' => UserEmailType::class,

@@ -15,7 +15,11 @@ class UserPhoneType extends AbstractType
     {
         $builder->add('number', TextType::class, array(
             'label' => false,
-            'attr' => array('data-required' => 'true'),
+            'attr' => array(
+                'data-required' => 'true',
+                'fieldType' => 'mobilenumber',
+                'class' => 'phone_number',
+            ),
         ));
     }
 

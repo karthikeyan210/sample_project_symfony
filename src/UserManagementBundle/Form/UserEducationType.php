@@ -20,11 +20,19 @@ class UserEducationType extends AbstractType
                 'choice_label' => 'type',
                 'multiple' => false,
                 'expanded' => false,
-//                'label' => false,
+                'required' => false,
+                'attr' => array(
+                    'class' => 'education_type',
+                ),
+                'label' => false,
             ))
             ->add('institute', TextType::class, array(
-//                'label' => false,
-                'attr' => array('data-required' => 'true'),
+                'label' => false,
+                'attr' => array(
+                    'data-required' => 'true',
+                    'fieldType' => 'name',
+                    'class' => 'institute',
+                ),
             ));
     }
 
