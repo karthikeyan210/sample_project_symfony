@@ -11,7 +11,14 @@ user_management_list:
     defaults: { _controller: UserManagementBundle:User:list, page: 1 }
     requirements:
       page: '\d+'
-          
+
+user_management_paginate:
+    path: /users/paginate/{page}
+    defaults: { _controller: UserManagementBundle:User:paginate, page: 1 }
+    requirements:
+      page: '\d+'
+
+
 user_management_show:
     path: /users/view/{id}
     defaults: { _controller: UserManagementBundle:User:show }

@@ -1,0 +1,125 @@
+.header {
+    position:absolute;
+    top:0%;
+    bottom:82%;
+    right:0%;
+    left: 0%;
+    background-color: #e40046;
+}
+.heading img {
+    height: 50px;
+    width:80px;
+    border-radius: 10%;
+}
+.heading a {
+    text-decoration: none;
+    color:#ffffff;
+}
+.heading {
+    text-align: center;
+    /*//background-color:#e0e0d1;*/
+    padding:10px;
+    font-size: xx-large;
+    color:white;
+    position :absolute;
+    top:5%;
+    /*//bottom:70%;*/
+    right:0%;
+    left: 0%;
+}
+.taps {
+    display:inline-block;
+    position: relative;
+    top:71%;
+    bottom:0%;
+    right:0%;
+    left: 0%;
+    width: 100%;
+    background-color:ghostwhite;
+}
+/*.logout {
+    position: absolute;
+    top:35%;
+    left:90%;
+}*/
+.taps ul {
+    list-style: none;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+}
+.taps ul li {
+    display: inline-block;
+    float:left;
+    width:200px;
+    line-height: 40px;
+    margin: 0 auto;
+}
+.taps ul li a {
+  text-decoration: none;
+  color:#000000;
+  display: block;
+  transition: .3s background-color;
+  padding:0 24px;
+}
+.taps ul li a:hover {
+  background-color: #333333;
+  color:#FFFFFF;
+  opacity: 0.8;
+}
+.taps li ul {
+    position:absolute;
+    display:none;
+    width:inherit;
+    text-align:center;
+}
+.taps li:hover ul {
+    display:block;
+}
+.taps ul li ul li {
+  display: block;
+  float:none;
+  height:auto;
+  width:inherit;
+  line-height:40px;
+}
+.container {
+   position: absolute;
+   top:19%;
+   left:0%;
+   width:100%;
+   /*z-index: -1;*/ 
+}
+input[type=button], button {
+    background-color: rgb;
+    border: none;
+    color: steelblue;
+    padding: 12px 20px;
+    text-decoration: none;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+button {
+    background-color:tamato;
+}
+
+input[type=text], input[type=email], select {
+    width: 300px;
+    padding: 10px 10px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    background-color: #f2f2f2;
+    border: none;
+    line-height: 30px;
+}
+table {
+    border-collapse: collapse; 
+    border-spacing: 0;
+}
+td, th { 
+    padding: 10px;
+    text-align:left;
+}
+th {
+    background: #e0e0e0;
+}

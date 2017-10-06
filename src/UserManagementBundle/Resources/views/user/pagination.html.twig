@@ -1,0 +1,36 @@
+{% if maxPages > 1 %}
+<table class="pagination">
+    <tr>
+        <td>
+        {# `«` arrow  #}
+        {% if thisPage <= 1 %}
+            <span> « </span>
+        {% else %}
+            <span>
+                <a href="{{ path('user_management_list', {page: thisPage-1 < 1 ? 1 : thisPage-1 }) }}"> « </a>
+            </span>
+        {% endif %}
+
+        {# Render each page number #}
+        {% for i in 1..maxPages %}
+            {% if thisPage != i %}
+                <span>
+                <a href="{{ path('user_management_list', {page: i}) }}">{{ i }}</a>
+                </span>
+            {% else %}
+                <span>{{ i }}</span>
+            {% endif %}
+        {% endfor %}
+        
+        {# `»` arrow #}
+        {% if thisPage == maxPages %}
+            <span> » </span>
+        {% else %}
+            <span>
+                <a href="{{ path('user_management_list', {page: thisPage+1 <= maxPages ? thisPage+1 : thisPage}) }}"> » </a>
+            </span>
+        {% endif %}
+        </td>
+    </tr>
+</table>
+{% endif %}

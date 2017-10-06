@@ -11,7 +11,7 @@ function addField(ulFieldId)
     newLi.innerHTML = fieldWidget;
     var removeButton = document.createElement('input');
     removeButton.setAttribute("type", "button");
-    removeButton.setAttribute("value", "X");
+    removeButton.setAttribute("value", "x");
     removeButton.setAttribute('class', 'remove_button')
     removeButton.onclick = function() { removeField(this,ulField); };
     newLi.appendChild(removeButton);

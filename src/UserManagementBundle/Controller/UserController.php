@@ -21,9 +21,14 @@ use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
 {
+    /**
+     * To render the form to create new user
+     * 
+     * @param Request $request
+     * @return type
+     */
     public function formAction(Request $request)
     {
-        // create a task and give it some dummy data for this example
         $user = new User();
         $user->addEmail(new UserEmail());
         $user->addEducation(new UserEducation());
@@ -38,19 +43,20 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            return $this->redirectToRoute('user_management_list');
-//            return new Response("User is saved. id=" .$user->getId());
+            $this->addFlash("success", "User registration is success!!");
+            return $this->redirectToRoute('user_management_form');
         }
         return $this->render('UserManagementBundle:user:new.html.twig', array(
             'form' => $form->createView(),
         ));
     }
 
-//    public function successAction()
-//    {
-//        return $this->render('@UserManagement/Default/link.html.twig');
-//    }
-    
+    /**
+     * To list the users
+     * 
+     * @param integer $page
+     * @return type
+     */
     public function listAction($page = 1)
     {           
         $em = $this->getDoctrine()->getManager();
@@ -66,7 +72,36 @@ class UserController extends Controller
            'thisPage' => $thisPage,
         ));
     }
+    
+    /**
+     * To retrieve the selected user based on the page number
+     * 
+     * @param integer $page
+     * @return type
+     */
+    public function paginateAction($page = 1)
+    {           
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository('UserManagementBundle:User')
+                    ->getAllUsers($page);
+        $totalUsers = $users->count();
+        $limit = 5;
+        $maxPages = ceil($totalUsers / $limit);
+        $thisPage = $page;
+       return $this->render('UserManagementBundle:user:userlist.html.twig', array(
+            'users' => $users,
+            'maxPages' => $maxPages,
+           'thisPage' => $thisPage,
+        ));
+    }
    
+    /**
+     * To display the user profile
+     * 
+     * @param integer $id
+     * @return type
+     * @throws type
+     */
     public function showAction($id)
     {           
         $em = $this->getDoctrine()->getManager();
@@ -82,6 +117,14 @@ class UserController extends Controller
         ));
     }
     
+    /**
+     * To render the form to edit the user profile
+     * 
+     * @param integer $id
+     * @param Request $request
+     * @return type
+     * @throws type
+     */
     public function editAction($id, Request $request)
     {           
         $em = $this->getDoctrine()->getManager();
@@ -99,8 +142,8 @@ class UserController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $userProfile = $form->getData();
             $em->flush();
+            $this->addFlash("success", "Updated Successfully!!");
             return $this->redirectToRoute('user_management_show', array('id'=>$id));
-//            return new Response("Updated the user Profile. id=" . $userProfile->getId());
         }
         
         return $this->render('UserManagementBundle:user:new.html.twig', array(
@@ -109,14 +152,12 @@ class UserController extends Controller
         ));
     }
     
-    public function genderAction()
-    {
-       $em = $this->getDoctrine()->getManager();
-       $repo = $em->getRepository('UserManagementBundle:BloodGroup');
-       $genders = $repo->findAll();
-       dump($genders); die();
-    }
-    
+    /** 
+     * To manage the user interest,education and blood group details
+     * 
+     * @param Request $request
+     * @return type
+     */
     public function adminAction(Request $request)
     {
         $user = new User();
@@ -130,6 +171,12 @@ class UserController extends Controller
         ));
     }
         
+    /**
+     * To add the blood group
+     * 
+     * @param Request $request
+     * @return type
+     */
     public function addBloodGroupAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -154,6 +201,12 @@ class UserController extends Controller
         
     }
     
+    /**
+     * To add the user interest area
+     * 
+     * @param Request $request
+     * @return type
+     */
     public function addInterestAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
@@ -178,6 +231,12 @@ class UserController extends Controller
         
     }
     
+    /**
+     * To add the education type
+     * 
+     * @param Request $request
+     * @return type
+     */
     public function addEducationAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();

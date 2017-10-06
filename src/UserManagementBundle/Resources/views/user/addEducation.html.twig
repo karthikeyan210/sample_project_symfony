@@ -1,7 +1,6 @@
-{# empty Twig template onclick="location.href='/admin/{{ gender.id }}/remove'"#}
-{% extends 'base.html.twig' %}
+{% extends 'UserManagementBundle:user:index.html.twig' %}
 {% block body %}
-<table border="2">
+<table border="2" align="center">
     <tr>
         <th>Education Types</th>
         <th>Add New</th>
@@ -18,4 +17,10 @@
         {{ form_end(form) }}
     </tr>
 </table>
+    <div class="back_button" align="center">
+        <input type="button" value="back" onclick="location.href='{{ path('user_management_admin')}}'">
+    </div>
+{% endblock %}
+{% block stylesheets %}
+   {{ parent() }}
 {% endblock %}

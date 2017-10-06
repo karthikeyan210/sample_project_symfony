@@ -1,5 +1,15 @@
 {# empty Twig template #}
-<table border = "2">
+{% extends 'UserManagementBundle:user:index.html.twig' %}
+{% block messages %}
+{% for message in app.flashes('success') %}
+    <div class="alert alert-notice">
+        {{ message }}
+    </div>
+{% endfor %}
+{% endblock %}
+
+{% block body %}
+<table border = "1" align="center">
     <tr>  
         <th>Id</th>
         <td>{{ user.id }}</td>
@@ -18,7 +28,7 @@
     </tr>
     <tr>
         <th>DOB</th>
-        <td>{{ user.dob|date('d-m-Y') }}</td>
+        <td>{{ user.dob|date('M-d-Y') }}</td>
     </tr>
     <tr>
         <th>BloodGroup</th>
@@ -71,5 +81,14 @@
         </td>
     </tr>
 </table>
+{% endblock %}
+{% block stylesheets %}
+   {{ parent() }}
+    <style>
+        table {
+            background-color:rgb;
+        }
+    </style>
+{% endblock %}
     
     

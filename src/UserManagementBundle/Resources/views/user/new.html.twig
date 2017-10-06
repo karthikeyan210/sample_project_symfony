@@ -1,10 +1,19 @@
 {# src/UserManagementBundle/Resources/views/form/new.html.twig #}
 
-{% extends 'base.html.twig' %}
+{% extends 'UserManagementBundle:user:index.html.twig' %}
+
+{% block messages %}
+{% for message in app.flashes('success') %}
+    <div class="alert alert-notice">
+        {{ message }}
+    </div>
+{% endfor %}
+{% endblock %}
 
 {% block body %}
-{{ form_start(form, {'attr':{'novalidate' : 'novalidate','onsubmit':'return validation();','id':'myform'}}) }}
-<table>
+<div id="new_form">
+{{ form_start(form, {'attr':{'novalidate' : 'novalidate','id':'myform'}}) }}
+<table align="center">
     <tr>
         <td>
             {{ form_label(form.username) }}
@@ -78,10 +87,10 @@
         </td>
     </tr>
     <tr>
-        <td>
-        <a href="#" id="add-another-email" onclick="addField('email-fields-list')">Add another email</a>
-        </td>
         <td></td>
+        <td>
+        <input type="button" value="Add another email" id="add-another-email" onclick="addField('email-fields-list')">
+        </td>
     </tr>
     <tr>
         <td>
@@ -102,10 +111,10 @@
         </td>
     </tr>
     <tr>
-        <td>
-        <a href="#" id="add-another-number" onclick="addField('mobile-numbers-list')">Add another Number</a>
-        </td>
         <td></td>
+        <td>
+        <input type="button" value="Add another Number" id="add-another-number" onclick="addField('mobile-numbers-list')">
+        </td>
     </tr>
     <tr>
         <td>
@@ -127,10 +136,10 @@
         </td>
     </tr>
     <tr>
-        <td>
-        <a href="#" id="add-another-education" onclick="addField('education-list')">Add another Education</a>
-        </td>
         <td></td>
+        <td>
+        <input type="button" value="Add another Education" id="add-another-education" onclick="addField('education-list')">
+        </td>
     </tr>
     
     <tr>
@@ -151,10 +160,10 @@
         </td>
     </tr>
     <tr>
-        <td>
-        <a href="#" id="add-another-interest" onclick="addField('interests-list')">Add another interest</a>
-        </td>
         <td></td>
+        <td>
+        <input type="button" value="Add another interest" id="add-another-interest" onclick="addField('interests-list')">
+        </td>
     </tr>
     <tr>
         <td>
@@ -167,23 +176,17 @@
             {{ form_row(form._token) }}
 
 {{ form_end(form, {'render_rest': false}) }}
+</div>
 {% endblock %}
 
 
 {% block javascripts %}
-{#    {{ parent() }}#}
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-    </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js">
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js">
-    </script>
-    <script src="{{ asset('bundles/usermanagement/js/addRemoveField.js') }}">    
-    </script>
-    {#<script src="{{ asset('bundles/usermanagement/js/validation2.js') }}">
-    </script>#}
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js"></script>
+    <script src="{{ asset('bundles/usermanagement/js/addRemoveField.js') }}"></script>
     <script>
         $(document).ready(function() {
             var today = new Date();
@@ -240,36 +243,15 @@
                         required: "Please select Blood group",
                     }, 
                   }        
-            });
-            
-            {#$('.email_id').each(function() {
-                $(this).rules('add', {
-                    required: true,
-                    pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                    messages: {
-                        required: "Please enter your email",
-                        pattern: "Please enter valid email"
-                    }
-                });
-            });#}
-
-            $('.phone_number').each(function() {
-                $(this).rules('add', {
-                    required: true,
-                    pattern: /^([9|8|7])[\d]{9}$/,
-                    messages: {
-                        required: "Please enter your mobile number",
-                        pattern: "Please enter valid mobile number",            }
-                });
-            });
-            '[name*="field"]'
-           {# $.validator.addMethod("cRequired", $.validator.methods.required,
-            "email required");
-#}
+            });            
             jQuery.validator.addClassRules({
                 "email_id": {
                     required: true,
                     pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
+                },
+                "phone_number": {
+                    required: true,
+                    pattern: /^([9|8|7])[\d]{9}$/,
                 },
                 "education_type": {
                     required: true,
@@ -287,44 +269,23 @@
     
 {% endblock %}
 {% block stylesheets %}
+    {{ parent() }}
     <style>
-        
         div.email_id, div.phone_number, div.education_type, div.interest_area {
             display:inline-block;
         }
         .error {
-            color: red;
+            color: teal;
         }
         form {
             padding:20px 20px;
+            display:block;
             text-align: center;
         }
-        {#td, th {
-            width :400px;
-            height: auto;
-            padding:5px;
-
-        }#}
-        input[type=text], input[type=email] {
-            width: 100%;
-            padding: 10px 10px;
-            margin: 8px 0;
-            box-sizing: border-box;
+        td > ul {
+            padding:0%;
+            margin:0%;
         }
-        input[type=submit] {
-            background-color: #4CAF50;
-            border: none;
-            color: white;
-            padding: 16px 32px;
-            text-decoration: none;
-            margin: 4px 2px;
-            cursor: pointer;
-        }
-        select {
-            width: 50%;
-            height:20px;
-        }
-
     </style>
 {% endblock %}
         

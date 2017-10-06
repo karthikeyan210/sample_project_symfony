@@ -1,72 +1,94 @@
-{# empty Twig template #}
-{% extends 'base.html.twig' %}
+{% extends 'UserManagementBundle:user:index.html.twig' %}
+
 {% block body %}
- <input type="button" value="New User"
-                   onclick="location.href='/users/new';" >
-<table border = "2">
-    <tr>
-        <th>UserName</th>
-        <th>FirstName</th>
-        <th>LastName</th> 
-        <th>DOB</th>
-        <th>Gender</th>
-        <th colspan="2">Modify</th>
-    </tr>
-{% for user in users %}
-    <tr>  
-        <td>{{ user.username }}</td>
-        <td>{{ user.firstname }}</td>   
-        <td>{{ user.lastname }}</td>
-        <td>{{ user.dob|date('Y-m-d') }}</td>
-        <td>{{ user.gender }}</td>
-        <td>
-            <input type="button" value="View"
-                   onclick="location.href='/users/view/{{user.id}}';" >
-            <input type="button" value="Edit"
-                   onclick="location.href='/users/edit/{{user.id}}';" >
-        </td>
-    </tr>
-{% endfor %}
-</table>
-
-
     
-{% if maxPages > 1 %}
-<table class="pagination">
-    <tr>
-        <td>
-        {# `«` arrow  #}
-        {% if thisPage <= 1 %}
-            <span> « </span>
-        {% else %}
-            <span>
-                <a href="{{ path('user_management_list', {page: thisPage-1 < 1 ? 1 : thisPage-1 }) }}"> « </a>
-            </span>
-        {% endif %}
-
-        {# Render each page number #}
-        {% for i in 1..maxPages %}
-            {% if thisPage != i %}
-                <span>
-                <a href="{{ path('user_management_list', {page: i}) }}">{{ i }}</a>
-                </span>
+<div id="displayResults">
+    <table border = "2" id="userlist" align="center">
+        <tr>
+            <th>UserName</th>
+            <th>FirstName</th>
+            <th>LastName</th> 
+            <th>DOB</th>
+            <th>Gender</th>
+            <th colspan="2">Modify</th>
+        </tr>
+    {% for user in users %}
+        <tr>  
+            <td>{{ user.username }}</td>
+            <td>{{ user.firstname }}</td>   
+            <td>{{ user.lastname }}</td>
+            <td>{{ user.dob|date('Y-m-d') }}</td>
+            <td>{{ user.gender }}</td>
+            <td>
+                <input type="button" value="View" class="edit_button"
+                       onclick="location.href='/users/view/{{user.id}}';" >
+                <input type="button" value="Edit" class="edit_button"
+                       onclick="location.href='/users/edit/{{user.id}}';" >
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+    <div id="pagination" align="center">    
+    {% if maxPages > 1 %}
+    <table class="pagination" >
+        <tr>
+            <td>
+            {% if thisPage <= 1 %}
+                <span> « </span>
             {% else %}
-                <span>{{ i }}</span>
+                <span>
+                    <input type="button" class="page_no" value="«" onclick="changePagination('{{ thisPage-1 < 1 ? 1 : thisPage-1 }}')" href="javascript:void(0)">
+                </span>
             {% endif %}
-        {% endfor %}
-        
-        {# `»` arrow #}
-        {% if thisPage == maxPages %}
-            <span> » </span>
-        {% else %}
-            <span>
-                <a href="{{ path('user_management_list', {page: thisPage+1 <= maxPages ? thisPage+1 : thisPage}) }}"> » </a>
-            </span>
-        {% endif %}
-        </td>
-    </tr>
-</table>
-{% endif %}
 
+            {% for i in 1..maxPages %}
+                {% if thisPage != i %}
+                    <span>
+                    <input type="button" class="page_no" value="{{ i }}" onclick="changePagination('{{ i }}')" href="javascript:void(0)">
+                    </span>
+                {% else %}
+                    <span>{{ i }}</span>
+                {% endif %}
+            {% endfor %}
 
+            {% if thisPage == maxPages %}
+                <span> » </span>
+            {% else %}
+                <span>
+                    <input type="button" class="page_no" value="»" onclick="changePagination('{{ thisPage+1 <= maxPages ? thisPage+1 : thisPage }}')" href="javascript:void(0)">
+                </span>
+            {% endif %}
+            </td>
+        </tr>
+    </table>
+    {% endif %}
+    </div>
+
+</div>
 {% endblock %}
+
+{% block javascripts %}
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    <script>
+        function changePagination(pageId){
+            var url = '{{ path('user_management_paginate')}}'+'/'+pageId;
+            $.ajax({
+                type: "POST",
+                url: url,
+                cache: false,
+                success: function(result){
+                    console.log(result);
+                    var elem =  document.getElementById('displayResults');
+                    elem.innerHTML = "";
+                    elem.innerHTML = result;
+                }
+            });
+        }
+    </script>
+{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+
+

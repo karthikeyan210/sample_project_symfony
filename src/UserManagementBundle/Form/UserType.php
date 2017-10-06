@@ -44,7 +44,7 @@ class UserType extends AbstractType
                     'data-required' => 'true',
                     'fieldType' => 'dob',
                 ),
-                'format' => 'dd/MM/yyyy',
+                'format' => 'MM/dd/yyyy',
             ))
             ->add('gender', EntityType::class, array(
                 'class' => 'UserManagementBundle:Gender',
