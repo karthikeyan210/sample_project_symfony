@@ -19,8 +19,8 @@
             {{ form_label(form.username) }}
         </td>
         <td>
-            <p class="widget">{{ form_widget(form.username) }}</p>
-            <span class="error">{{ form_errors(form.username) }}</span>
+            {{ form_widget(form.username) }}
+            {{ form_errors(form.username) }}
         </td>
     </tr>
     <tr>
@@ -28,8 +28,8 @@
             {{ form_label(form.firstname) }}
         </td>
         <td>
-            <p class="widget">{{ form_widget(form.firstname) }}</p>
-            <span class="error">{{ form_errors(form.firstname) }}</span>
+            {{ form_widget(form.firstname) }}
+            {{ form_errors(form.firstname) }}
         </td>
     </tr>
     <tr>
@@ -37,8 +37,8 @@
             {{ form_label(form.lastname) }}
         </td>
         <td>
-            <p class="widget">{{ form_widget(form.lastname) }}</p>
-            <span class="error">{{ form_errors(form.lastname) }}</span>
+            {{ form_widget(form.lastname) }}
+            {{ form_errors(form.lastname) }}
         </td>
     </tr>
     <tr>
@@ -46,8 +46,8 @@
             {{ form_label(form.gender) }}
         </td>
         <td>
-            <p class="widget">{{ form_widget(form.gender) }}</p>
-            <span class="error">{{ form_errors(form.gender) }}</span>
+            {{ form_widget(form.gender) }}
+            {{ form_errors(form.gender) }}
         </td>
     </tr>
     <tr>
@@ -55,8 +55,8 @@
             {{ form_label(form.blood) }}
         </td>
         <td>
-            <p class="widget">{{ form_widget(form.blood) }}</p>
-            <span class="error">{{ form_errors(form.blood) }}</span>
+            {{ form_widget(form.blood) }}
+            {{ form_errors(form.blood) }}
         </td>
     </tr>
     <tr>
@@ -64,8 +64,8 @@
             {{ form_label(form.dob) }}
         </td>
         <td>
-            <p class="widget">{{ form_widget(form.dob) }}</p>
-            <span class="error">{{ form_errors(form.dob) }}</span>
+            {{ form_widget(form.dob) }}
+            {{ form_errors(form.dob) }}
         </td>
     </tr>
   
@@ -78,10 +78,8 @@
         <ul id="email-fields-list"
             data-prototype="{{ form_widget(form.emails.vars.prototype)|e }}">
             {% for emailField in form.emails %}
-                <p>
-                    <p class="widget">{{ form_widget(emailField) }}<p>
-                    <span class="error">{{ form_errors(emailField) }}</span>
-                </p>
+                    {{ form_widget(emailField) }}
+                    {{ form_errors(emailField) }}
             {% endfor %}
         </ul>
         </td>
@@ -89,7 +87,7 @@
     <tr>
         <td></td>
         <td>
-        <input type="button" value="Add another email" id="add-another-email" onclick="addField('email-fields-list')">
+        <input type="button" value="Add another email" id="add-another-email" {#onclick="addField('email-fields-list','user_emails')"#}>
         </td>
     </tr>
     <tr>
@@ -101,11 +99,8 @@
         <ul id="mobile-numbers-list"
             data-prototype="{{ form_widget(form.mobileNumbers.vars.prototype)|e }}">
             {% for mobileField in form.mobileNumbers %}
-                <p>
-                    <p class="widget">{{ form_widget(mobileField) }}</p>
-                    <span class="error">{{ form_errors(mobileField) }}</span>
-
-                </p>
+                    {{ form_widget(mobileField) }}
+                    {{ form_errors(mobileField) }}
             {% endfor %}
         </ul>
         </td>
@@ -113,7 +108,7 @@
     <tr>
         <td></td>
         <td>
-        <input type="button" value="Add another Number" id="add-another-number" onclick="addField('mobile-numbers-list')">
+        <input type="button" value="Add another Number" id="add-another-number" {#onclick="addField('mobile-numbers-list','user_mobileNumbers')"#}>
         </td>
     </tr>
     <tr>
@@ -125,12 +120,10 @@
         <ul id="education-list"
             data-prototype="{{ form_widget(form.education.vars.prototype)|e }}">
             {% for edu in form.education %}
-                <p>
-                    <p class="widget">{{ form_widget(edu.eduType) }}</p>
-                    <span class="error">{{ form_errors(edu.eduType) }}</span>
-                    <p class="widget">{{ form_widget(edu.institute, {'attr':{'placeholder': 'Institute'}}) }}</p>
-                    <span class="error">{{ form_errors(edu.institute) }}</span>
-                </p>
+                    {{ form_widget(edu.eduType) }}
+                    {{ form_errors(edu.eduType) }}
+                    {{ form_widget(edu.institute, {'attr':{'placeholder': 'Institute'}}) }}
+                    {{ form_errors(edu.institute) }}
             {% endfor %}
         </ul>
         </td>
@@ -138,7 +131,7 @@
     <tr>
         <td></td>
         <td>
-        <input type="button" value="Add another Education" id="add-another-education" onclick="addField('education-list')">
+        <input type="button" value="Add another Education" id="add-another-education" {#onclick="addField('education-list', 'user_education')"#}>
         </td>
     </tr>
     
@@ -151,10 +144,8 @@
         <ul id="interests-list"
             data-prototype="{{ form_widget(form.interests.vars.prototype)|e }}">
             {% for interestfield in form.interests %}
-                <p>
-                    <p class="widget">{{ form_widget(interestfield.interest) }}</p>
-                    <span class="error">{{ form_errors(interestfield.interest) }}</span>
-                </p>
+                    {{ form_widget(interestfield.interest) }}
+                    {{ form_errors(interestfield.interest) }}
             {% endfor %}
         </ul>
         </td>
@@ -162,7 +153,7 @@
     <tr>
         <td></td>
         <td>
-        <input type="button" value="Add another interest" id="add-another-interest" onclick="addField('interests-list')">
+        <input type="button" value="Add another interest" id="add-another-interest" {#onclick="addField('interests-list', 'user_interests')"#}>
         </td>
     </tr>
     <tr>
@@ -186,106 +177,32 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/jquery.validate.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js"></script>
-    <script src="{{ asset('bundles/usermanagement/js/addRemoveField.js') }}"></script>
+    <script src="{{ asset('bundles/usermanagement/js/addField.js') }}"></script>
+    <script src="{{ asset('bundles/usermanagement/js/date.js') }}"></script>
+    <script src="{{ asset('bundles/usermanagement/js/validation.js') }}"></script>
     <script>
-        $(document).ready(function() {
-            var today = new Date();
-            var currentYear = today.getFullYear();
-            //var rangeLimit = currentYear-18;
-            $( ".js-datepicker" ).datepicker({
-                changeMonth: true,
-                changeYear: true,
-                yearRange: '1980:'+currentYear,
+        {#var $collectionHolder;
+        function addField(ulFieldId) {
+            $collectionHolder = document.getElementById(ulFieldId);
+            console.log($collectionHolder);
+        }
+        jQuery(document).ready(function() {
+            $('#add-another-email').click(function(e) {
+                console.log($collectionHolder);
+              $collectionHolder.append($newLinkLi);
+
+    $collectionHolder.data('index', $collectionHolder.find(':input').length);
+                console.log($collectionHolder.data('index'));
+               $addTagLink.on('click', function(e) {
+                    e.preventDefault();
+                    addTagForm($collectionHolder, $newLinkLi);
+                });
             });
-        });
-    </script>
-    <script>
-        $(document).ready(function () {
-            $("#myform").validate({
-                rules: {
-                    'user[username]': {
-                        required: true,
-                        pattern: /^(\w+)$/,
-                    },
-                    'user[firstname]': {
-                        required: true,
-                        pattern: /^([a-zA-Z]+)([ \.-][a-zA-Z]+)?$/,
-                    },
-                    'user[lastname]': {
-                        required: false,
-                        pattern: /^([a-zA-Z]+)([ \.-][a-zA-Z]+)?$/,
-                    },
-                    'user[dob]': {
-                        required: true,
-                        pattern: /^[\d]{2}[/][\d]{2}[/][\d]{4}$/,
-                    },
-                    '{{ form.blood.vars.full_name }}': {
-                         required: true,
-                     }, 
-                  },
-                messages: {
-                    'user[username]': {
-                        required: "Please enter your username",
-                        pattern: "Please enter valid username"
-                    },
-                    'user[firstname]': {
-                        required: "Please enter your firstname",
-                        pattern: "Please enter valid firstname"
-                    },
-                    'user[lastname]': {
-                        pattern: "Please enter valid lastname"
-                    },
-                    'user[dob]': {
-                        required: "Please enter your dob",
-                        pattern: "Please enter valid dob",
-                    },
-                    '{{ form.blood.vars.full_name }}': {
-                        required: "Please select Blood group",
-                    }, 
-                  }        
-            });            
-            jQuery.validator.addClassRules({
-                "email_id": {
-                    required: true,
-                    pattern: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
-                },
-                "phone_number": {
-                    required: true,
-                    pattern: /^([9|8|7])[\d]{9}$/,
-                },
-                "education_type": {
-                    required: true,
-                },
-                "interest_area": {
-                    required: true,
-                },
-                "institute": {
-                    required: true,
-                    pattern: /^[A-z]+$/,
-                },
-            });
-        });
-    </script>
-    
+        });#}
+</script>
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-    <style>
-        div.email_id, div.phone_number, div.education_type, div.interest_area {
-            display:inline-block;
-        }
-        .error {
-            color: teal;
-        }
-        form {
-            padding:20px 20px;
-            display:block;
-            text-align: center;
-        }
-        td > ul {
-            padding:0%;
-            margin:0%;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('bundles/usermanagement/css/formstyle.css') }}"
 {% endblock %}
         

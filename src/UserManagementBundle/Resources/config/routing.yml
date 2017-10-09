@@ -50,3 +50,9 @@ user_management_addInterest:
 user_management_addEducation:
     path: /admin/education
     defaults: { _controller: UserManagementBundle:User:addEducation }
+login:
+    path:     /login
+    defaults: { _controller: UserManagementBundle:Security:login }
+    
+logout:
+    path: /logout

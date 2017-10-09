@@ -69,22 +69,7 @@
 
 {% block javascripts %}
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
-    <script>
-        function changePagination(pageId){
-            var url = '{{ path('user_management_paginate')}}'+'/'+pageId;
-            $.ajax({
-                type: "POST",
-                url: url,
-                cache: false,
-                success: function(result){
-                    console.log(result);
-                    var elem =  document.getElementById('displayResults');
-                    elem.innerHTML = "";
-                    elem.innerHTML = result;
-                }
-            });
-        }
-    </script>
+    <script src="{{ asset('bundles/usermanagement/js/paginate.js') }}"></script>
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
