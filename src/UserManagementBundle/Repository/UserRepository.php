@@ -21,8 +21,8 @@ class UserRepository extends EntityRepository
     {
         $paginator = new Paginator($dql);
         $paginator->getQuery()
-            ->setFirstResult($limit * ($page - 1)) // Offset
-            ->setMaxResults($limit); // Limit
+            ->setFirstResult($limit * ($page - 1))
+            ->setMaxResults($limit);
 
         return $paginator;
     }

@@ -20,8 +20,10 @@
             </li>
             <li><a href = "{{ path('user_management_list') }}">User List</a>
             </li>
+            {% if is_granted('ROLE_ADMIN') == true %}
             <li><a href = "{{ path('user_management_admin') }}">Admin Page</a>
             </li>
+            {% endif %}
             <li><a href="{{ path('logout') }}">logout</a></li>
         </ul>
     </div>

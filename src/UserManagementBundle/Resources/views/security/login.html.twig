@@ -1,4 +1,4 @@
-{% extends 'UserManagementBundle:user:index.html.twig' %}
+{#{% extends 'UserManagementBundle:user:index.html.twig' %}
 {% block taps %} {% endblock %}
 {% block body %}
 {% if error %}
@@ -14,5 +14,42 @@
     
     <button type="submit">login</button>
 </form>
-{% endblock %}
+{% endblock %}#}
+
+<html>
+<head>
+    <title>Sign In</title>
+    <link rel = "stylesheet" type = "text/css" 
+    href = "{{ asset('bundles/usermanagement/css/loginstyle.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <div class = "header">
+        <b>User Management System</b>
+    </div>
+    <div align="center">
+        {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+    </div>
+    {{ form_start(form) }}
+        {{ form_row(form.username, {'attr': {'placeholder':'username'}}) }}
+        {{ form_row(form.password, {'attr': {'placeholder':'password'}}) }}
+        <button type="submit" id="signin">login</button>
+    {{ form_end(form) }}
+   {# <form action="{{ path('login') }}" method="post" name = "myform">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="_username" value="{{ last_username }}" placeholder="username"/><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="_password" placeholder="password"/><br>
+
+        <button type="submit" id="signin">login</button>
+    </form>
+#}
+</div>
+    
+</body>
+</html>
  

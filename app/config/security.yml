@@ -50,23 +50,11 @@ security:
                 check_path: login
                 default_target_path: user_management_list
                 always_use_default_target_path: true
+            access_denied_handler: authentication_handler
             logout:
                 path:   /logout
                 target: /login
         
-#        secured_area:
-##            # ...
-#            pattern: ^/admin
-#            anonymous: ~
-#            form_login:
-#                login_path: login
-#                check_path: login
-#                default_target_path: user_management_admin
-#                always_use_default_target_path: true
-#            logout:
-#                path:   /logout
-#                target: /
-
     access_control:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin, roles: ROLE_ADMIN }

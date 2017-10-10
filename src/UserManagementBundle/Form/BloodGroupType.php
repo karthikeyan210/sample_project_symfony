@@ -16,12 +16,6 @@ class BloodGroupType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-//            ->add('name', EntityType::class, array(
-//                'class' => 'UserManagementBundle:BloodGroup',
-//                'choice_label' => 'name',
-//                'multiple' => false,
-//                'expanded' => true,
-//            ))
             ->add('name', TextType::class, array(
                 'label' => false,
                 'required' => false,

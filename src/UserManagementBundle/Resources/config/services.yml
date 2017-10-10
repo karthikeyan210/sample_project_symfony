@@ -2,3 +2,6 @@ services:
 #    user_management.example:
 #        class: UserManagementBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
+    authentication_handler:
+        class: UserManagementBundle\Security\AccessDeniedHandler
+        arguments: ["@router","@session"]
