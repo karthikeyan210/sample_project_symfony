@@ -37,19 +37,19 @@ user_management_gender:
 
 user_management_admin:
     path: /admin
-    defaults: { _controller: UserManagementBundle:User:admin }
+    defaults: { _controller: UserManagementBundle:Admin:admin }
 
 user_management_addBloodGroup:
     path: /admin/bloodgroup
-    defaults: { _controller: UserManagementBundle:User:addBloodGroup }
+    defaults: { _controller: UserManagementBundle:Admin:addBloodGroup }
     
 user_management_addInterest:
     path: /admin/interest
-    defaults: { _controller: UserManagementBundle:User:addInterest }
+    defaults: { _controller: UserManagementBundle:Admin:addInterest }
     
 user_management_addEducation:
     path: /admin/education
-    defaults: { _controller: UserManagementBundle:User:addEducation }
+    defaults: { _controller: UserManagementBundle:Admin:addEducation }
 login:
     path:     /login
     defaults: { _controller: UserManagementBundle:Security:login }
