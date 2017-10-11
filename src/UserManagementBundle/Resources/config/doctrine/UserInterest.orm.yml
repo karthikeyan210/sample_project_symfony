@@ -17,13 +17,12 @@ UserManagementBundle\Entity\UserInterest:
             id: true
             generator:
                 strategy: IDENTITY
+    uniqueConstraints:
+        user_interest_unique:
+            columns: [user_id, interest_id]
     manyToOne:
         interest:
             targetEntity: Interest
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: null
-            inversedBy: null
             joinColumns:
                 interest_id:
                     referencedColumnName: id

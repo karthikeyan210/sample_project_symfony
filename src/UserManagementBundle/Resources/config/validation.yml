@@ -69,11 +69,11 @@ UserManagementBundle\Entity\EducationType:
 #                message: should select gender.
  
                
-#UserManagementBundle\Entity\UserInterest:
-#    constraints:
-#        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
-#            fields: [type]
-#            message: This type "{{ value }}" is already there.
+UserManagementBundle\Entity\UserInterest:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [interest, user]
+            message: This  "{{ value }}" is already there.
 #    properties:
 #        interest:
 #            - Valid: ~

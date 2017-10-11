@@ -27,10 +27,6 @@ UserManagementBundle\Entity\UserEducation:
     manyToOne:
         eduType:
             targetEntity: EducationType
-            cascade: {  }
-            fetch: LAZY
-            mappedBy: null
-            inversedBy: null
             joinColumns:
                 edu_type_id:
                     referencedColumnName: id

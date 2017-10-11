@@ -33,7 +33,6 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user = $form->getData();
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
@@ -134,7 +133,6 @@ class UserController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $userProfile = $form->getData();
             $em->flush();
             $this->addFlash("success", "Updated Successfully!!");
             return $this->redirectToRoute('user_management_show', array('id'=>$id));

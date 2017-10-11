@@ -33,21 +33,21 @@
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
     </div>
-    {{ form_start(form) }}
-        {{ form_row(form.username, {'attr': {'placeholder':'username'}}) }}
-        {{ form_row(form.password, {'attr': {'placeholder':'password'}}) }}
+    {#{{ form_start(form) }}
+        {{ form_row(form._username, {'attr': {'placeholder':'username'}}) }}
+        {{ form_row(form._password, {'attr': {'placeholder':'password'}}) }}
         <button type="submit" id="signin">login</button>
-    {{ form_end(form) }}
-   {# <form action="{{ path('login') }}" method="post" name = "myform">
-        <label for="username">Username:</label>
+    {{ form_end(form) }}#}
+    <form action="{{ path('login') }}" method="post" name = "myform">
+{#        <label for="username">Username:</label>#}
         <input type="text" id="username" name="_username" value="{{ last_username }}" placeholder="username"/><br>
 
-        <label for="password">Password:</label>
+{#        <label for="password">Password:</label>#}
         <input type="password" id="password" name="_password" placeholder="password"/><br>
 
         <button type="submit" id="signin">login</button>
     </form>
-#}
+
 </div>
     
 </body>

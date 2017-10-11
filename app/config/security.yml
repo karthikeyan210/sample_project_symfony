@@ -31,6 +31,12 @@ security:
                     karthi:
                         password: karthi@123
                         roles: 'ROLE_USER'
+                    ram:
+                        password: ramkumar
+                        roles: 'ROLE_ADMIN'
+                    aadhil:
+                        password: karthi
+                        roles: 'ROLE_ADMIN'
                     admin:
                         password: admin@123
                         roles: 'ROLE_ADMIN'

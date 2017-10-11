@@ -54,9 +54,11 @@ $(document).ready(function () {
             pattern: /^([9|8|7])[\d]{9}$/,
         },
         "education_type": {
+            unique: 'education_type',
             required: true,
         },
         "interest_area": {
+            unique: 'interest_area',
             required: true,
         },
         "institute": {

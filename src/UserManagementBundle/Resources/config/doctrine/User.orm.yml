@@ -50,20 +50,12 @@ UserManagementBundle\Entity\User:
     manyToOne:
         blood:
             targetEntity: BloodGroup
-            cascade: ["persist"]
-            fetch: LAZY
-            mappedBy: null
-            inversedBy: null
             joinColumns:
                 blood_id:
                     referencedColumnName: id
             orphanRemoval: false
         gender:
             targetEntity: Gender
-            cascade: ["persist"]
-            fetch: LAZY
-            mappedBy: null
-            inversedBy: null
             joinColumns:
                 gender_id:
                     referencedColumnName: id
@@ -75,9 +67,6 @@ UserManagementBundle\Entity\User:
             fetch: LAZY
             mappedBy: user
             inversedBy: null
-            joinColumns:
-                email_id:
-                    referencedColumnName: id
             orphanRemoval: false
         mobileNumbers:
             targetEntity: UserPhone
@@ -85,9 +74,6 @@ UserManagementBundle\Entity\User:
             fetch: LAZY
             mappedBy: user
             inversedBy: null
-            joinColumns:
-                mobilenumber_id:
-                    referencedColumnName: id
             orphanRemoval: false
         education:
             targetEntity: UserEducation
@@ -95,9 +81,6 @@ UserManagementBundle\Entity\User:
             fetch: LAZY
             mappedBy: user
             inversedBy: null
-            joinColumns:
-                education_id:
-                    referencedColumnName: id
             orphanRemoval: false
         interests:
             targetEntity: UserInterest
@@ -105,8 +88,5 @@ UserManagementBundle\Entity\User:
             fetch: LAZY
             mappedBy: user
             inversedBy: null
-            joinColumns:
-                interest_id:
-                    referencedColumnName: id
             orphanRemoval: false
     lifecycleCallbacks: {  }
