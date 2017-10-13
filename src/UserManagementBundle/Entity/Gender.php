@@ -57,7 +57,7 @@ class Gender
         return $this->getName();
     }
     
-    public function getGender()
+    public static function getGender()
     {
         return array('male', 'female');
     }

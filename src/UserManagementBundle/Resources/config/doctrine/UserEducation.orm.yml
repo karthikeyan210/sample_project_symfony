@@ -8,6 +8,9 @@ UserManagementBundle\Entity\UserEducation:
         graduation_id_idx:
             columns:
                 - edu_type_id
+    uniqueConstraints:
+        user_education_unique:
+            columns: [user_id, edu_type_id]
     id:
         id:
             type: integer

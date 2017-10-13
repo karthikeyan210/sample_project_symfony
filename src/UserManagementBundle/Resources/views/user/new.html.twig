@@ -144,8 +144,10 @@
         <ul id="interests-list"
             data-prototype="{{ form_widget(form.interests.vars.prototype)|e }}">
             {% for interestfield in form.interests %}
+                <li>
                     {{ form_widget(interestfield.interest) }}
                     {{ form_errors(interestfield.interest) }}
+                </li>
             {% endfor %}
         </ul>
         </td>
@@ -179,27 +181,7 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js"></script>
     <script src="{{ asset('bundles/usermanagement/js/addField.js') }}"></script>
     <script src="{{ asset('bundles/usermanagement/js/date.js') }}"></script>
-    <script src="{{ asset('bundles/usermanagement/js/validation.js') }}"></script>
-    <script>
-        {#var $collectionHolder;
-        function addField(ulFieldId) {
-            $collectionHolder = document.getElementById(ulFieldId);
-            console.log($collectionHolder);
-        }
-        jQuery(document).ready(function() {
-            $('#add-another-email').click(function(e) {
-                console.log($collectionHolder);
-              $collectionHolder.append($newLinkLi);
-
-    $collectionHolder.data('index', $collectionHolder.find(':input').length);
-                console.log($collectionHolder.data('index'));
-               $addTagLink.on('click', function(e) {
-                    e.preventDefault();
-                    addTagForm($collectionHolder, $newLinkLi);
-                });
-            });
-        });#}
-</script>
+{#    <script src="{{ asset('bundles/usermanagement/js/validation.js') }}"></script>#}
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}

@@ -37,7 +37,7 @@ function addTagForm($collectionHolder, $liFieldId) {
     $index++;
     var newForm = prototype.replace(/__name__/g, $index);
     console.log(newForm);
-    var $newFormLi = $('<p></p>').append(newForm);
+    var $newFormLi = $('<li></li>').html(newForm);
     $newFormLi.appendTo($collectionHolder);
     addTagFormDeleteLink($newFormLi);
 }

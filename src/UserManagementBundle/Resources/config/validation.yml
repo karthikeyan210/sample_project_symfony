@@ -6,7 +6,8 @@ UserManagementBundle\Entity\UserEmail:
             message: This email "{{ value }}" already used.
     properties:
         emailAddr:
-            - NotBlank: ~
+            - NotBlank: 
+                message: enter your email id.
             - Email:
                 message: The email "{{ value }}" is not a valid email.
     
@@ -19,7 +20,8 @@ UserManagementBundle\Entity\UserPhone:
             message: This number "{{ value }}" already used.
     properties:
         number:
-            - NotBlank: ~
+            - NotBlank: 
+                message: enter your mobile number.
             - Regex:
                 pattern: '/^[9|8|7][0-9]{9}$/'
                 match: true
@@ -34,10 +36,6 @@ UserManagementBundle\Entity\BloodGroup:
     properties:
         name:
             - NotBlank: ~
-#            - Count:
-#                min: 1
-#                max: 5
-#            
             
 UserManagementBundle\Entity\Interest:
     constraints:
@@ -74,23 +72,21 @@ UserManagementBundle\Entity\UserInterest:
         - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
             fields: [interest, user]
             message: This  "{{ value }}" is already there.
-#    properties:
-#        interest:
-#            - Valid: ~
-#            
+    properties:
+        interest:
+            - NotBlank: 
+                message: select interest.
                            
-#UserManagementBundle\Entity\UserEducation:
-#    constraints:
-#        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
-#            fields: [type]
-#            message: This type "{{ value }}" is already there.
-#    properites:
-#        institute:
-#            - NotBlank: 
-#                  message: should fill this field.
-#        eduType:
-#            - Valid: ~
-#            
+UserManagementBundle\Entity\UserEducation:
+    constraints:
+        - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+            fields: [eduType, user]
+            message: This type "{{ value }}" is already there.
+    properites:
+        eduType:
+            - NotBlank: ~ 
+        institute: 
+            - NotBlank: ~
             
 UserManagementBundle\Entity\User:
     constraints:
@@ -101,6 +97,7 @@ UserManagementBundle\Entity\User:
         username:
             - NotBlank:
                 message: Should Enter User Name.
+#            - UserManagementBundle\Validator\Constraints\ContainsAlphanumeric: ~
             - Regex:
                 pattern: '/\w+/'
                 match:   true
@@ -122,18 +119,25 @@ UserManagementBundle\Entity\User:
         dob:
             - Date: ~
             - NotBlank: 
-                message: Should not be blank.
+                message: Select date of birth.
         gender:
             - NotBlank: 
                 message: Select one gender.
+        blood:
+            - NotBlank: 
+                message: select blood group.
         emails:
             - Valid: ~
         mobileNumbers:
-            - Valid: ~
-        blood:
             - Valid: ~
         interests:
             - Valid: ~
         education:
             - Valid: ~
+            - NotBlank: ~
+            - Count:
+                min: 1
+                max: 2
+                minMessage: 'You must specify at least one interest'
+                maxMessage: 'You cannot specify more than {{ limit }} interests'
 #       

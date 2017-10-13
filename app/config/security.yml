@@ -24,24 +24,30 @@
             #form_login: ~
 
 security:
-    providers:
-        in_memory:
-            memory:
-                users:
-                    karthi:
-                        password: karthi@123
-                        roles: 'ROLE_USER'
-                    ram:
-                        password: ramkumar
-                        roles: 'ROLE_ADMIN'
-                    aadhil:
-                        password: karthi
-                        roles: 'ROLE_ADMIN'
-                    admin:
-                        password: admin@123
-                        roles: 'ROLE_ADMIN'
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+#        Symfony\Component\Security\Core\User\User: plaintext
+        UserManagementBundle\Entity\Login:
+            algorithm: bcrypt
+    providers:
+        db_provider:
+            entity:
+                class: UserManagementBundle:Login
+                property: userName
+#        in_memory:
+#            memory:
+#                users:
+#                    karthi:
+#                        password: karthi@123
+#                        roles: 'ROLE_USER'
+#                    ram:
+#                        password: ramkumar
+#                        roles: 'ROLE_ADMIN'
+#                    aadhil:
+#                        password: karthi
+#                        roles: 'ROLE_ADMIN'
+#                    admin:
+#                        password: admin@123
+#                        roles: 'ROLE_ADMIN'
 #   
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -51,12 +57,13 @@ security:
 #        
         main:
             anonymous: ~
+            provider: db_provider
             form_login:
                 login_path: login
                 check_path: login
                 default_target_path: user_management_list
                 always_use_default_target_path: true
-            access_denied_handler: authentication_handler
+#            access_denied_handler: authentication_handler
             logout:
                 path:   /logout
                 target: /login

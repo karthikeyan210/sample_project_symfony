@@ -2,11 +2,15 @@ services:
 #    user_management.example:
 #        class: UserManagementBundle\Example
 #        arguments: ["@service_id", "plain_value", "%parameter%"]
-    authentication_handler:
-        class: UserManagementBundle\Security\AccessDeniedHandler
-        arguments: ["@router","@session"]
-        
-    kernel.listener.user_cache_listener:
-        class: UserManagementBundle\EventListener\UserCacheListener
+#    authentication_handler:
+#        class: UserManagementBundle\Security\AccessDeniedHandler
+#        arguments: ["@router","@session"]
+    validator.unique.ContainsAlphanumericValidator:
+        class: UserManagementBundle\Validator\Contraints\ContainsAlphanumericValidator
         tags:
-            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+            - { name: validator.constraint_validator, alias: 'alpha_numeric' }
+            
+#    kernel.listener.user_cache_listener:
+#        class: UserManagementBundle\EventListener\UserCacheListener
+#        tags:
+#            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
