@@ -35,8 +35,9 @@
                 <input type="button" class="page_no" value="«" onclick="changePagination('{{ thisPage-1 < 1 ? 1 : thisPage-1 }}')" href="javascript:void(0)">
             </span>
         {% endif %}
-
-        {% for i in 1..maxPages %}
+        {% set start = max(1, thisPage - 4) %}
+        {% set end = min(thisPage + 4, maxPages) %}
+        {% for i in start..end %}
             {% if thisPage != i %}
                 <span>
                 <input type="button" class="page_no" value="{{ i }}" onclick="changePagination('{{ i }}')" href="javascript:void(0)">

@@ -1,15 +1,24 @@
 {% extends 'UserManagementBundle:user:index.html.twig' %}
 
 {% block messages %}
-{% for message in app.flashes('denied') %}
+{% for messages in app.flashes(['denied','success']) %}
+    {% for message in messages %}
     <div>
         {{ message }}
     </div>
+    {% endfor %}
 {% endfor %}
 {% endblock %}
 
 {% block body %}
-    
+   {# <form method="post" action="{{ path('user_management_export') }}" enctype="multipart/form-data">
+        <input type="submit" value="exportCSV" name="upload">
+    </form>#}
+<div>
+{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+    <p>Currently Logged in user: <b>{{ app.user.userName }}</b></p>
+{% endif %}
+</div>
 <div id="displayResults">
     <table border = "2" id="userlist" align="center">
         <tr>
@@ -48,8 +57,10 @@
                     <input type="button" class="page_no" value="«" onclick="changePagination('{{ thisPage-1 < 1 ? 1 : thisPage-1 }}')" href="javascript:void(0)">
                 </span>
             {% endif %}
-
-            {% for i in 1..maxPages %}
+            {% set start = max(1, thisPage - 4) %}
+            {% set end = min(thisPage + 4, maxPages) %}
+            
+            {% for i in start..end %}
                 {% if thisPage != i %}
                     <span>
                     <input type="button" class="page_no" value="{{ i }}" onclick="changePagination('{{ i }}')" href="javascript:void(0)">

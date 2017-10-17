@@ -108,6 +108,7 @@ class Login implements UserInterface
      */
     public function getRoles()
     {
+//        dump($this->roles); die();
         return array($this->roles);
     }
     

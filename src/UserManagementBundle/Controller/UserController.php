@@ -51,7 +51,11 @@ class UserController extends Controller
      * @return type
      */
     public function listAction($page = 1)
-    {           
+    {   
+//        $currentUser = $this->getUser()->getAttribute('userName');
+//        dump($this->get('session')->getId()); die();
+
+//        dump($currentUser); die();
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('UserManagementBundle:User')
                     ->getAllUsers($page);
@@ -143,4 +147,146 @@ class UserController extends Controller
             'form' => $form->createView(),
         ));
     }
+    
+    public function csvImportAction(Request $request)
+    {
+        $file = $request->files->get('csvimport');
+        $row = 0;
+        $all_rows = array();
+        $header = null;
+        $em = $this->getDoctrine()->getManager();
+        if (filesize($file)>0) {
+            if (($handle = fopen($file, "r")) !== FALSE) {
+                while (($data = fgetcsv($handle)) !== FALSE) {
+                    if ($header === null) {
+                        $header = $data;
+                        continue;
+                    }
+                    $all_rows[] = array_combine($header, $data);
+                }
+                fclose($handle);
+            }
+        } else {
+            $this->addFlash("warning", "Select the file!!");
+            return $this->redirectToRoute('user_management_form');
+        }
+        echo '<pre>';
+        print_r($all_rows);
+        echo '</pre>';
+        self::saveUser($all_rows);
+        $this->addFlash("success", "Csv file imported successfully!!");
+        return $this->redirectToRoute('user_management_list');
+    }
+    
+    public function saveUser($all_rows)
+    {
+        $em = $this->getDoctrine()->getManager();
+        foreach($all_rows as $row) {
+            $userrepo = $em->getRepository('UserManagementBundle:User');
+            $userProfile = $userrepo->findOneBy(array('username' => $row['username']));
+            if (!$userProfile) {
+                $userProfile = new User();
+            }
+
+
+            $bloodrepo = $em->getRepository('UserManagementBundle:BloodGroup');
+            $blood = $bloodrepo->findOneBy(array('name' => $row['blood']));
+
+            $genderrepo = $em->getRepository('UserManagementBundle:Gender');
+            $gender = $genderrepo->findOneBy(array('name' => $row['gender']));
+
+            $interests = explode(',', $row['interests']);
+            for ($index = 0; $index < count($interests); $index++) {
+                $interestrepo = $em->getRepository('UserManagementBundle:Interest');
+                $interest = $interestrepo->findOneBy(array('name' => $interests[$index]));
+                if ($interest === null) {
+                    $interest = new \UserManagementBundle\Entity\Interest;
+                    $interest->setName($interests[$index]);
+                    $em->persist($interest);
+                    $em->flush();
+                    $interest = $interestrepo->findOneBy(array('name' => $interests[$index]));
+                }
+                $userinterestrepo = $em->getRepository('UserManagementBundle:UserInterest');
+                $query = $em->createQuery(
+                    'SELECT u
+                    FROM UserManagementBundle:UserInterest u
+                    WHERE u.user = :userid
+                    AND u.interest = :interestid'
+                )->setParameters(array('userid'=> $userProfile->getId(), 'interestid' => $interest->getId()));
+                $userinterest = $query->getResult();
+                if (!$userinterest) {
+                    $userinterest = new UserInterest();
+                    $userinterest->setInterest($interest);
+                    $userProfile->addInterest($userinterest);
+                }
+            }
+            
+            
+            $educations = explode('/', $row['education']);
+            foreach($educations as $edu) {
+                $education = explode(',', $edu);
+                
+                $educationrepo = $em->getRepository('UserManagementBundle:EducationType');
+                $edutype = $educationrepo->findOneBy(array('type' => $education[0]));
+                if ($edutype === null) {
+                    $edutype = new \UserManagementBundle\Entity\EducationType;
+                    $edutype->setType($education[0]);
+                    $em->persist($edutype);
+                    $em->flush();
+                    $edutype = $educationrepo->findOneBy(array('type' => $education[0]));
+                }
+                $query = $em->createQuery(
+                    'SELECT u
+                    FROM UserManagementBundle:UserEducation u
+                    WHERE u.user = :userid
+                    AND u.eduType = :typeid'
+                )->setParameters(array('userid'=> $userProfile->getId(), 'typeid' => $edutype->getId()));
+                $usereducation = $query->getResult();
+                if (!$usereducation) {
+                    $usereducation = new UserEducation();
+                    $usereducation->setEduType($edutype);
+                    $usereducation->setInstitute($education[1]);
+                    $userProfile->addEducation($usereducation);
+                }
+                dump($usereducation);
+            }
+            
+            
+            $emails = explode(',', $row['emails']);
+            for ($index = 0; $index < count($emails); $index++) {
+                $emailrepo = $em->getRepository('UserManagementBundle:UserEmail');
+                $email = $emailrepo->findOneBy(array('emailAddr' => $emails[$index]));
+                if (!$email) {
+                    $email = new UserEmail();
+                    $email->setEmailAddr($emails[$index]);
+                    $userProfile->addEmail($email);
+                }
+            }
+            
+            
+            $mobileNumbers = explode(',', $row['mobileNumbers']);
+            for ($index = 0; $index < count($mobileNumbers); $index++) {
+                $phonerepo = $em->getRepository('UserManagementBundle:UserPhone');
+                $number = $phonerepo->findOneBy(array('number' => $mobileNumbers[$index]));
+                if (!$number) {
+                    $number = new UserPhone();
+                    $number->setNumber($mobileNumbers[$index]);
+                    $userProfile->addMobileNumber($number);
+                }
+            }
+
+            $userProfile
+                ->setUsername($row['username'])
+                ->setFirstname($row['firstname'])
+                ->setLastname($row['lastname'])
+                ->setDob(new \DateTime($row['dob']))
+                ->setBlood($blood)
+                ->setGender($gender)
+            ;
+            $em->persist($userProfile);
+            $em->flush();
+            dump($userProfile);
+        }
+    }
+
 }

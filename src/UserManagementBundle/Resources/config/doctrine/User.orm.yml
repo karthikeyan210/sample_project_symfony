@@ -50,12 +50,14 @@ UserManagementBundle\Entity\User:
     manyToOne:
         blood:
             targetEntity: BloodGroup
+#            cascade: ["persist"]
             joinColumns:
                 blood_id:
                     referencedColumnName: id
             orphanRemoval: false
         gender:
             targetEntity: Gender
+#            cascade: ["persist"]
             joinColumns:
                 gender_id:
                     referencedColumnName: id
