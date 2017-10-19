@@ -97,11 +97,11 @@ UserManagementBundle\Entity\User:
         username:
             - NotBlank:
                 message: Should Enter User Name.
-#            - UserManagementBundle\Validator\Constraints\ContainsAlphanumeric: ~
-            - Regex:
-                pattern: '/\w+/'
-                match:   true
-                message: Enter valid User name.
+            - UserManagementBundle\Validator\Constraints\ContainsAlphanumeric: ~
+#            - Regex:
+#                pattern: '/\w+/'
+#                match:   true
+#                message: Enter valid User name.
         firstname:
             - NotBlank:
                 message: Should Enter First Name.

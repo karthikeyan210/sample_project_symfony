@@ -5,10 +5,10 @@ services:
 #    authentication_handler:
 #        class: UserManagementBundle\Security\AccessDeniedHandler
 #        arguments: ["@router","@session"]
-    validator.unique.ContainsAlphanumericValidator:
-        class: UserManagementBundle\Validator\Contraints\ContainsAlphanumericValidator
+    contains_alphanumeric_validator:
+        class: UserManagementBundle\Validator\Constraints\ContainsAlphanumericValidator
         tags:
-            - { name: validator.constraint_validator, alias: 'alpha_numeric' }
+            - { name: validator.constraint_validator, alias: alpha_numeric }
             
 #    kernel.listener.user_cache_listener:
 #        class: UserManagementBundle\EventListener\UserCacheListener

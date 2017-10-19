@@ -11,6 +11,7 @@ use UserManagementBundle\Entity\UserInterest;
 use UserManagementBundle\Entity\UserEducation;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 class UserController extends Controller
@@ -287,6 +288,31 @@ class UserController extends Controller
             $em->flush();
             dump($userProfile);
         }
+    }
+
+    public function csvExportAction()
+    {
+        $response = new StreamedResponse();
+        $response->setCallback(function() {
+            $handle = fopen('php://output', 'w+');
+
+            fputcsv($handle, array('username', 'firstname'));
+            $em = $this->getDoctrine()->getManager();
+            $repo = $em->getRepository('UserManagementBundle:User');
+            $results = $repo->findAll();
+            foreach ($results as $result) {
+                $data = array($result->getUserName(), $result->getFirstName());
+                fputcsv($handle, $data);
+            }
+
+            fclose($handle);
+        });
+
+        $response->setStatusCode(200);
+        $response->headers->set('Content-Type', 'text/csv; charset=utf-8');
+        $response->headers->set('Content-Disposition', 'attachment; filename="export.csv"');
+
+        return $response;
     }
 
 }

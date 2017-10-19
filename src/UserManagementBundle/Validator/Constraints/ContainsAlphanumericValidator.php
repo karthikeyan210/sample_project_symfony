@@ -12,7 +12,7 @@ class ContainsAlphanumericValidator extends ConstraintValidator
     {
         if (!preg_match('/^[a-zA-Z0-9]+$/', $value, $matches)) {
             $this->context->buildViolation($constraint->message)
-                ->setParameter('%string%', $value)
+                ->setParameter('{{ string }}', $value)
                 ->addViolation();
         }
     }

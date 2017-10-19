@@ -28,11 +28,14 @@
 <table class="pagination" >
     <tr>
         <td>
+            <span>
+                <input type="button" class="page_no" value="«" onclick="changePagination('{{ 1 }}')">
+            </span>
         {% if thisPage <= 1 %}
-            <span> « </span>
+            <span> Prev </span>
         {% else %}
             <span>
-                <input type="button" class="page_no" value="«" onclick="changePagination('{{ thisPage-1 < 1 ? 1 : thisPage-1 }}')" href="javascript:void(0)">
+                <input type="button" class="page_no" value="Prev" onclick="changePagination('{{ thisPage-1 < 1 ? 1 : thisPage-1 }}')" href="javascript:void(0)">
             </span>
         {% endif %}
         {% set start = max(1, thisPage - 4) %}
@@ -48,12 +51,15 @@
         {% endfor %}
         
         {% if thisPage == maxPages %}
-            <span> » </span>
+            <span> Next </span>
         {% else %}
             <span>
-                <input type="button" class="page_no" value="»" onclick="changePagination('{{ thisPage+1 <= maxPages ? thisPage+1 : thisPage }}')" href="javascript:void(0)">
+                <input type="button" class="page_no" value="Next" onclick="changePagination('{{ thisPage+1 <= maxPages ? thisPage+1 : thisPage }}')" href="javascript:void(0)">
             </span>
         {% endif %}
+            <span>
+                <input type="button" class="page_no" value="»" onclick="changePagination('{{ maxPages }}')">
+            </span>
         </td>
     </tr>
 </table>

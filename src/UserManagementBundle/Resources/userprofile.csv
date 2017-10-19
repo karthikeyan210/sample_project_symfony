@@ -1,4 +1,4 @@
 username,firstname,lastname,gender,dob,blood,emails,mobileNumbers,education,interests
-vetri_vel,vetri,vel,male,1995-10-02,A+,"vetrivel@gmail.com,vetrivel1@gmail.com",8987676545,"UG,MIT/PG,CEG/SSLC,KV","c,c++,php,symfony"
+vetri_vel,vetri,vel,male,1995-10-02,A+,"vetrivel@gmail.com,vetrivel1@gmail.com,vetrivel2@gmail.com","8987676545,8765445678","UG,MIT/PG,CEG/SSLC,KV/HSC,DonBosco","c,c++,php,symfony,solr"
 mani_rz,mani,subbu,male,1995-10-02,A-,manirz@gmail.com,8987676665,"UG,MIT","c++,symfony"
 rajini,rajini,khan,male,1995-10-02,O+,rajinikhan@gmail.com,8987676775,"UG,MIT","php,c++"

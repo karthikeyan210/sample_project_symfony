@@ -2,7 +2,6 @@
 
 namespace UserManagementBundle\Entity;
 
-use UserManagementBundle\Validator\Constraints\ContainsAlphanumericValidator;
 /**
  * User
  */

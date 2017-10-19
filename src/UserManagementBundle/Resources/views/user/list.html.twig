@@ -11,9 +11,9 @@
 {% endblock %}
 
 {% block body %}
-   {# <form method="post" action="{{ path('user_management_export') }}" enctype="multipart/form-data">
+    <form method="post" action="{{ path('user_management_export') }}" enctype="multipart/form-data">
         <input type="submit" value="exportCSV" name="upload">
-    </form>#}
+    </form>
 <div>
 {% if is_granted('IS_AUTHENTICATED_FULLY') %}
     <p>Currently Logged in user: <b>{{ app.user.userName }}</b></p>
@@ -50,11 +50,14 @@
     <table class="pagination" >
         <tr>
             <td>
+                <span>
+                    <input type="button" class="page_no" value="«" onclick="changePagination('{{ 1 }}')">
+                </span>
             {% if thisPage <= 1 %}
-                <span> « </span>
+                <span> Prev </span>
             {% else %}
                 <span>
-                    <input type="button" class="page_no" value="«" onclick="changePagination('{{ thisPage-1 < 1 ? 1 : thisPage-1 }}')" href="javascript:void(0)">
+                    <input type="button" class="page_no" value="Prev" onclick="changePagination('{{ thisPage-1 < 1 ? 1 : thisPage-1 }}')">
                 </span>
             {% endif %}
             {% set start = max(1, thisPage - 4) %}
@@ -63,7 +66,7 @@
             {% for i in start..end %}
                 {% if thisPage != i %}
                     <span>
-                    <input type="button" class="page_no" value="{{ i }}" onclick="changePagination('{{ i }}')" href="javascript:void(0)">
+                    <input type="button" class="page_no" value="{{ i }}" onclick="changePagination('{{ i }}')">
                     </span>
                 {% else %}
                     <span>{{ i }}</span>
@@ -71,12 +74,15 @@
             {% endfor %}
 
             {% if thisPage == maxPages %}
-                <span> » </span>
+                <span> Next </span>
             {% else %}
                 <span>
-                    <input type="button" class="page_no" value="»" onclick="changePagination('{{ thisPage+1 <= maxPages ? thisPage+1 : thisPage }}')" href="javascript:void(0)">
+                    <input type="button" class="page_no" value="Next" onclick="changePagination('{{ thisPage+1 <= maxPages ? thisPage+1 : thisPage }}')">
                 </span>
             {% endif %}
+                <span>
+                    <input type="button" class="page_no" value="»" onclick="changePagination('{{ maxPages }}')">
+                </span>
             </td>
         </tr>
     </table>
