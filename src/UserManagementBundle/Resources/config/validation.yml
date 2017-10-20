@@ -135,9 +135,9 @@ UserManagementBundle\Entity\User:
         education:
             - Valid: ~
             - NotBlank: ~
-            - Count:
-                min: 1
-                max: 2
-                minMessage: 'You must specify at least one interest'
-                maxMessage: 'You cannot specify more than {{ limit }} interests'
+#            - Count:
+#                min: 1
+#                max: 2
+#                minMessage: 'You must specify at least one interest'
+#                maxMessage: 'You cannot specify more than {{ limit }} interests'
 #       

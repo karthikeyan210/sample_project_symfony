@@ -17,6 +17,20 @@ class UserRepository extends EntityRepository
         return $paginator;
     }
     
+    public function filterByDate($start, $end, $currentPage)
+    {
+        $query = $this->getEntityManager()
+            ->createQueryBuilder()
+            ->select('u')
+            ->from('UserManagementBundle:User', 'u')
+            ->where('u.createdAt BETWEEN :start AND :end')
+            ->setParameter('start', $start)
+            ->setParameter('end', $end);
+        
+        $paginator = $this->paginate($query, $currentPage);
+        return $paginator;
+    }
+    
     public function paginate($dql, $page = 1, $limit = 5)
     {
         $paginator = new Paginator($dql);

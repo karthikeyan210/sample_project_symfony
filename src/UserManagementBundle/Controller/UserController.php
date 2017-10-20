@@ -13,6 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\StreamedResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class UserController extends Controller
 {
@@ -314,5 +315,30 @@ class UserController extends Controller
 
         return $response;
     }
+    
+    
+    public function autocompleteAction(Request $request)
+    {
+        $names = array();
+        $term = trim(strip_tags($request->get('term')));
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('UserManagementBundle:Interest')->createQueryBuilder('i')
+           ->where('i.name LIKE :name')
+           ->setParameter('name', '%'.$term.'%')
+           ->getQuery()
+           ->getResult();
+
+        foreach ($entities as $entity)
+        {
+            $names[] = $entity->getName();
+        }
+
+        $response = new JsonResponse();
+        $response->setData($names);
+
+        return $response;
+    }
+
 
 }

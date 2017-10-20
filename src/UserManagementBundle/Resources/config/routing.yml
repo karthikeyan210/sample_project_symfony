@@ -64,3 +64,21 @@ user_management_import:
 user_management_export:
     path: /users/export
     defaults: { _controller: UserManagementBundle:User:csvExport }
+    
+user_management_autocomplete:
+    path: /users/autocomplete
+    defaults: { _controller: UserManagementBundle:User:autocomplete }
+    
+user_management_filterByDate:
+    path: /admin/filterbydate/{page}
+    defaults: { _controller: UserManagementBundle:Admin:filterByDate, page: 1 }
+    requirements:
+      page: '\d+'
+
+user_management_filterByDatePagination:
+    path: /admin/paginate/{page}
+    defaults: { _controller: UserManagementBundle:Admin:paginate, page: 1 }
+    requirements:
+      page: '\d+'
+
+

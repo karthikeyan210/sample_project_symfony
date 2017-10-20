@@ -36,10 +36,13 @@ function addTagForm($collectionHolder, $liFieldId) {
     var prototype = $collectionHolder.data('prototype');
     $index++;
     var newForm = prototype.replace(/__name__/g, $index);
-    console.log(newForm);
     var $newFormLi = $('<li></li>').html(newForm);
     $newFormLi.appendTo($collectionHolder);
     addTagFormDeleteLink($newFormLi);
+//    $newFormLi.find("*").autocomplete({
+    $( "input[id^='user_interests']").autocomplete({
+        source: "/users/autocomplete",
+    });
 }
 
 function addTagFormDeleteLink($tagFormLi) {

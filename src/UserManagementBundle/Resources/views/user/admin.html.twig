@@ -50,7 +50,68 @@
     </tr>
 </table>
 {{ form_end(form, {'render_rest': false}) }}
+<div>
+    <input type="date" id="start_date" name="state_date">
+    <input type="date" id="last_date" name="last_date">
+    <input type="button" onclick="filterByDate()" value="filter">
+</div>
+<div id="displayResults">
+    {% for messages in app.flashes(['success','warning']) %}
+    {% for message in messages %}
+        <div>
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+</div>
 {% endblock %}
 {% block stylesheets %}
    {{ parent() }}
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script type="text/javascript">
+    function filterByDate(){
+    var url = 'admin/filterbydate';
+    var startday = $( "#start_date" ).val();
+    var endday = $( "#last_date" ).val();
+    console.log(startday + endday);
+    $.ajax({
+        type: "POST",
+        url: url,
+        cache: false,
+        data: { startday: startday, endday: endday },
+        success: function(result){
+            console.log(result);
+            var elem =  document.getElementById('displayResults');
+            elem.innerHTML = "";
+            elem.innerHTML = result;
+        }
+    });
+}
+</script>
+<script type="text/javascript">
+    function changePagination(pageId){
+    //    var url = '{{ path('user_management_paginate')}}'+'/'+pageId;
+        var url = 'admin/filterbydate/'+pageId;
+        var startday = $( "#start_date" ).val();
+        var endday = $( "#last_date" ).val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: { startday: startday, endday: endday },
+            success: function(result){
+                console.log(result);
+                var elem =  document.getElementById('displayResults');
+                elem.innerHTML = "";
+                elem.innerHTML = result;
+            }
+        });
+    }
+</script>
 {% endblock %}

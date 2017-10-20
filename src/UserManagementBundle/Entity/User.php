@@ -61,6 +61,16 @@ class User
      * @var \UserManagementBundle\Entity\Gender
      */
     private $gender;
+    
+    /**
+     * @var \DateTime
+     */
+    private $createdAt;
+    
+    /**
+     * @var \DateTime
+     */
+    private $updatedAt;
 
     /**
      * Constructor
@@ -361,5 +371,21 @@ class User
     public function getGender()
     {
         return $this->gender;
+    }
+    
+    /**
+     * Gets triggered only on insert
+     */
+    public function setCreatedAtValue()
+    {
+        $this->createdAt = new \DateTime();
+    }
+    
+    /**
+     * Gets triggered every time on update
+     */
+    public function setUpdatedAtValue()
+    {
+        $this->updatedAt = new \DateTime();
     }
 }

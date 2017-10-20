@@ -47,6 +47,16 @@ UserManagementBundle\Entity\User:
         dob:
             type: date
             nullable: false
+        createdAt:
+            type: date
+            nullable: true
+            columns:
+                - created_at
+        updatedAt:
+            type: date
+            nullable: true
+            columns:
+                - updated_at
     manyToOne:
         blood:
             targetEntity: BloodGroup
@@ -91,4 +101,6 @@ UserManagementBundle\Entity\User:
             mappedBy: user
             inversedBy: null
             orphanRemoval: false
-    lifecycleCallbacks: {  }
+    lifecycleCallbacks:
+        prePersist: [setCreatedAtValue]
+        preUpdate: [setUpdatedAtValue]

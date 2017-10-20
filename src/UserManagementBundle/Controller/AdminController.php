@@ -126,4 +126,27 @@ class AdminController extends Controller
             'form' => $form->createView(),
         ));
     }
+    
+    public function filterByDateAction(Request $request, $page = 1)
+    {
+        $start = $request->request->get('startday');
+        $end = $request->request->get('endday');
+        $em = $this->getDoctrine()->getManager();
+        $users = $em->getRepository('UserManagementBundle:User')
+                    ->filterByDate($start, $end, $page);
+        $totalUsers = $users->count();
+        if ($totalUsers == 0) {
+            return new Response("<b>select valid duration</b>");
+        }
+        $limit = 5;
+        $maxPages = ceil($totalUsers / $limit);
+        $thisPage = $page;
+        return $this->render('UserManagementBundle:user:userlist.html.twig', array(
+            'users' => $users,
+            'maxPages' => $maxPages,
+           'thisPage' => $thisPage,
+        ));
+
+    }
+   
 }

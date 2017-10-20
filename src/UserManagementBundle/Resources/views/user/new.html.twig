@@ -171,10 +171,12 @@
             {{ form_row(form.save) }}
         </td>
     </tr>
+    
     </table>
             {{ form_row(form._token) }}
 
 {{ form_end(form, {'render_rest': false}) }}
+
 </div>
 {% endblock %}
 
@@ -187,10 +189,19 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.17.0/dist/additional-methods.min.js"></script>
     <script src="{{ asset('bundles/usermanagement/js/addField.js') }}"></script>
     <script src="{{ asset('bundles/usermanagement/js/date.js') }}"></script>
-{#    <script src="{{ asset('bundles/usermanagement/js/validation.js') }}"></script>#}
+    <script src="{{ asset('bundles/usermanagement/js/validation.js') }}"></script>
+{#  <script src="//code.jquery.com/jquery-1.12.4.js"></script>#}
+{#  <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>#}
+  <script>
+    $( "input[id^='user_interests']" ).autocomplete({
+        source: "{{ path('user_management_autocomplete') }}",
+        minLength: 1,
+    });
+  </script>
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
+{#    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">#}
     <link rel="stylesheet" href="{{ asset('bundles/usermanagement/css/formstyle.css') }}"
 {% endblock %}
         
