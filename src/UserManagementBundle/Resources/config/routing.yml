@@ -81,4 +81,17 @@ user_management_filterByDatePagination:
     requirements:
       page: '\d+'
 
+user_management_filterByEducation:
+    path: /admin/filterbyeducation/{page}
+    defaults: { _controller: UserManagementBundle:Admin:filterByEducation, page: 1 }
+    requirements:
+      page: '\d+'
+
+user_management_filterByInterest:
+    path: /admin/filterbyinterest
+    defaults: { _controller: UserManagementBundle:Admin:filterByInterest }
+#    requirements:
+#      page: '\d+'
+
+
 

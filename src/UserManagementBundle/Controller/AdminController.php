@@ -31,10 +31,15 @@ class AdminController extends Controller
         $user->addEducation(new UserEducation());
         $user->addInterest(new UserInterest());
         
+        $em = $this->getDoctrine()->getManager();
+        $repo = $em->getRepository('UserManagementBundle:EducationType');
+        $educationtypes = $repo->findAll();
+        
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
         return $this->render('UserManagementBundle:user:admin.html.twig', array(
             'form' => $form->createView(),
+            'educationtypes' => $educationtypes,
         ));
     }
         
@@ -147,6 +152,64 @@ class AdminController extends Controller
            'thisPage' => $thisPage,
         ));
 
+    }
+    
+    public function filterByEducationAction(Request $request, $page = 1)
+    {
+        $edutype = $request->request->get('edutype');
+        $em = $this->getDoctrine()->getManager();
+        $edutype = $em->getRepository('UserManagementBundle:EducationType')
+              ->findOneBy(array('type' => $edutype));
+        $type = $edutype->getId();
+        $users = $em->getRepository('UserManagementBundle:User')
+                ->filterByEduType($type, $page);
+        
+        $totalUsers = $users->count();
+        if ($totalUsers == 0) {
+            return new Response("<b>select valid duration</b>");
+        }
+        $limit = 5;
+        $maxPages = ceil($totalUsers / $limit);
+        $thisPage = $page;
+        return $this->render('UserManagementBundle:user:userlistEdu.html.twig', array(
+            'users' => $users,
+            'maxPages' => $maxPages,
+           'thisPage' => $thisPage,
+        ));
+//            ->createQueryBuilder('u')
+//            ->select('count(u.username)')
+//            ->innerJoin('u.education', 'ue')
+//            ->where('ue.user = u.id')
+//            ->innerJoin('ue.eduType', 'e')
+//            ->where('ue.eduType = e.id')
+//            ->where('e.id >= :edutype')
+//            ->setParameter('edutype', $type)
+//            ->getQuery()
+//            ->getResult();
+        dump($users); die();
+       
+    }
+    
+    public function filterByInterestAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+        $entities = $em->getRepository('UserManagementBundle:User')
+                ->filterByInterest();
+        $unique = 0;
+        $total = count($entities);
+        foreach ($entities as $row)
+        {
+            if ($row['interested_users'] == 1)
+            {
+                $unique++;
+            }
+        }
+        $common = $total-$unique;
+        return $this->render('UserManagementBundle:user:interestList.html.twig', array(
+            'users' => $entities,
+            'unique' => $unique,
+           'common' => $common,
+        ));
     }
    
 }

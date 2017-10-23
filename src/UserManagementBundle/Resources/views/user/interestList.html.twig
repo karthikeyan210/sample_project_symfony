@@ -1,0 +1,21 @@
+{#{% extends 'UserManagementBundle:user:index.html.twig' %}#}
+
+{#{% block body %}#}
+<div>
+    <b>No of users having common area of interest:</b> {{ common }} <br>
+    <b>No of users having unique area of interest:</b> {{ unique }} <br>
+</div>
+<table border = "2" align="center">
+    <tr>
+        <th>Interest</th>
+        <th>NoOfUsers</th>
+    </tr>
+{% for user in users %}
+    <tr>  
+        <td>{{ user.name }}</td>
+        <td>{{ user.interested_users }}</td>   
+    </tr>
+{% endfor %}
+</table>
+
+{#{% endblock %}#}

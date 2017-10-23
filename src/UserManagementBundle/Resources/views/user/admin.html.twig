@@ -48,12 +48,37 @@
                    onclick="location.href='{{ path('user_management_addEducation') }}'">                   
         </td>
     </tr>
+    <tr>
+        <td>
+            {{ form_label(form.education, 'filterByEducation') }}
+        </td>
+        <td>
+            <select id="educationlist">
+            {% for education in educationtypes %}
+                <option value="{{ education }}">{{ education }}</option>
+            {% endfor %}
+            </select>
+        </td>
+        <td>
+            <input type="button" onclick="filterByEduType()" value="filter">
+        </td>
+    </tr>
+    <tr>
+        <td>
+            <input type="date" id="start_date" name="state_date">
+        </td>
+        <td>
+            <input type="date" id="last_date" name="last_date">
+        </td>
+        <td>
+            <input type="button" onclick="filterByDate()" value="filterByDate">
+        </td>
+    </tr>
 </table>
 {{ form_end(form, {'render_rest': false}) }}
-<div>
-    <input type="date" id="start_date" name="state_date">
-    <input type="date" id="last_date" name="last_date">
-    <input type="button" onclick="filterByDate()" value="filter">
+<div align="center">
+    <input type="button" value="filterByInterest" onclick="filterByInterest()">
+{#        onclick="location.href='{{ path('user_management_filterByInterest') }}'">#}
 </div>
 <div id="displayResults">
     {% for messages in app.flashes(['success','warning']) %}
@@ -63,7 +88,10 @@
         </div>
     {% endfor %}
 {% endfor %}
+</div>
 
+<div id="education">
+    
 </div>
 {% endblock %}
 {% block stylesheets %}
@@ -76,15 +104,55 @@
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
     <script type="text/javascript">
     function filterByDate(){
-    var url = 'admin/filterbydate';
-    var startday = $( "#start_date" ).val();
-    var endday = $( "#last_date" ).val();
-    console.log(startday + endday);
+        var url = 'admin/filterbydate';
+        var startday = $( "#start_date" ).val();
+        var endday = $( "#last_date" ).val();
+        console.log(startday + endday);
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: { startday: startday, endday: endday },
+            success: function(result){
+                console.log(result);
+                var elem =  document.getElementById('displayResults');
+                elem.innerHTML = "";
+                elem.innerHTML = result;
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+    function changePagination(pageId){
+        var url = 'admin/filterbydate/'+pageId;
+        var startday = $( "#start_date" ).val();
+        var endday = $( "#last_date" ).val();
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
+            data: { startday: startday, endday: endday },
+            success: function(result){
+                console.log(result);
+                var elem =  document.getElementById('displayResults');
+                elem.innerHTML = "";
+                elem.innerHTML = result;
+            }
+        });
+    }
+</script>
+
+<script type="text/javascript">
+    function filterByEduType(){
+    var url = 'admin/filterbyeducation';
+    var edutype = $("#educationlist option:selected").val();
+    
+    console.log(edutype);
     $.ajax({
         type: "POST",
         url: url,
         cache: false,
-        data: { startday: startday, endday: endday },
+        data: { edutype: edutype },
         success: function(result){
             console.log(result);
             var elem =  document.getElementById('displayResults');
@@ -94,17 +162,32 @@
     });
 }
 </script>
+
 <script type="text/javascript">
-    function changePagination(pageId){
-    //    var url = '{{ path('user_management_paginate')}}'+'/'+pageId;
-        var url = 'admin/filterbydate/'+pageId;
-        var startday = $( "#start_date" ).val();
-        var endday = $( "#last_date" ).val();
+    function paginate(pageId){
+        var url = 'admin/filterbyeducation/'+pageId;
+        var edutype = $("#educationlist option:selected").val();
         $.ajax({
             type: "POST",
             url: url,
             cache: false,
-            data: { startday: startday, endday: endday },
+            data: { edutype: edutype },
+            success: function(result){
+                console.log(result);
+                var elem =  document.getElementById('displayResults');
+                elem.innerHTML = "";
+                elem.innerHTML = result;
+            }
+        });
+    }
+</script>
+<script type="text/javascript">
+    function filterByInterest(){
+        var url = 'admin/filterbyinterest';
+        $.ajax({
+            type: "POST",
+            url: url,
+            cache: false,
             success: function(result){
                 console.log(result);
                 var elem =  document.getElementById('displayResults');

@@ -14,7 +14,7 @@
 
 {% block body %}
     <form method="post" action="{{ path('user_management_import') }}" enctype="multipart/form-data">
-        <input type="file" name="csvimport" id="csvimport">
+        <input type="file" name="csvimport" id="csvimport" accept=".csv">
         <input type="submit" value="csvImport" name="upload">
     </form>
 <div id="new_form">

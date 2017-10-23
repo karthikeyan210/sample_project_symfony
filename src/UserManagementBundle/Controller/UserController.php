@@ -150,6 +150,12 @@ class UserController extends Controller
         ));
     }
     
+    /**
+     * Create or update user profile using CSV file
+     * 
+     * @param Request $request
+     * @return type
+     */
     public function csvImportAction(Request $request)
     {
         $file = $request->files->get('csvimport');
@@ -164,6 +170,10 @@ class UserController extends Controller
                         $header = $data;
                         continue;
                     }
+                    if (count($data) != count($header)) {
+                        $this->addFlash("warning", "Provide all the details for the user!!");
+                        return $this->redirectToRoute('user_management_form');
+                    }
                     $all_rows[] = array_combine($header, $data);
                 }
                 fclose($handle);
@@ -172,14 +182,156 @@ class UserController extends Controller
             $this->addFlash("warning", "Select the file!!");
             return $this->redirectToRoute('user_management_form');
         }
-        echo '<pre>';
-        print_r($all_rows);
-        echo '</pre>';
-        self::saveUser($all_rows);
+        $valid = $this->validateCsv($all_rows);
+        if (!$valid[1]) {
+            
+
+        }
+        $this->saveUser($all_rows);
         $this->addFlash("success", "Csv file imported successfully!!");
         return $this->redirectToRoute('user_management_list');
     }
     
+    /**
+     * Validate the user details in the CSV file
+     * 
+     * @param type $all_rows
+     * @return boolean|string
+     */
+    public function validateCsv($all_rows)
+    {
+        $msg = array("success", true);
+        foreach($all_rows as $row) {
+            if ($row['username'] == "") {
+                $message = "username should not be empty!!";
+                $msg = array($message, false);
+                return $msg;
+            } else {
+                if (!preg_match("/^(\w+)$/", $row['username'], $matches)) {
+                    $message = "Provide valid username";
+                    $msg = array($message, false);
+                    return $msg;
+                }
+            }
+            if ($row['firstname'] == "") {
+                $message = "firstname should not be empty for the user: " . $row['username'];
+                $msg = array($message, false);
+                return $msg;
+            } else {
+                if (!preg_match("/^([a-zA-Z]+)([ \.-][a-zA-Z]+)?$/", $row['firstname'], $matches)) {
+                    $message = "Provide valid firstname for the user: ".$row['username'];
+                    $msg = array($message, false);
+                    return $msg;
+                }
+            }
+            if ($row['gender'] == "") {
+                $message = "gender should not be empty for the user: ".$row['username'];
+                $msg = array($message, false);
+                return $msg;
+            } 
+            if ($row['dob'] == "") {
+                $message = "dateofbirth should not be empty for the user: ".$row['username'];
+                $msg = array($message, false);
+                return $msg;
+            } else {
+                if (!$this->validateDob($row['dob'])) {
+                    $message = "Provide valid dateofbirth for the user: ".$row['username'];
+                    $msg = array($message, false);
+                    return $msg;
+                }
+            }
+            if ($row['blood'] == "") {
+                $message = "bloodgroup should not be empty for the user: ".$row['username'];
+                $msg = array($message, false);
+                return $msg;
+            }
+            if ($row['emails'] == "") {
+                $message = "emails should not be empty for the user: ".$row['username'];
+                $msg = array($message, false);
+                return $msg;
+            } else {
+                $emails = explode(',', $row['emails']);
+                for ($index = 0; $index < count($emails); $index++) {
+                    if (!preg_match("/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/", $emails[$index], $matches)) {
+                        $message = "Provide valid email for the user:".$row['username'];
+                        $msg = array($message, false);
+                        return $msg;
+                    }
+                }
+            }
+            if ($row['mobileNumbers'] == "") {
+                $message = "mobileNumbers should not be empty for the user: ".$row['username'];
+                $msg = array($message, false);
+                return $msg;
+            } else {
+                $mobileNumbers = explode(',', $row['mobileNumbers']);
+                for ($index = 0; $index < count($mobileNumbers); $index++) {
+                    if (!preg_match("/^([9|8|7])[\d]{9}$/", $mobileNumbers[$index], $matches)) {
+                        $message = "Provide valid mobile no for the user: ".$row['username'];
+                        $msg = array($message, false);
+                        return $msg;
+                    }
+                }
+            }
+            if ($row['education'] == "") {
+                $message = "education should not be empty for the user: ".$row['username'];
+                $msg = array($message, false);
+                return $msg;
+            } else {
+                $educations = explode('/', $row['education']);
+                foreach($educations as $edu) {
+                    $education = explode('-', $edu);
+                    if ($education[0] == "" || $education[1] == "") {
+                        $message = "education should not be empty for the user: ".$row['username'];
+                        $msg = array($message, false);
+                        return $msg;
+                    }
+                }
+            }
+            if ($row['interests'] == "") {
+                $message = "interests should not be empty for the user: ".$row['username'];
+                $msg = array($message, false);
+                return $msg;
+            }
+            return $msg;
+        }
+
+    }
+    
+    /**
+     * To validate the date of birth 
+     * 
+     * @param type $dob
+     * @return boolean
+     */
+    public function validateDob($dob)
+    {
+        $isValid = true;
+        if (!preg_match("/^[\d]{2}[-][\d]{2}[-][\d]{4}$/", $dob, $matches)) {
+            $isValid = false;
+        }
+       
+        $dateofbirth = explode('-', $dob);
+        $birthDay = $dateofbirth[0];
+        $birthMonth = $dateofbirth[1];
+        $birthYear = $dateofbirth[2];
+        if ($birthMonth == 0 || $birthMonth >12 || $birthDay == 0 || $birthDay > 31
+            || $birthYear < 1970) {          
+            $isValid = false;
+        }
+        $today = date("d-m-Y"); 
+        $age = strtotime($today) - strtotime($dob);
+        if ($age < 0) {
+            $isValid = false;
+        }
+        return $isValid;
+    }
+
+    /**
+     * To persist the user into the database
+     * 
+     * @param type $all_rows
+     */
     public function saveUser($all_rows)
     {
         $em = $this->getDoctrine()->getManager();
@@ -224,9 +376,9 @@ class UserController extends Controller
             }
             
             
-            $educations = explode('/', $row['education']);
+            $educations = explode(',', $row['education']);
             foreach($educations as $edu) {
-                $education = explode(',', $edu);
+                $education = explode('-', $edu);
                 
                 $educationrepo = $em->getRepository('UserManagementBundle:EducationType');
                 $edutype = $educationrepo->findOneBy(array('type' => $education[0]));
@@ -296,16 +448,54 @@ class UserController extends Controller
         $response = new StreamedResponse();
         $response->setCallback(function() {
             $handle = fopen('php://output', 'w+');
-
-            fputcsv($handle, array('username', 'firstname'));
+            $csvArray = array();
+            fputcsv($handle, array(
+                'username', 'firstname', 'lastname', 'gender', 'bloodgroup',
+                'dob', 'emails', 'mobilenumbers', 'interests', 'education')
+            );
             $em = $this->getDoctrine()->getManager();
             $repo = $em->getRepository('UserManagementBundle:User');
             $results = $repo->findAll();
             foreach ($results as $result) {
-                $data = array($result->getUserName(), $result->getFirstName());
-                fputcsv($handle, $data);
+                $data['username'] = $result->getUserName();
+                $data['firstname'] = $result->getFirstName();
+                $data['lastname'] = $result->getLastName();
+                $data['gender'] = $result->getGender();
+                $data['bloodgroup'] = $result->getBlood();
+                $data['dob'] = date_format($result->getDob(), 'd-m-Y');
+                $emails = $result->getEmails();
+                $i = 0;
+                foreach ($emails as $emailid) {
+                    $email[$i] = $emailid->getEmailAddr();
+                    $i++;
+                }
+                $data['emails'] = implode(',', $email);
+                $mobileNumbers = $result->getMobileNumbers();
+                $i = 0;
+                foreach ($mobileNumbers as $mobilenumber) {
+                    $number[$i] = $mobilenumber->getNumber();
+                    $i++;
+                }
+                $data['mobilenumbers'] = implode(',', $number);
+                $interests = $result->getInterests();
+                $i = 0;
+                foreach ($interests as $interest) {
+                    $interestArea[$i] = $interest->getInterest();
+                    $i++;
+                }
+                $data['interests'] = implode(',', $interestArea);
+                $educationList = $result->getEducation();
+                $i = 0;
+                foreach ($educationList as $education) {
+                    $educations[$i] = $education->getEduType()."-".$education->getInstitute();
+                    $i++;
+                }
+                $data['education'] = implode(',', $educations);
+                $csvArray[] = $data;
+             }
+            foreach ($csvArray as $csvSingle) {
+                fputcsv($handle,$csvSingle);
             }
-
             fclose($handle);
         });
 
@@ -336,7 +526,6 @@ class UserController extends Controller
 
         $response = new JsonResponse();
         $response->setData($names);
-
         return $response;
     }
 
