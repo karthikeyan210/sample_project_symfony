@@ -1,0 +1,4 @@
+username,firstname,lastname,gender,dob,blood,emails,mobileNumbers,education,interests
+rajini,rajini,khan,male,10-10-2017,O+,"rajinikhan@gmail.com","8987676775","UG-MIT","php,c++"
+radha,radha,krish,female,10-10-2017,A+,"radha@gmail.com","9878990989","UG-IIT","c++,php"
+saravana123,saravana,kumar,male,08-02-1994,B+,"saravana1234@gmail.com","8787878787","UG-MIT","c++"

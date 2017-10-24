@@ -176,17 +176,6 @@ class AdminController extends Controller
             'maxPages' => $maxPages,
            'thisPage' => $thisPage,
         ));
-//            ->createQueryBuilder('u')
-//            ->select('count(u.username)')
-//            ->innerJoin('u.education', 'ue')
-//            ->where('ue.user = u.id')
-//            ->innerJoin('ue.eduType', 'e')
-//            ->where('ue.eduType = e.id')
-//            ->where('e.id >= :edutype')
-//            ->setParameter('edutype', $type)
-//            ->getQuery()
-//            ->getResult();
-        dump($users); die();
        
     }
     

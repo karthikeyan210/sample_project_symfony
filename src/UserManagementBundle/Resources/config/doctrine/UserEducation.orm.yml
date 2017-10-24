@@ -30,6 +30,7 @@ UserManagementBundle\Entity\UserEducation:
     manyToOne:
         eduType:
             targetEntity: EducationType
+            fetch: EAGER
             joinColumns:
                 edu_type_id:
                     referencedColumnName: id

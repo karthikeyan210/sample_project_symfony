@@ -23,6 +23,7 @@ UserManagementBundle\Entity\UserInterest:
     manyToOne:
         interest:
             targetEntity: Interest
+            fetch: EAGER
             joinColumns:
                 interest_id:
                     referencedColumnName: id

@@ -29,8 +29,8 @@ UserManagementBundle\Entity\UserEmail:
     manyToOne:
         user:
             targetEntity: User
-            cascade: {  }
-            fetch: LAZY
+            cascade: ["all"]
+            fetch: EAGER
             mappedBy: null
             inversedBy: emails
             joinColumn:

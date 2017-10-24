@@ -61,6 +61,10 @@ user_management_import:
     path: /users/import
     defaults: { _controller: UserManagementBundle:User:csvImport }
 
+user_management_split:
+    path: /users/split
+    defaults: { _controller: UserManagementBundle:User:csvSplit }
+
 user_management_export:
     path: /users/export
     defaults: { _controller: UserManagementBundle:User:csvExport }

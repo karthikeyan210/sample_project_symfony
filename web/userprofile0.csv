@@ -1,0 +1,3 @@
+username,firstname,lastname,gender,dob,blood,emails,mobileNumbers,education,interests
+vetri_vel123,vetri,vel,male,10-10-2017,A+,"vetrivel@gmail.com,vetrivel1@gmail.com,vetrivel2@gmail.com","8987676545,8765445678","UG-MIT,PG-CEG,SSLC-KV,HSC-DonBosco","c,c++,php,symfony,solr"
+mani_rz,mani,subbu,male,10-10-2017,A-,"manirz@gmail.com","8987676665","UG-MIT","c++,symfony"

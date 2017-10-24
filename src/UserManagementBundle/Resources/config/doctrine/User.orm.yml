@@ -61,12 +61,14 @@ UserManagementBundle\Entity\User:
         blood:
             targetEntity: BloodGroup
 #            cascade: ["persist"]
+            fetch: EAGER
             joinColumns:
                 blood_id:
                     referencedColumnName: id
             orphanRemoval: false
         gender:
             targetEntity: Gender
+            fetch: EAGER
 #            cascade: ["persist"]
             joinColumns:
                 gender_id:
@@ -76,28 +78,28 @@ UserManagementBundle\Entity\User:
         emails:
             targetEntity: UserEmail
             cascade: ["persist"]
-            fetch: LAZY
+            fetch: EAGER
             mappedBy: user
             inversedBy: null
             orphanRemoval: false
         mobileNumbers:
             targetEntity: UserPhone
             cascade: ["persist"]
-            fetch: LAZY
+            fetch: EAGER
             mappedBy: user
             inversedBy: null
             orphanRemoval: false
         education:
             targetEntity: UserEducation
             cascade: ["persist"]
-            fetch: LAZY
+            fetch: EAGER
             mappedBy: user
             inversedBy: null
             orphanRemoval: false
         interests:
             targetEntity: UserInterest
             cascade: ["persist"]
-            fetch: LAZY
+            fetch: EAGER
             mappedBy: user
             inversedBy: null
             orphanRemoval: false

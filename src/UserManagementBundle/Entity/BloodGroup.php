@@ -57,8 +57,5 @@ class BloodGroup
         return $this->getName();
     }
     
-    public static function getBloodGroup()
-    {
-        return array('A-', 'A+', 'B+', 'B-', 'AB+', 'AB-', 'O-', 'O+');
-    }
+    
 }
