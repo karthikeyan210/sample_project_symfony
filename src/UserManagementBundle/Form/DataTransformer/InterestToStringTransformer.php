@@ -4,15 +4,16 @@
 namespace UserManagementBundle\Form\DataTransformer;
 
 use UserManagementBundle\Entity\Interest;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\EntityManager;
 use Symfony\Component\Form\DataTransformerInterface;
+use Symfony\Component\Config\Definition\Exception\Exception;
 use Symfony\Component\Form\Exception\TransformationFailedException;
 
 class InterestToStringTransformer implements DataTransformerInterface
 {
     private $em;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManager $em)
     {
         $this->em = $em;
     }
@@ -62,6 +63,9 @@ class InterestToStringTransformer implements DataTransformerInterface
                 'An interest with name "%s" does not exist!',
                 $interestArea
             ));
+//            throw new Exception(sprintf(
+//                'An interest with name "%s" does not exist!',
+//                $interestArea));
         }
 
         return $intetest;

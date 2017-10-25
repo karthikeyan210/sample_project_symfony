@@ -54,10 +54,6 @@ class UserController extends Controller
      */
     public function listAction($page = 1)
     {   
-//        $currentUser = $this->getUser()->getAttribute('userName');
-//        dump($this->get('session')->getId()); die();
-
-//        dump($currentUser); die();
         $em = $this->getDoctrine()->getManager();
         $users = $em->getRepository('UserManagementBundle:User')
                     ->getAllUsers($page);
@@ -182,11 +178,7 @@ class UserController extends Controller
             $this->addFlash("warning", "Select the file!!");
             return $this->redirectToRoute('user_management_form');
         }
-        $valid = $this->validateCsv($all_rows);
-        if (!$valid[1]) {
-            $this->addFlash("warning", $valid[0]);
-            return $this->redirectToRoute('user_management_form');
-        }
+        
         $saveUser = $this->saveUser($all_rows);
         if (!$saveUser[1]) {
             $this->addFlash("warning", $saveUser[0]);
@@ -196,111 +188,6 @@ class UserController extends Controller
         return $this->redirectToRoute('user_management_list');
     }
     
-    /**
-     * Validate the user details in the CSV file
-     * 
-     * @param type $all_rows
-     * @return boolean|string
-     */
-    public function validateCsv($all_rows)
-    {
-        $msg = array("success", true);
-        foreach($all_rows as $row) {
-            if ($row['username'] == "") {
-                $message = "username should not be empty!!";
-                $msg = array($message, false);
-                return $msg;
-            } else {
-                if (!preg_match("/^(\w+)$/", $row['username'], $matches)) {
-                    $message = "Provide valid username";
-                    $msg = array($message, false);
-                    return $msg;
-                }
-            }
-            if ($row['firstname'] == "") {
-                $message = "firstname should not be empty for the user: " . $row['username'];
-                $msg = array($message, false);
-                return $msg;
-            } else {
-                if (!preg_match("/^([a-zA-Z]+)([ \.-][a-zA-Z]+)?$/", $row['firstname'], $matches)) {
-                    $message = "Provide valid firstname for the user: ".$row['username'];
-                    $msg = array($message, false);
-                    return $msg;
-                }
-            }
-            if ($row['gender'] == "") {
-                $message = "gender should not be empty for the user: ".$row['username'];
-                $msg = array($message, false);
-                return $msg;
-            } 
-            if ($row['dob'] == "") {
-                $message = "dateofbirth should not be empty for the user: ".$row['username'];
-                $msg = array($message, false);
-                return $msg;
-            } else {
-                if (!$this->validateDob($row['dob'])) {
-                    $message = "Provide valid dateofbirth for the user: ".$row['username'];
-                    $msg = array($message, false);
-                    return $msg;
-                }
-            }
-            if ($row['blood'] == "") {
-                $message = "bloodgroup should not be empty for the user: ".$row['username'];
-                $msg = array($message, false);
-                return $msg;
-            }
-            if ($row['emails'] == "") {
-                $message = "emails should not be empty for the user: ".$row['username'];
-                $msg = array($message, false);
-                return $msg;
-            } else {
-                $emails = explode(',', $row['emails']);
-                for ($index = 0; $index < count($emails); $index++) {
-                    if (!preg_match("/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/", $emails[$index], $matches)) {
-                        $message = "Provide valid email for the user:".$row['username'];
-                        $msg = array($message, false);
-                        return $msg;
-                    }
-                }
-            }
-            if ($row['mobileNumbers'] == "") {
-                $message = "mobileNumbers should not be empty for the user: ".$row['username'];
-                $msg = array($message, false);
-                return $msg;
-            } else {
-                $mobileNumbers = explode(',', $row['mobileNumbers']);
-                for ($index = 0; $index < count($mobileNumbers); $index++) {
-                    if (!preg_match("/^([9|8|7])[\d]{9}$/", $mobileNumbers[$index], $matches)) {
-                        $message = "Provide valid mobile no for the user: ".$row['username'];
-                        $msg = array($message, false);
-                        return $msg;
-                    }
-                }
-            }
-            if ($row['education'] == "") {
-                $message = "education should not be empty for the user: ".$row['username'];
-                $msg = array($message, false);
-                return $msg;
-            } else {
-                $educations = explode('/', $row['education']);
-                foreach($educations as $edu) {
-                    $education = explode('-', $edu);
-                    if ($education[0] == "" || $education[1] == "") {
-                        $message = "education should not be empty for the user: ".$row['username'];
-                        $msg = array($message, false);
-                        return $msg;
-                    }
-                }
-            }
-            if ($row['interests'] == "") {
-                $message = "interests should not be empty for the user: ".$row['username'];
-                $msg = array($message, false);
-                return $msg;
-            }
-            return $msg;
-        }
-
-    }
     
     /**
      * To validate the date of birth 
@@ -356,28 +243,43 @@ class UserController extends Controller
                 $userProfile = new User();
             }
             foreach ($bloodArray as $value) {
+                $isValidBlood = false;
                 if ($value->getName() == $row['blood']) {
                     $blood = $value;
+                    $isValidBlood = true;
                     break;
                }
             }
+            if (!$isValidBlood) {
+                $message = "Please provide valid blood: ".$row['username'];
+                $msg = array($message, false);
+                return $msg;
+            }
             foreach ($genderArray as $value) {
+                $isValidGender = false;
                 if ($value->getName() == $row['gender']) {
                     $gender = $value;
+                    $isValidGender = true;
                     break;
                }
+            }
+            if (!$isValidGender) {
+                $message = "Please provide valid gender: ".$row['username'];
+                $msg = array($message, false);
+                return $msg;
             }
 
             $interests = explode(',', $row['interests']);
             for ($index = 0; $index < count($interests); $index++) {
                 foreach ($interestArray as $value) {
-                    $interest = null;
+                    $isValidInterest = false;
                     if ($value->getName() == $interests[$index]) {
                         $interest = $value;
+                        $isValidInterest = true;
                         break;
                     }
                 }
-                if ($interest == null) {
+                if (!$isValidInterest) {
                     $message = "Please provide valid interest for the user: ".$row['username'];
                     $msg = array($message, false);
                     return $msg;
@@ -403,13 +305,14 @@ class UserController extends Controller
             foreach($educations as $edu) {
                 $education = explode('-', $edu);
                 foreach ($edutypeArray as $eduType) {
-                    $edutype = null;
+                    $isValidEdutype = false;
                     if ($eduType->getType() == $education[0]) {
                         $edutype = $eduType;
+                        $isValidEdutype = true;
                         break;
                     }
                 }
-                if ($edutype == null) {
+                if (!$isValidEdutype) {
                     $message = "Please provide valid edu type for the user: ".$row['username'];
                     $msg = array($message, false);
                     return $msg;
@@ -472,7 +375,18 @@ class UserController extends Controller
                     $userProfile->addMobileNumber($number);
                 }
             }
-
+            
+            if ($row['dob'] == "") {
+                $message = "dateofbirth should not be empty for the user: ".$row['username'];
+                $msg = array($message, false);
+                return $msg;
+            } else {
+                if (!$this->validateDob($row['dob'])) {
+                    $message = "Provide valid dateofbirth for the user: ".$row['username'];
+                    $msg = array($message, false);
+                    return $msg;
+                }
+            }
             $userProfile
                 ->setUsername($row['username'])
                 ->setFirstname($row['firstname'])
@@ -481,6 +395,18 @@ class UserController extends Controller
                 ->setBlood($blood)
                 ->setGender($gender)
             ;
+            $validator = $this->get('validator');
+            $errors = $validator->validate($userProfile);
+            
+            if (count($errors) > 0) {
+                $errorString = "";
+                foreach ($errors as $i => $error) {
+                    $errorString .= $error->getMessage()."\n";
+                }
+                $message = $row['username'] . "=>" .$errorString;
+                $msg = array($message, false);
+                return $msg;
+            }
             $em->persist($userProfile);
             $em->flush();
         }

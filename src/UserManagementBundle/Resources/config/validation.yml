@@ -97,23 +97,23 @@ UserManagementBundle\Entity\User:
         username:
             - NotBlank:
                 message: Should Enter User Name.
-            - UserManagementBundle\Validator\Constraints\ContainsAlphanumeric: ~
-#            - Regex:
-#                pattern: '/\w+/'
-#                match:   true
-#                message: Enter valid User name.
+#            - UserManagementBundle\Validator\Constraints\ContainsAlphanumeric: ~
+            - Regex:
+                pattern: '/\w+/'
+                match:   true
+                message: Enter valid User name.
         firstname:
             - NotBlank:
                 message: Should Enter First Name.
             - Regex:
                 pattern: '/\d/'
                 match:   false
-                message: Your name cannot contain a number
+                message: Your firstname cannot contain a number.
         lastname:
             - Regex:
                 pattern: '/\d/'
                 match:   false
-                message: Your name cannot contain a number.
+                message: Your lastname cannot contain a number.
        
        
         dob:

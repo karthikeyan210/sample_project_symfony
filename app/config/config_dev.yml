@@ -13,11 +13,17 @@ web_profiler:
 
 monolog:
     handlers:
+        doctrine:
+            # log all messages (since debug is the lowest level)
+            level:    debug
+            type:     stream
+            path:     '%kernel.logs_dir%/doctrine.log'
+            channels: [doctrine]
         main:
             type: stream
             path: '%kernel.logs_dir%/%kernel.environment%.log'
             level: debug
-            channels: ['!event']
+            channels: ['!event','!doctrine']
         console:
             type: console
             process_psr_3_messages: false

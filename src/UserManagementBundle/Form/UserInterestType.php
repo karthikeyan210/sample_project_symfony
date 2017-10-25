@@ -14,13 +14,6 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class UserInterestType extends AbstractType
 {
-//    private $transformer;
-//
-//    public function __construct(InterestToStringTransformer $transformer)
-//    {
-//        $this->transformer = $transformer;
-//    }
-    
     private $em;
 
     public function __construct(EntityManagerInterface $em)
@@ -40,18 +33,7 @@ class UserInterestType extends AbstractType
             ));
         $builder->get('interest')
             ->addModelTransformer(new InterestToStringTransformer($this->em));
-//            ->add('interest', EntityType::class, array(
-//                'class' => 'UserManagementBundle:Interest',
-//                'choice_label' => 'name',
-//                'multiple' => false,
-//                'expanded' => false,
-//                'label' => false,
-//                'required' => false,
-//                'attr' => array(
-////                    'data-required' => 'true',
-//                    'class' => 'interest_area',
-//                ),
-//            ));          
+   
     }
 
     public function configureOptions(OptionsResolver $resolver)
