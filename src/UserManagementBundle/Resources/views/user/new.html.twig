@@ -13,10 +13,6 @@
 {% endblock %}
 
 {% block body %}
-    <form method="post" action="{{ path('user_management_import') }}" enctype="multipart/form-data">
-        <input type="file" name="csvimport" id="csvimport" accept=".csv">
-        <input type="submit" value="csvImport" name="upload">
-    </form>
 <div id="new_form">
 {{ form_start(form, {'attr':{'novalidate' : 'novalidate','id':'myform'}}) }}
 <table align="center">
@@ -190,8 +186,6 @@
     <script src="{{ asset('bundles/usermanagement/js/addField.js') }}"></script>
     <script src="{{ asset('bundles/usermanagement/js/date.js') }}"></script>
     <script src="{{ asset('bundles/usermanagement/js/validation.js') }}"></script>
-{#  <script src="//code.jquery.com/jquery-1.12.4.js"></script>#}
-{#  <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>#}
   <script>
     $( "input[id^='user_interests']" ).autocomplete({
         source: "{{ path('user_management_autocomplete') }}",
@@ -201,7 +195,6 @@
 {% endblock %}
 {% block stylesheets %}
     {{ parent() }}
-{#    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">#}
     <link rel="stylesheet" href="{{ asset('bundles/usermanagement/css/formstyle.css') }}"
 {% endblock %}
         

@@ -388,4 +388,180 @@ class User
     {
         $this->updatedAt = new \DateTime();
     }
+    
+    /**
+     * set/update the email from CSV file
+     * 
+     * @param array $emails
+     */
+    public function setCsvEmail($emails)
+    {
+        $emailArray = $this->getEmails();
+        for ($index = 0; $index < count($emails); $index++) {
+            $emailExist = false;
+            if ($emailArray) {
+                foreach ($emailArray as $email) {
+                    if ($email->getEmailAddr() == $emails[$index]) {
+                        $emailExist = true;
+                        break;
+                    }
+                }
+            }
+            if (!$emailExist) {
+                $email = new UserEmail();
+                $email->setEmailAddr($emails[$index]);
+                $this->addEmail($email);
+            }
+        }
+    }
+    
+    /**
+     * set/update the mobile number from CSV file
+     * 
+     * @param array $mobileNumbers
+     */
+    public function setCsvPhone($mobileNumbers)
+    {
+        $phoneArray = $this->getMobileNumbers();
+        for ($index = 0; $index < count($mobileNumbers); $index++) {
+            $numberExist = false;
+            if ($phoneArray) {
+                foreach ($phoneArray as $number) {
+                    if ($number->getNumber() == $mobileNumbers[$index]) {
+                        $numberExist = true;
+                        break;
+                    }
+                }
+            }
+            if (!$numberExist) {
+                $number = new UserPhone();
+                $number->setNumber($mobileNumbers[$index]);
+                $this->addMobileNumber($number);
+            }
+        }
+    }
+    
+    /**
+     * set blood from CSV file
+     * 
+     * @param array  $bloodArray
+     * @param string $userBlood
+     * @return \UserManagementBundle\Entity\BloodGroup
+     */
+    public function setCsvBlood($bloodArray, $userBlood)
+    {
+        foreach ($bloodArray as $value) {
+            $blood = null;
+            if ($value->getName() == $userBlood) {
+                $blood = $value;
+                break;
+           }
+        }
+        return $blood;
+    }
+    
+    /**
+     * set gender from CSV file
+     * 
+     * @param array  $genderArray
+     * @param string $userGender
+     * 
+     * @return \UserManagementBundle\Entity\Gender
+     */
+    public function setCsvGender($genderArray, $userGender)
+    {
+        foreach ($genderArray as $value) {
+            $gender = null;
+            if ($value->getName() == $userGender) {
+                $gender = $value;
+                break;
+           }
+        }
+        return $gender;
+    }
+    
+    /**
+     * set interest from CSV file
+     * 
+     * @param array $interestArray
+     * @param array $userInterests
+     * 
+     * @return boolean
+     */
+    public function setCsvInterest($interestArray, $userInterests)
+    {
+        for ($index = 0; $index < count($userInterests); $index++) {
+            foreach ($interestArray as $value) {
+                $isValidInterest = false;
+                if ($value->getName() == $userInterests[$index]) {
+                    $interest = $value;
+                    $isValidInterest = true;
+                    break;
+                }
+            }
+            if (!$isValidInterest) {
+                return false;
+            }
+            $userInterestArray = $this->getInterests();
+            $interestExist = false;
+            if ($userInterestArray) {
+                foreach ($userInterestArray as $userInterest) {
+                    if ($userInterest->getInterest() == $interest) {
+                        $interestExist = true;
+                        break;
+                    }
+                }
+            }
+            if (!$interestExist) {
+                $userinterest = new UserInterest();
+                $userinterest->setInterest($interest);
+                $this->addInterest($userinterest);
+            }
+        }
+        return true;
+    }
+    
+    /**
+     * set education from CSV file
+     * 
+     * @param array $edutypeArray
+     * @param array $userEducations
+     * 
+     * @return boolean
+     */
+    public function setCsvEducation($edutypeArray, $userEducations)
+    {
+        foreach($userEducations as $edu) {
+            $education = explode('-', $edu);
+            foreach ($edutypeArray as $eduType) {
+                $isValidEdutype = false;
+                if ($eduType->getType() == $education[0]) {
+                    $edutype = $eduType;
+                    $isValidEdutype = true;
+                    break;
+                }
+            }
+            if (!$isValidEdutype) {
+                return false;
+            }
+
+            $userEducationArray = $this->getEducation();
+            $educationExist = false;
+            if ($userEducationArray) {
+                foreach ($userEducationArray as $userEducation) {
+                    if ($userEducation->getEduType() == $edutype) {
+                        $educationExist = true;
+                        break;
+                    }
+                }
+            }
+            if (!$educationExist) {
+                $usereducation = new UserEducation();
+                $usereducation->setEduType($edutype);
+                $usereducation->setInstitute($education[1]);
+                $this->addEducation($usereducation);
+            }
+        }
+        return true;
+    }
 }

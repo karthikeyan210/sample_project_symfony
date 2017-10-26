@@ -146,13 +146,18 @@ class UserController extends Controller
         ));
     }
     
+    public function csvImportAction()
+    {
+        return $this->render('UserManagementBundle:user:csvImport.html.twig');
+    }
+    
     /**
      * Create or update user profile using CSV file
      * 
      * @param Request $request
      * @return type
      */
-    public function csvImportAction(Request $request)
+    public function csvReadAction(Request $request)
     {
         $file = $request->files->get('csvimport');
         $row = 0;
@@ -176,13 +181,13 @@ class UserController extends Controller
             }
         } else {
             $this->addFlash("warning", "Select the file!!");
-            return $this->redirectToRoute('user_management_form');
+            return $this->redirectToRoute('user_management_import');
         }
         
         $saveUser = $this->saveUser($all_rows);
         if (!$saveUser[1]) {
             $this->addFlash("warning", $saveUser[0]);
-            return $this->redirectToRoute('user_management_form');
+            return $this->redirectToRoute('user_management_import');
         }
         $this->addFlash("success", "Csv file imported successfully!!");
         return $this->redirectToRoute('user_management_list');
@@ -199,7 +204,7 @@ class UserController extends Controller
     {
         $isValid = true;
         if (!preg_match("/^[\d]{2}[-][\d]{2}[-][\d]{4}$/", $dob, $matches)) {
-            $isValid = false;
+            return false;
         }
        
         $dateofbirth = explode('-', $dob);
@@ -242,139 +247,30 @@ class UserController extends Controller
             if (!$userProfile) {
                 $userProfile = new User();
             }
-            foreach ($bloodArray as $value) {
-                $isValidBlood = false;
-                if ($value->getName() == $row['blood']) {
-                    $blood = $value;
-                    $isValidBlood = true;
-                    break;
-               }
-            }
-            if (!$isValidBlood) {
-                $message = "Please provide valid blood: ".$row['username'];
-                $msg = array($message, false);
-                return $msg;
-            }
-            foreach ($genderArray as $value) {
-                $isValidGender = false;
-                if ($value->getName() == $row['gender']) {
-                    $gender = $value;
-                    $isValidGender = true;
-                    break;
-               }
-            }
-            if (!$isValidGender) {
-                $message = "Please provide valid gender: ".$row['username'];
-                $msg = array($message, false);
-                return $msg;
-            }
+            $blood = $userProfile->setCsvBlood($bloodArray, $row['blood']);
+            $gender = $userProfile->setCsvGender($genderArray, $row['gender']);
 
             $interests = explode(',', $row['interests']);
-            for ($index = 0; $index < count($interests); $index++) {
-                foreach ($interestArray as $value) {
-                    $isValidInterest = false;
-                    if ($value->getName() == $interests[$index]) {
-                        $interest = $value;
-                        $isValidInterest = true;
-                        break;
-                    }
-                }
-                if (!$isValidInterest) {
-                    $message = "Please provide valid interest for the user: ".$row['username'];
-                    $msg = array($message, false);
-                    return $msg;
-                }
-                $userInterestArray = $userProfile->getInterests();
-                $interestExist = false;
-                if ($userInterestArray) {
-                    foreach ($userInterestArray as $userInterest) {
-                        if ($userInterest->getInterest() == $interest) {
-                            $interestExist = true;
-                            break;
-                        }
-                    }
-                }
-                if (!$interestExist) {
-                    $userinterest = new UserInterest();
-                    $userinterest->setInterest($interest);
-                    $userProfile->addInterest($userinterest);
-                }
+            $isValidInterest = $userProfile->setCsvInterest($interestArray, $interests);
+            if (!$isValidInterest) {
+                $message = "Please provide valid interest for the user: ".$row['username'];
+                $msg = array($message, false);
+                return $msg;
             }
             
             $educations = explode(',', $row['education']);
-            foreach($educations as $edu) {
-                $education = explode('-', $edu);
-                foreach ($edutypeArray as $eduType) {
-                    $isValidEdutype = false;
-                    if ($eduType->getType() == $education[0]) {
-                        $edutype = $eduType;
-                        $isValidEdutype = true;
-                        break;
-                    }
-                }
-                if (!$isValidEdutype) {
-                    $message = "Please provide valid edu type for the user: ".$row['username'];
-                    $msg = array($message, false);
-                    return $msg;
-                }
-                
-                $userEducationArray = $userProfile->getEducation();
-                $educationExist = false;
-                if ($userEducationArray) {
-                    foreach ($userEducationArray as $userEducation) {
-                        if ($userEducation->getEduType() == $edutype) {
-                            $educationExist = true;
-                            break;
-                        }
-                    }
-                }
-                if (!$educationExist) {
-                    $usereducation = new UserEducation();
-                    $usereducation->setEduType($edutype);
-                    $usereducation->setInstitute($education[1]);
-                    $userProfile->addEducation($usereducation);
-                }
+            $isValidEdutype = $userProfile->setCsvEducation($edutypeArray, $educations);
+            if (!$isValidEdutype) {
+                $message = "Please provide valid edu type for the user: ".$row['username'];
+                $msg = array($message, false);
+                return $msg;
             }
-            
             
             $emails = explode(',', $row['emails']);
-            for ($index = 0; $index < count($emails); $index++) {
-                $emailArray = $userProfile->getEmails();
-                $emailExist = false;
-                if ($emailArray) {
-                    foreach ($emailArray as $email) {
-                        if ($email->getEmailAddr() == $emails[$index]) {
-                            $emailExist = true;
-                            break;
-                        }
-                    }
-                }
-                if (!$emailExist) {
-                    $email = new UserEmail();
-                    $email->setEmailAddr($emails[$index]);
-                    $userProfile->addEmail($email);
-                }
-            }
-            
+            $userProfile->setCsvEmail($emails);
             
             $mobileNumbers = explode(',', $row['mobileNumbers']);
-            for ($index = 0; $index < count($mobileNumbers); $index++) {
-                $phoneArray = $userProfile->getMobileNumbers();
-                $numberExist = false;
-                if ($phoneArray) {
-                    foreach ($phoneArray as $number) {
-                        if ($number->getNumber() == $mobileNumbers[$index]) {
-                            $numberExist = true;
-                            break;
-                        }
-                    }
-                }
-                if (!$numberExist) {
-                    $number = new UserPhone();
-                    $number->setNumber($mobileNumbers[$index]);
-                    $userProfile->addMobileNumber($number);
-                }
-            }
+            $userProfile->setCsvPhone($mobileNumbers);
             
             if ($row['dob'] == "") {
                 $message = "dateofbirth should not be empty for the user: ".$row['username'];
@@ -387,6 +283,7 @@ class UserController extends Controller
                     return $msg;
                 }
             }
+            
             $userProfile
                 ->setUsername($row['username'])
                 ->setFirstname($row['firstname'])

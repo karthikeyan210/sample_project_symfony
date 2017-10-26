@@ -1,0 +1,20 @@
+{% extends 'UserManagementBundle:user:index.html.twig' %}
+
+{% block messages %}
+{% for messages in app.flashes(['success','warning']) %}
+    {% for message in messages %}
+        <div>
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endfor %}
+{% endblock %}
+
+{% block body %}
+    <div align="center">
+    <form method="post" action="{{ path('user_management_csvread') }}" enctype="multipart/form-data">
+        <input type="file" name="csvimport" id="csvimport" accept=".csv">
+        <input type="submit" value="csvImport" name="upload">
+    </form>
+    </div>
+{% endblock %}

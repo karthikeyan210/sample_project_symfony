@@ -35,6 +35,7 @@ UserManagementBundle\Entity\BloodGroup:
             message: This Blood_group "{{ value }}" is already there. 
     properties:
         name:
+            - NotNull: ~
             - NotBlank: ~
             
 UserManagementBundle\Entity\Interest:
@@ -121,9 +122,11 @@ UserManagementBundle\Entity\User:
             - NotBlank: 
                 message: Select date of birth.
         gender:
+#            - NotNull: ~
             - NotBlank: 
-                message: Select one gender.
+                message: Select gender.
         blood:
+            - NotNull: ~
             - NotBlank: 
                 message: select blood group.
         emails:

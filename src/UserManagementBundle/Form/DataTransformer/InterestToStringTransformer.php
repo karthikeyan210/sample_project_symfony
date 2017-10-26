@@ -50,10 +50,8 @@ class InterestToStringTransformer implements DataTransformerInterface
 
         $intetest = $this->em
             ->getRepository(Interest::class)
-            // query for the issue with this id
             ->findOneBy(array('name' => $interestArea))
         ;
-//        dump($intetest); die();
 
         if (null === $intetest) {
             // causes a validation error
